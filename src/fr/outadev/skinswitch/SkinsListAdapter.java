@@ -26,10 +26,10 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 		View cell = inflater.inflate(R.layout.skin_icon, parent, false);
 
 		ImageView skinView = (ImageView) cell.findViewById(R.id.img_skin_preview);
-		
+
 		BitmapFactory.Options opt = new BitmapFactory.Options();
 		opt.inScaled = false;
-		
+
 		Bitmap btmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.test_skin_outadoc, opt);
 		skinView.setImageBitmap(SkinImageUtils.getCroppedHead(SkinImageUtils.getSkinPreview(btmp, Side.FRONT, 19)));
 
