@@ -2,9 +2,9 @@ package fr.outadev.skinswitch.network;
 
 import simbio.se.sau.Encryption;
 
-public class MojangPasswordManager {
+public class PasswordManager {
 
-	public MojangPasswordManager() {
+	public PasswordManager() {
 		encryption = new Encryption();
 	}
 

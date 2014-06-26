@@ -42,13 +42,13 @@ public class MojangLoginManager {
 			throw new InvalidMojangCredentialsException();
 		} else if(body.indexOf("<h1>Confirm your identity</h1>") != -1) {
 			Log.e("SkinSwitch", "challenge required for " + user.getUsername());
-			throw new ChallengeRequirementException(new MojangLoginChallenge(body));
+			throw new ChallengeRequirementException(new LoginChallenge(body));
 		}
 
 		Log.i("SkinSwitch", "logged in as " + user.getUsername());
 	}
 
-	public void validateChallenge(MojangLoginChallenge challenge, String answer) throws InvalidMojangChallengeAnswerException {
+	public void validateChallenge(LoginChallenge challenge, String answer) throws InvalidMojangChallengeAnswerException {
 		Map<String, String> data = new HashMap<String, String>();
 
 		data.put("answer", answer);

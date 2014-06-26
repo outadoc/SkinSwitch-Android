@@ -3,19 +3,19 @@ package fr.outadev.skinswitch.network;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MojangLoginChallenge {
+public class LoginChallenge {
 	
 	private String id;
 	private String question;
 	private String authToken;
 
-	public MojangLoginChallenge(String id, String question, String authToken) {
+	public LoginChallenge(String id, String question, String authToken) {
 		this.id = id;
 		this.question = question;
 		this.authToken = authToken;
 	}
 
-	public MojangLoginChallenge(String challengePage) {
+	public LoginChallenge(String challengePage) {
 		Matcher matcher;
 
 		Pattern patternId = Pattern.compile("<input type=\"hidden\" name=\"questionId\" value=\"([0-9]+)\"( /)?>");

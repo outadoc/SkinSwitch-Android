@@ -15,7 +15,7 @@ import android.widget.Toast;
 import fr.outadev.skinswitch.network.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.InvalidMojangChallengeAnswerException;
 import fr.outadev.skinswitch.network.InvalidMojangCredentialsException;
-import fr.outadev.skinswitch.network.MojangLoginChallenge;
+import fr.outadev.skinswitch.network.LoginChallenge;
 import fr.outadev.skinswitch.network.MojangLoginManager;
 import fr.outadev.skinswitch.storage.User;
 import fr.outadev.skinswitch.storage.UsersManager;
@@ -52,7 +52,7 @@ public class MojangLoginActivity extends Activity {
 	private UsersManager usersManager;
 	private User user;
 
-	private MojangLoginChallenge challenge;
+	private LoginChallenge challenge;
 	private MojangLoginManager loginManager;
 
 	private static final int STEP_LOGIN = 0;
@@ -143,7 +143,7 @@ public class MojangLoginActivity extends Activity {
 		mPassword = user.getPassword();
 		mPasswordView.setText(mPassword);
 		
-		challenge = new MojangLoginChallenge(bundle.getString("challenge:id"), bundle.getString("challenge:question"), bundle.getString("challenge:auth"));
+		challenge = new LoginChallenge(bundle.getString("challenge:id"), bundle.getString("challenge:question"), bundle.getString("challenge:auth"));
 		mChallengeQuestionView.setText(challenge.getQuestion());
 		mChallengeAnswerView.setText(bundle.getString("challenge:answer"));
 		
