@@ -2,7 +2,6 @@ package fr.outadev.skinswitch;
 
 import java.util.ArrayList;
 
-import fr.outadev.skinswitch.SkinImageUtils.Side;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,11 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import fr.outadev.skinswitch.SkinImageUtils.Side;
 
 public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
 	public SkinsListAdapter(Activity activity, int resource, ArrayList<Skin> objects) {
-		super((Context) activity, resource, objects);
+		super(activity, resource, objects);
 		this.activity = activity;
 	}
 
@@ -32,10 +32,11 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
 		Bitmap btmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.test_skin_outadoc, opt);
 		skinView.setImageBitmap(SkinImageUtils.getCroppedHead(SkinImageUtils.getSkinPreview(btmp, Side.FRONT, 19)));
+		btmp.recycle();
 
 		return cell;
 	}
 
-	private Activity activity;
+	private final Activity activity;
 
 }
