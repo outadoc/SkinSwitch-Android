@@ -56,6 +56,11 @@ public class MojangLoginManager {
 		data.put("authenticityToken", challenge.getAuthToken());
 
 		String body = HttpRequest.post(BASE_URL + "/challenge").followRedirects(false).form(data).body();
+		
+		if(body.equals("Security challenge passed.")) {
+			return;
+		}
+		
 		String error = null;
 		
 		try {

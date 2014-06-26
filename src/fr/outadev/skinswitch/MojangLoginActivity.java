@@ -314,7 +314,7 @@ public class MojangLoginActivity extends Activity {
 		protected Exception doInBackground(Void... params) {
 			try {
 				loginManager.validateChallenge(challenge, mChallengeAnswerView.getText().toString());
-			} catch(Exception e) {
+			} catch(InvalidMojangChallengeAnswerException e) {
 				return e;
 			}
 
@@ -329,7 +329,7 @@ public class MojangLoginActivity extends Activity {
 				Toast.makeText(MojangLoginActivity.this, "Yay, right answer. ^-^", Toast.LENGTH_LONG).show();
 				saveCredentials();
 				finish();
-			} else if(ex instanceof InvalidMojangChallengeAnswerException) {
+			} else {
 				Toast.makeText(MojangLoginActivity.this, ((InvalidMojangChallengeAnswerException) ex).getMessage(),
 				        Toast.LENGTH_LONG).show();
 				showProgress(STEP_LOGIN);
