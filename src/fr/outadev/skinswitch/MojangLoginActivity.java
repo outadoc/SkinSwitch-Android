@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -111,13 +110,6 @@ public class MojangLoginActivity extends Activity {
 		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.mojang_login, menu);
-		return true;
-	}
-
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -184,7 +176,6 @@ public class MojangLoginActivity extends Activity {
 	private void showProgress(final int step) {
 		int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-		mLoginStatusView.setVisibility(View.VISIBLE);
 		mLoginStatusView.animate().setDuration(shortAnimTime).alpha(step == STEP_LOADING ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
 			        @Override
@@ -193,7 +184,6 @@ public class MojangLoginActivity extends Activity {
 			        }
 		        });
 
-		mLoginFormView.setVisibility(View.VISIBLE);
 		mLoginFormView.animate().setDuration(shortAnimTime).alpha(step == STEP_LOGIN ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
 			        @Override
@@ -202,7 +192,6 @@ public class MojangLoginActivity extends Activity {
 			        }
 		        });
 
-		mChallengeFormView.setVisibility(View.VISIBLE);
 		mChallengeFormView.animate().setDuration(shortAnimTime).alpha(step == STEP_CHALLENGE ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
 			        @Override
@@ -210,6 +199,18 @@ public class MojangLoginActivity extends Activity {
 				        mChallengeFormView.setVisibility(step == STEP_CHALLENGE ? View.VISIBLE : View.GONE);
 			        }
 		        });
+		
+		switch(step) {
+			case STEP_LOGIN:
+				setTitle(R.string.title_activity_mojang_login);
+				break;
+			case STEP_CHALLENGE:
+				setTitle(R.string.title_activity_mojang_challenge);
+				break;
+			case STEP_LOADING:
+				setTitle(R.string.title_activity_mojang_loading);
+				break;
+		}
 
 	}
 
