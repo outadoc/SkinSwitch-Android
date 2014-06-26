@@ -269,7 +269,7 @@ public class MojangLoginActivity extends Activity {
 		@Override
 		protected Exception doInBackground(Void... params) {
 			try {
-				loginManager.loginWithCredentials(mEmail, mPassword);
+				loginManager.loginWithCredentials(user);
 			} catch(Exception e) {
 				return e;
 			}
