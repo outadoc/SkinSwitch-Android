@@ -6,6 +6,8 @@ import java.net.CookieManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
+
 import com.github.kevinsawicki.http.HttpRequest;
 
 public class MojangLoginManager {
@@ -26,14 +28,17 @@ public class MojangLoginManager {
 		data.put("password", password);
 		data.put("remember", "false");
 
-		String location = HttpRequest.post(BASE_URL + "/login").followRedirects(false).form(data).location();
-
-		if(location.indexOf("/login") != -1) {
+		String body = HttpRequest.post(BASE_URL + "/login").followRedirects(true).form(data).body();
+		
+		if(body.isEmpty() || body.indexOf("<h1>Login</h1>") != -1) {
+			Log.e("SkinSwitch", "could not log in as " + username);
 			throw new InvalidMojangCredentialsException();
-		} else if(location.indexOf("/challenge") != -1) {
-			String challengeContent = HttpRequest.post(BASE_URL + "/challenge").followRedirects(false).body();
-			throw new ChallengeRequirementException(new MojangLoginChallenge(challengeContent));
+		} else if(body.indexOf("<h1>Confirm your identity</h1>") != -1) {
+			Log.e("SkinSwitch", "challenge required for " + username);
+			throw new ChallengeRequirementException(new MojangLoginChallenge(body));
 		}
+		
+		Log.i("SkinSwitch", "logged in as " + username);
 	}
 
 	public void validateChallenge(MojangLoginChallenge challenge, String answer) throws InvalidMojangChallengeAnswerException {
