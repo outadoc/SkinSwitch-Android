@@ -17,7 +17,8 @@
             android:layout_margin="14dp" />
     </FrameLayout>
 
-    <TextView android:text="Test"
+    <TextView
+        android:id="@+id/lbl_skin_title"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
