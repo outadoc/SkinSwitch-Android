@@ -10,6 +10,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Manages the skins in the database.
+ * 
+ * @author outadoc
+ * 
+ */
 public class SkinsDatabase {
 
 	private final DatabaseOpenHelper databaseOpenHelper;
@@ -18,6 +24,13 @@ public class SkinsDatabase {
 		databaseOpenHelper = new DatabaseOpenHelper(context);
 	}
 
+	/**
+	 * Gets a skin with the specified id.
+	 * 
+	 * @param id
+	 *            the id of the skin.
+	 * @return the skin, if it exists; else, null.
+	 */
 	public Skin getSkin(int id) {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
 		Cursor cur = db.query("skins", new String[] { "name", "description", "timestamp" }, "id = ?", new String[] { Integer
@@ -34,6 +47,11 @@ public class SkinsDatabase {
 		}
 	}
 
+	/**
+	 * Gets all the skins in the database.
+	 * 
+	 * @return a List of skins contained in the database.
+	 */
 	public List<Skin> getAllSkins() {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
 		Cursor cur = db.query("skins", new String[] { "id", "name", "description", "timestamp" }, null, null, null, null, "name");
@@ -49,6 +67,14 @@ public class SkinsDatabase {
 		return skins;
 	}
 
+	/**
+	 * Adds a skin to the database.
+	 * 
+	 * @param skin
+	 *            the skin to add.
+	 * @throws SQLException
+	 *             if it couldn't be added.
+	 */
 	public void addSkin(Skin skin) throws SQLException {
 		SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
 
@@ -61,10 +87,22 @@ public class SkinsDatabase {
 		db.close();
 	}
 
+	/**
+	 * Removes a skin from the database.
+	 * 
+	 * @param skin
+	 *            the skin to remove.
+	 */
 	public void removeSkin(Skin skin) {
 		removeSkin(skin.getId());
 	}
 
+	/**
+	 * Removes a skin from the database.
+	 * 
+	 * @param id
+	 *            the ID of the skin to remove.
+	 */
 	public void removeSkin(int id) {
 		SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
 		db.delete("skins", "id = ?", new String[] { Integer.valueOf(id).toString() });

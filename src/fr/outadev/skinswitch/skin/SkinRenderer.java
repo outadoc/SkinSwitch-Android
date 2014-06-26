@@ -6,21 +6,62 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 
+/**
+ * Renders a skin in different ways.
+ * 
+ * @author outadoc
+ * 
+ */
 public class SkinRenderer {
 
+	/**
+	 * Gets a cropped head from the skin.
+	 * 
+	 * @param skin
+	 *            the skin to crop.
+	 * @return the head.
+	 */
 	public static Bitmap getCroppedHead(Bitmap skin) {
-		return Bitmap.createBitmap(skin, (int) (skin.getWidth() / 4), 0, (int) (skin.getWidth() / 2),
-		        (int) (skin.getWidth() / 2 - 1));
+		return Bitmap.createBitmap(skin, skin.getWidth() / 4, 0, skin.getWidth() / 2, skin.getWidth() / 2 - 1);
 	}
 
+	/**
+	 * Gets the preview of a skin from its bitmap.
+	 * 
+	 * @param skin
+	 *            the bitmap of the skin.
+	 * @return the preview.
+	 */
 	public static Bitmap getSkinPreview(Bitmap skin) {
 		return getSkinPreview(skin, Side.FRONT);
 	}
 
+	/**
+	 * Gets the preview of a skin from its bitmap.
+	 * 
+	 * @param skin
+	 *            the bitmap of the skin.
+	 * @param side
+	 *            the side for which to render it.
+	 * @return the preview.
+	 * @see Side
+	 */
 	public static Bitmap getSkinPreview(Bitmap skin, Side side) {
 		return getSkinPreview(skin, side, 6);
 	}
 
+	/**
+	 * Gets the preview of a skin from its bitmap.
+	 * 
+	 * @param skin
+	 *            the bitmap of the skin.
+	 * @param side
+	 *            the side for which to render it.
+	 * @param zoom
+	 *            the scale factor for the preview.
+	 * @return the preview.
+	 * @see Side
+	 */
 	public static Bitmap getSkinPreview(Bitmap skin, Side side, int zoom) {
 		Bitmap head, chest, arm_right, arm_left, leg_right, leg_left, armor_head, armor_chest, armor_arm_right, armor_arm_left, armor_leg_right, armor_leg_left;
 
@@ -115,6 +156,14 @@ public class SkinRenderer {
 		return resizeImage(dest, zoom);
 	}
 
+	/**
+	 * Checks if a skin is of the new format (square, armour for every body
+	 * part).
+	 * 
+	 * @param skin
+	 *            the skin to check.
+	 * @return true if it's new, false if it's old.
+	 */
 	private static boolean isNewSkinFormat(Bitmap skin) {
 		return(skin.getHeight() == skin.getWidth() && skin.getWidth() == 64);
 	}
@@ -127,6 +176,13 @@ public class SkinRenderer {
 		return new Rect(x, y, x + img.getWidth(), y + img.getHeight());
 	}
 
+	/**
+	 * Checks if all the pixels of a bitmap are of the same colour.
+	 * 
+	 * @param image
+	 *            the bitmap.
+	 * @return true if they are, else false.
+	 */
 	private static boolean areAllPixelsOfSameColor(Bitmap image) {
 		// remember the color of the first pixel
 		int firstPixColor = image.getPixel(0, 0);
@@ -141,32 +197,63 @@ public class SkinRenderer {
 		return true;
 	}
 
-	private static Bitmap overlayArmor(Bitmap head, Bitmap armor) {
-		Bitmap headCopy = head.copy(head.getConfig(), true);
+	/**
+	 * Overlays the armour on a body part.
+	 * 
+	 * @param bodyPart
+	 *            the part of the skin we have to overlay the armour on.
+	 * @param armor
+	 *            the armour to overlay.
+	 * @return the combined armour and body part.
+	 */
+	private static Bitmap overlayArmor(Bitmap bodyPart, Bitmap armor) {
+		Bitmap copy = bodyPart.copy(bodyPart.getConfig(), true);
 
 		if(!areAllPixelsOfSameColor(armor)) {
-			for(int i = 0; i < head.getHeight(); i++) {
-				for(int j = 0; j < head.getWidth(); j++) {
+			for(int i = 0; i < bodyPart.getHeight(); i++) {
+				for(int j = 0; j < bodyPart.getWidth(); j++) {
 					if(Color.alpha(armor.getPixel(j, i)) == 255) {
-						headCopy.setPixel(j, i, armor.getPixel(j, i));
+						copy.setPixel(j, i, armor.getPixel(j, i));
 					}
 				}
 			}
 		}
 
-		return headCopy;
+		return copy;
 	}
 
+	/**
+	 * Flips a bitmap vertically (or horizontally, idek).
+	 * 
+	 * @param image
+	 *            the image to flip.
+	 * @return the image flipped.
+	 */
 	private static Bitmap flipImage(Bitmap image) {
 		Matrix matrix = new Matrix();
 		matrix.preScale(-1.0f, 1.0f);
 		return Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), matrix, true);
 	}
 
+	/**
+	 * Resizes an image.
+	 * 
+	 * @param image
+	 *            the image to resize.
+	 * @param zoom
+	 *            the scale factor.
+	 * @return the resized image.
+	 */
 	private static Bitmap resizeImage(Bitmap image, int zoom) {
 		return Bitmap.createScaledBitmap(image, image.getWidth() * zoom, image.getHeight() * zoom, false);
 	}
 
+	/**
+	 * Represents the front or the back of a skin.
+	 * 
+	 * @author outadoc
+	 * 
+	 */
 	public enum Side {
 		FRONT, BACK
 	}

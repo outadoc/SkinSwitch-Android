@@ -136,17 +136,18 @@ public class MojangLoginActivity extends Activity {
 		super.onRestoreInstanceState(bundle);
 
 		user = new User(bundle.getString("user:username"), bundle.getString("user:password"));
-		
+
 		mEmail = user.getUsername();
 		mEmailView.setText(mEmail);
-		
+
 		mPassword = user.getPassword();
 		mPasswordView.setText(mPassword);
-		
-		challenge = new LoginChallenge(bundle.getString("challenge:id"), bundle.getString("challenge:question"), bundle.getString("challenge:auth"));
+
+		challenge = new LoginChallenge(bundle.getString("challenge:id"), bundle.getString("challenge:question"),
+		        bundle.getString("challenge:auth"));
 		mChallengeQuestionView.setText(challenge.getQuestion());
 		mChallengeAnswerView.setText(bundle.getString("challenge:answer"));
-		
+
 		showProgress(bundle.getInt("step", 0));
 	}
 

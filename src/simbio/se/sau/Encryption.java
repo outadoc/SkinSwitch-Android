@@ -38,7 +38,7 @@ public class Encryption {
 
 	public String encrypt(String key, String data) {
 		if(key == null || data == null) return null;
-		
+
 		try {
 			DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(charsetName));
 			SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(algorithm);
@@ -54,7 +54,7 @@ public class Encryption {
 
 	public String decrypt(String key, String data) {
 		if(key == null || data == null) return null;
-		
+
 		try {
 			byte[] dataBytes = Base64.decode(data, base64Mode);
 			DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(charsetName));

@@ -2,6 +2,12 @@ package fr.outadev.skinswitch.skin;
 
 import java.util.Date;
 
+/**
+ * Represents a stored skin, as it is in the database.
+ * 
+ * @author outadoc
+ * 
+ */
 public class Skin {
 
 	private int id;
@@ -9,6 +15,18 @@ public class Skin {
 	private String description;
 	private Date creationDate;
 
+	/**
+	 * Creates a new skin.
+	 * 
+	 * @param id
+	 *            the skin ID.
+	 * @param name
+	 *            the name of the skin.
+	 * @param description
+	 *            the description of the skin.
+	 * @param creationDate
+	 *            the date of creation of the skin.
+	 */
 	public Skin(int id, String name, String description, Date creationDate) {
 		this.id = id;
 		this.name = name;

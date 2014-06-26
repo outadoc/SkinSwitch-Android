@@ -33,7 +33,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
 		BitmapFactory.Options opt = new BitmapFactory.Options();
 		opt.inScaled = false;
-		
+
 		skinTitle.setText(getItem(position).getName());
 
 		Bitmap btmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.test_skin_outadoc, opt);

@@ -11,12 +11,12 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		UsersManager usersManager = new UsersManager(this);
-		
+
 		if(!usersManager.userCreated()) {
-		    Intent intent = new Intent(this, MojangLoginActivity.class);
-		    startActivity(intent);
+			Intent intent = new Intent(this, MojangLoginActivity.class);
+			startActivity(intent);
 		}
 	}
 

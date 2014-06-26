@@ -24,10 +24,11 @@ import fr.outadev.skinswitch.network.upload.SkinUploadException;
 import fr.outadev.skinswitch.storage.User;
 
 /**
- * Manages the connection to minecraft.net.
- * Allows you to sign in successfully, and send a skin.
+ * Manages the connection to minecraft.net. Allows you to sign in successfully,
+ * and send a skin.
+ * 
  * @author outadoc
- *
+ * 
  */
 public class MojangConnectionManager {
 
@@ -38,6 +39,17 @@ public class MojangConnectionManager {
 		CookieHandler.setDefault(cookieManager);
 	}
 
+	/**
+	 * Login with this user's credentials to the website.
+	 * 
+	 * @param user
+	 *            the username and password that will be used to login.
+	 * @throws InvalidMojangCredentialsException
+	 *             if the username or password isn't right.
+	 * @throws ChallengeRequirementException
+	 *             if the user has to complete a challenge in order to log in
+	 *             from this device.
+	 */
 	public void loginWithCredentials(User user) throws InvalidMojangCredentialsException, ChallengeRequirementException {
 
 		Map<String, String> data = new HashMap<String, String>();
@@ -59,6 +71,16 @@ public class MojangConnectionManager {
 		Log.i("SkinSwitch", "logged in as " + user.getUsername());
 	}
 
+	/**
+	 * Send a completed challenge to the website for validation.
+	 * 
+	 * @param challenge
+	 *            the challenge that was answered.
+	 * @param answer
+	 *            the answer.
+	 * @throws InvalidMojangChallengeAnswerException
+	 *             if the answer wasn't the right one.
+	 */
 	public void validateChallenge(LoginChallenge challenge, String answer) throws InvalidMojangChallengeAnswerException {
 		Map<String, String> data = new HashMap<String, String>();
 
@@ -67,13 +89,13 @@ public class MojangConnectionManager {
 		data.put("authenticityToken", challenge.getAuthToken());
 
 		String body = HttpRequest.post(BASE_URL + "/challenge").followRedirects(false).form(data).body();
-		
+
 		if(body.equals("Security challenge passed.")) {
 			return;
 		}
-		
+
 		String error = null;
-		
+
 		try {
 			JSONObject errorObject = (JSONObject) new JSONTokener(body).nextValue();
 
@@ -91,6 +113,14 @@ public class MojangConnectionManager {
 		}
 	}
 
+	/**
+	 * Uploads a skin to the website.
+	 * 
+	 * @param skin
+	 *            the skin to send.
+	 * @throws SkinUploadException
+	 *             if the upload failed.
+	 */
 	public void uploadSkinToMojang(File skin) throws SkinUploadException {
 		HttpRequest skinRequest = HttpRequest.post(BASE_URL + "/profile/skin").followRedirects(false).contentType("image/png")
 		        .part("skin", skin);
