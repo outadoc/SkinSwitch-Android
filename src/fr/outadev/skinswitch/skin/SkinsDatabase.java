@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch;
+package fr.outadev.skinswitch.skin;
 
 import android.content.Context;
 

@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import fr.outadev.skinswitch.SkinImageUtils.Side;
+import fr.outadev.skinswitch.skin.Skin;
+import fr.outadev.skinswitch.skin.SkinRenderer;
+import fr.outadev.skinswitch.skin.SkinRenderer.Side;
 
 public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
@@ -31,7 +33,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 		opt.inScaled = false;
 
 		Bitmap btmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.test_skin_outadoc, opt);
-		skinView.setImageBitmap(SkinImageUtils.getCroppedHead(SkinImageUtils.getSkinPreview(btmp, Side.FRONT, 19)));
+		skinView.setImageBitmap(SkinRenderer.getCroppedHead(SkinRenderer.getSkinPreview(btmp, Side.FRONT, 19)));
 		btmp.recycle();
 
 		return cell;

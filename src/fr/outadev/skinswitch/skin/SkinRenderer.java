@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch;
+package fr.outadev.skinswitch.skin;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 
-public class SkinImageUtils {
+public class SkinRenderer {
 
 	public static Bitmap getCroppedHead(Bitmap skin) {
 		return Bitmap.createBitmap(skin, (int) (skin.getWidth() / 4), 0, (int) (skin.getWidth() / 2),

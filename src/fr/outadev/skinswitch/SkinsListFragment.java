@@ -2,6 +2,8 @@ package fr.outadev.skinswitch;
 
 import java.util.ArrayList;
 
+import fr.outadev.skinswitch.skin.Skin;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
