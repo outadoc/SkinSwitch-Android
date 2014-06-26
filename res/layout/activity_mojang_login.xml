@@ -72,5 +72,43 @@
                 android:text="@string/action_sign_in_short" />
         </LinearLayout>
     </ScrollView>
+    
+    <!-- Challenge form -->
+    
+    <ScrollView
+        android:id="@+id/challenge_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <LinearLayout
+            style="@style/LoginFormContainer"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/lbl_challenge_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/txt_challenge_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_answer"
+                android:maxLines="1"
+                android:singleLine="true" />
+            
+            <Button
+                android:id="@+id/b_submit_challenge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:text="@string/submit" />
+            
+        </LinearLayout>
+    </ScrollView>
 
 </merge>

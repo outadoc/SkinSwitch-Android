@@ -6,6 +6,10 @@ import java.net.CookieManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import android.util.Log;
 
 import com.github.kevinsawicki.http.HttpRequest;
@@ -48,9 +52,22 @@ public class MojangLoginManager {
 		data.put("questionId", challenge.getId());
 		data.put("authenticityToken", challenge.getAuthToken());
 
-		HttpRequest challengeRequest = HttpRequest.post(BASE_URL + "/challenge").followRedirects(false).form(data);
+		String body = HttpRequest.post(BASE_URL + "/challenge").followRedirects(false).form(data).body();
+		String error = null;
 
-		System.out.println(challengeRequest.body());
+		try {
+			JSONObject errorObject = (JSONObject) new JSONTokener(body).nextValue();
+			
+	        if(errorObject != null && errorObject.getString("error") != null) {
+	        	error = errorObject.getString("error").replaceAll("\\<.*?>","");
+	        }
+        } catch(JSONException e) {
+	        error = body;
+        }
+		
+		if(error != null) {
+			throw new InvalidMojangChallengeAnswerException(error);
+		}
 	}
 
 	public void uploadSkinToMojang(File skin) {

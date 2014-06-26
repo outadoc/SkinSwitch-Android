@@ -2,10 +2,8 @@ package fr.outadev.skinswitch;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -16,7 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.outadev.skinswitch.network.ChallengeRequirementException;
+import fr.outadev.skinswitch.network.InvalidMojangChallengeAnswerException;
 import fr.outadev.skinswitch.network.InvalidMojangCredentialsException;
+import fr.outadev.skinswitch.network.MojangLoginChallenge;
 import fr.outadev.skinswitch.network.MojangLoginManager;
 import fr.outadev.skinswitch.storage.User;
 import fr.outadev.skinswitch.storage.UsersManager;
@@ -26,11 +26,11 @@ import fr.outadev.skinswitch.storage.UsersManager;
  * well.
  */
 public class MojangLoginActivity extends Activity {
-	
+
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
-	private UserLoginTask mAuthTask = null;
+	private AsyncTask<Void, Void, Exception> mAuthTask = null;
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
@@ -39,21 +39,35 @@ public class MojangLoginActivity extends Activity {
 	// UI references.
 	private EditText mEmailView;
 	private EditText mPasswordView;
+	private EditText mChallengeAnswerView;
+
 	private View mLoginFormView;
 	private View mLoginStatusView;
+	private View mChallengeFormView;
+
 	private TextView mLoginStatusMessageView;
-	
+	private TextView mChallengeQuestionView;
+
 	private UsersManager usersManager;
 	private User user;
+
+	private MojangLoginChallenge challenge;
+	private MojangLoginManager loginManager;
+
+	private static final int STEP_LOGIN = 0;
+	private static final int STEP_LOADING = 1;
+	private static final int STEP_CHALLENGE = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_mojang_login);
-		
+
 		usersManager = new UsersManager(this);
 		user = usersManager.getUser();
+		challenge = null;
+		loginManager = new MojangLoginManager();
 
 		// Set up the login form.
 		mEmail = user.getUsername();
@@ -82,6 +96,17 @@ public class MojangLoginActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				attemptLogin();
+			}
+		});
+
+		mChallengeFormView = findViewById(R.id.challenge_form);
+		mChallengeQuestionView = (TextView) findViewById(R.id.lbl_challenge_question);
+		mChallengeAnswerView = (EditText) findViewById(R.id.txt_challenge_answer);
+
+		findViewById(R.id.b_submit_challenge).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				attemptSubmitChallenge();
 			}
 		});
 	}
@@ -136,104 +161,146 @@ public class MojangLoginActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			showProgress(true);
+			showProgress(STEP_LOADING);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);
 		}
 	}
 
+	public void attemptSubmitChallenge() {
+		if(mAuthTask != null || challenge == null) {
+			return;
+		}
+
+		mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+		showProgress(STEP_LOADING);
+		mAuthTask = new SumbitChallengeTask();
+		mAuthTask.execute((Void) null);
+	}
+
 	/**
 	 * Shows the progress UI and hides the login form.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-	private void showProgress(final boolean show) {
-		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-		// for very easy animations. If available, use these APIs to fade-in
-		// the progress spinner.
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-			int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+	private void showProgress(final int step) {
+		int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-			mLoginStatusView.setVisibility(View.VISIBLE);
-			mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-				@Override
-				public void onAnimationEnd(Animator animation) {
-					mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-				}
-			});
+		mLoginStatusView.setVisibility(View.VISIBLE);
+		mLoginStatusView.animate().setDuration(shortAnimTime).alpha(step == STEP_LOADING ? 1 : 0)
+		        .setListener(new AnimatorListenerAdapter() {
+			        @Override
+			        public void onAnimationEnd(Animator animation) {
+				        mLoginStatusView.setVisibility(step == STEP_LOADING ? View.VISIBLE : View.GONE);
+			        }
+		        });
 
-			mLoginFormView.setVisibility(View.VISIBLE);
-			mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-				@Override
-				public void onAnimationEnd(Animator animation) {
-					mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-				}
-			});
-		} else {
-			// The ViewPropertyAnimator APIs are not available, so simply show
-			// and hide the relevant UI components.
-			mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-			mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-		}
+		mLoginFormView.setVisibility(View.VISIBLE);
+		mLoginFormView.animate().setDuration(shortAnimTime).alpha(step == STEP_LOGIN ? 1 : 0)
+		        .setListener(new AnimatorListenerAdapter() {
+			        @Override
+			        public void onAnimationEnd(Animator animation) {
+				        mLoginFormView.setVisibility(step == STEP_LOGIN ? View.VISIBLE : View.GONE);
+			        }
+		        });
+
+		mChallengeFormView.setVisibility(View.VISIBLE);
+		mChallengeFormView.animate().setDuration(shortAnimTime).alpha(step == STEP_CHALLENGE ? 1 : 0)
+		        .setListener(new AnimatorListenerAdapter() {
+			        @Override
+			        public void onAnimationEnd(Animator animation) {
+				        mChallengeFormView.setVisibility(step == STEP_CHALLENGE ? View.VISIBLE : View.GONE);
+			        }
+		        });
+
+	}
+
+	private void saveCredentials() {
+		user.setUsername(mEmail);
+		user.setPassword(mPassword);
+		usersManager.saveUserCredentials(user);
 	}
 
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	public class UserLoginTask extends AsyncTask<Void, Void, Exception> {
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-			MojangLoginManager loginManager = new MojangLoginManager();
-			
+		protected Exception doInBackground(Void... params) {
 			try {
-	            loginManager.loginWithCredentials(mEmail, mPassword);
-            } catch(InvalidMojangCredentialsException e) {
-            	toaster("Wrong credentials ;-;");
-	            return false;
-            } catch(ChallengeRequirementException e) {
-            	toaster("You need to answer the challenge ;-;");
-	            return false;
-            }
-			
-			toaster("Yay, logged in ^-^");
-			return true;
+				loginManager.loginWithCredentials(mEmail, mPassword);
+			} catch(Exception e) {
+				return e;
+			}
+
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(final Boolean success) {
+		protected void onPostExecute(final Exception ex) {
 			mAuthTask = null;
-			showProgress(false);
 
-			if(success) {
-				user.setUsername(mEmail);
-				user.setPassword(mPassword);
-				
-				usersManager.saveUserCredentials(user);
-				
+			if(ex == null) {
+				// no problem, save the credentials and close
+				Toast.makeText(MojangLoginActivity.this, "Yay, logged in ^-^", Toast.LENGTH_LONG).show();
+				saveCredentials();
 				finish();
-			} else {
+			} else if(ex instanceof InvalidMojangCredentialsException) {
+				// wrong username/password, try again
+				Toast.makeText(MojangLoginActivity.this, "Wrong credentials ;-;", Toast.LENGTH_LONG).show();
+
+				showProgress(STEP_LOGIN);
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
+			} else if(ex instanceof ChallengeRequirementException) {
+				// challenge required
+				Toast.makeText(MojangLoginActivity.this, "You need to answer the challenge ;-;", Toast.LENGTH_LONG).show();
+				mChallengeAnswerView.setText("");
+				showProgress(STEP_CHALLENGE);
+				saveCredentials();
+
+				challenge = ((ChallengeRequirementException) ex).getChallenge();
+				mChallengeQuestionView.setText(((ChallengeRequirementException) ex).getChallenge().getQuestion());
 			}
 		}
 
 		@Override
 		protected void onCancelled() {
 			mAuthTask = null;
-			showProgress(false);
+			showProgress(STEP_LOGIN);
 		}
-		
-		private void toaster(final String text) {
-			MojangLoginActivity.this.runOnUiThread(new Runnable() {
+	}
 
-				@Override
-                public void run() {
-					Toast.makeText(MojangLoginActivity.this, text, Toast.LENGTH_LONG).show();
-                }
-        		
-        	});
+	public class SumbitChallengeTask extends AsyncTask<Void, Void, Exception> {
+		@Override
+		protected Exception doInBackground(Void... params) {
+			try {
+				loginManager.validateChallenge(challenge, mChallengeAnswerView.getText().toString());
+			} catch(Exception e) {
+				return e;
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(final Exception ex) {
+			mAuthTask = null;
+
+			if(ex == null) {
+				Toast.makeText(MojangLoginActivity.this, "Yay, right answer. ^-^", Toast.LENGTH_LONG).show();
+				saveCredentials();
+				finish();
+			} else if(ex instanceof InvalidMojangChallengeAnswerException) {
+				Toast.makeText(MojangLoginActivity.this, ((InvalidMojangChallengeAnswerException) ex).getMessage(),
+				        Toast.LENGTH_LONG).show();
+				showProgress(STEP_LOGIN);
+			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			mAuthTask = null;
+			showProgress(STEP_CHALLENGE);
 		}
 	}
 }
