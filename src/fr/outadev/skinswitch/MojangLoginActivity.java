@@ -31,6 +31,8 @@ public class MojangLoginActivity extends Activity {
 	 */
 	private AsyncTask<Void, Void, Exception> mAuthTask = null;
 
+	private int step;
+
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
@@ -110,6 +112,44 @@ public class MojangLoginActivity extends Activity {
 		});
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+
+		if(user != null) {
+			savedInstanceState.putString("user:username", user.getUsername());
+			savedInstanceState.putString("user:password", user.getPassword());
+		}
+
+		if(challenge != null) {
+			savedInstanceState.putString("challenge:id", challenge.getId());
+			savedInstanceState.putString("challenge:question", challenge.getQuestion());
+			savedInstanceState.putString("challenge:auth", challenge.getAuthToken());
+			savedInstanceState.putString("challenge:answer", mChallengeAnswerView.getText().toString());
+		}
+
+		savedInstanceState.putInt("step", step);
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle bundle) {
+		super.onRestoreInstanceState(bundle);
+
+		user = new User(bundle.getString("user:username"), bundle.getString("user:password"));
+		
+		mEmail = user.getUsername();
+		mEmailView.setText(mEmail);
+		
+		mPassword = user.getPassword();
+		mPasswordView.setText(mPassword);
+		
+		challenge = new MojangLoginChallenge(bundle.getString("challenge:id"), bundle.getString("challenge:question"), bundle.getString("challenge:auth"));
+		mChallengeQuestionView.setText(challenge.getQuestion());
+		mChallengeAnswerView.setText(bundle.getString("challenge:answer"));
+		
+		showProgress(bundle.getInt("step", 0));
+	}
+
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -175,6 +215,7 @@ public class MojangLoginActivity extends Activity {
 	 */
 	private void showProgress(final int step) {
 		int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+		this.step = step;
 
 		mLoginStatusView.animate().setDuration(shortAnimTime).alpha(step == STEP_LOADING ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
@@ -199,7 +240,7 @@ public class MojangLoginActivity extends Activity {
 				        mChallengeFormView.setVisibility(step == STEP_CHALLENGE ? View.VISIBLE : View.GONE);
 			        }
 		        });
-		
+
 		switch(step) {
 			case STEP_LOGIN:
 				setTitle(R.string.title_activity_mojang_login);
