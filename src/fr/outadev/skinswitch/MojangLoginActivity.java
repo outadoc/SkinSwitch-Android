@@ -242,25 +242,22 @@ public class MojangLoginActivity extends Activity {
 
 			if(ex == null) {
 				// no problem, save the credentials and close
-				Toast.makeText(MojangLoginActivity.this, "Yay, logged in ^-^", Toast.LENGTH_LONG).show();
 				saveCredentials();
 				finish();
 			} else if(ex instanceof InvalidMojangCredentialsException) {
 				// wrong username/password, try again
-				Toast.makeText(MojangLoginActivity.this, "Wrong credentials ;-;", Toast.LENGTH_LONG).show();
-
 				showProgress(STEP_LOGIN);
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
 			} else if(ex instanceof ChallengeRequirementException) {
 				// challenge required
-				Toast.makeText(MojangLoginActivity.this, "You need to answer the challenge ;-;", Toast.LENGTH_LONG).show();
 				mChallengeAnswerView.setText("");
 				showProgress(STEP_CHALLENGE);
 				saveCredentials();
 
 				challenge = ((ChallengeRequirementException) ex).getChallenge();
 				mChallengeQuestionView.setText(((ChallengeRequirementException) ex).getChallenge().getQuestion());
+				mChallengeAnswerView.requestFocus();
 			}
 		}
 

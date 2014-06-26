@@ -1,7 +1,7 @@
 <resources>
 
     <string name="title_activity_mojang_login">Sign in to Mojang</string>
-    <string name="title_activity_mojang_loading">Logging in…</string>
+    <string name="title_activity_mojang_loading">Signing in to Mojang…</string>
     <string name="title_activity_mojang_challenge">Security Question</string>
 
     <!-- Strings related to login -->
