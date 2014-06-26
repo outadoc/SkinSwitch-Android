@@ -16,7 +16,7 @@ public class SkinsListFragment extends Fragment {
 		View view = inflater.inflate(R.layout.skin_list, container, false);
 		ArrayList<Skin> array = new ArrayList<Skin>();
 
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < 70; i++) {
 			array.add(new Skin());
 		}
 
