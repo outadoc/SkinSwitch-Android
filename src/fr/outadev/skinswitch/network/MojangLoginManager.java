@@ -57,12 +57,14 @@ public class MojangLoginManager {
 
 		String body = HttpRequest.post(BASE_URL + "/challenge").followRedirects(false).form(data).body();
 		String error = null;
-
+		
 		try {
 			JSONObject errorObject = (JSONObject) new JSONTokener(body).nextValue();
 
 			if(errorObject != null && errorObject.getString("error") != null) {
 				error = errorObject.getString("error").replaceAll("\\<.*?>", "");
+			} else {
+				error = body;
 			}
 		} catch(JSONException e) {
 			error = body;

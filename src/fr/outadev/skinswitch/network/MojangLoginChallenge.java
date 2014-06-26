@@ -18,7 +18,7 @@ public class MojangLoginChallenge {
 	public MojangLoginChallenge(String challengePage) {
 		Matcher matcher;
 
-		Pattern patternId = Pattern.compile("<input type=\"hidden\" name=\"questionId\" value=\"([0-9]+)\">");
+		Pattern patternId = Pattern.compile("<input type=\"hidden\" name=\"questionId\" value=\"([0-9]+)\"( /)?>");
 		Pattern patternQuestion = Pattern.compile("<label for=\"answer\">(.*)</label>");
 		Pattern patternAuthToken = Pattern.compile("<input type=\"hidden\" name=\"authenticityToken\" value=\"([0-9a-f]*)\">");
 
