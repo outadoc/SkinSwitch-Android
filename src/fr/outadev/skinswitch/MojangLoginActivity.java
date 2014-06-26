@@ -244,9 +244,11 @@ public class MojangLoginActivity extends Activity {
 		switch(step) {
 			case STEP_LOGIN:
 				setTitle(R.string.title_activity_mojang_login);
+				mEmailView.requestFocus();
 				break;
 			case STEP_CHALLENGE:
 				setTitle(R.string.title_activity_mojang_challenge);
+				mChallengeAnswerView.requestFocus();
 				break;
 			case STEP_LOADING:
 				setTitle(R.string.title_activity_mojang_loading);
@@ -289,7 +291,6 @@ public class MojangLoginActivity extends Activity {
 				// wrong username/password, try again
 				showProgress(STEP_LOGIN);
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
 			} else if(ex instanceof ChallengeRequirementException) {
 				// challenge required
 				mChallengeAnswerView.setText("");
@@ -298,7 +299,6 @@ public class MojangLoginActivity extends Activity {
 
 				challenge = ((ChallengeRequirementException) ex).getChallenge();
 				mChallengeQuestionView.setText(((ChallengeRequirementException) ex).getChallenge().getQuestion());
-				mChallengeAnswerView.requestFocus();
 			}
 		}
 
