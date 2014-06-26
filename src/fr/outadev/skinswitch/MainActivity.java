@@ -1,11 +1,10 @@
 package fr.outadev.skinswitch;
 
-import fr.outadev.skinswitch.network.NetworkHandler;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
-import android.widget.Toast;
+import fr.outadev.skinswitch.storage.UsersManager;
 
 public class MainActivity extends FragmentActivity {
 
@@ -14,19 +13,12 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		new AsyncTask<Void, Void, Boolean>() {
-			@Override
-			protected Boolean doInBackground(Void... params) {
-				NetworkHandler networkHandler = new NetworkHandler(MainActivity.this);
-				return Boolean.valueOf(networkHandler.checkMojangCredentials("testUser", "testPassword"));
-			}
-
-			@Override
-			protected void onPostExecute(Boolean result) {
-				Toast.makeText(MainActivity.this, result.toString(), Toast.LENGTH_LONG).show();
-			}
-
-		}.execute();
+		UsersManager usersManager = new UsersManager(this);
+		
+		if(!usersManager.userCreated()) {
+		    Intent intent = new Intent(this, MojangLoginActivity.class);
+		    startActivity(intent);
+		}
 	}
 
 	@Override
