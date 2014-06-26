@@ -31,7 +31,7 @@ public class MojangLoginActivity extends Activity {
 	 */
 	private AsyncTask<Void, Void, Exception> mAuthTask = null;
 
-	private int step;
+	private Step step;
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
@@ -54,10 +54,10 @@ public class MojangLoginActivity extends Activity {
 
 	private LoginChallenge challenge;
 	private MojangConnectionManager loginManager;
-
-	private static final int STEP_LOGIN = 0;
-	private static final int STEP_LOADING = 1;
-	private static final int STEP_CHALLENGE = 2;
+	
+	private enum Step {
+		LOGIN, LOADING, CHALLENGE
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,8 @@ public class MojangLoginActivity extends Activity {
 		user = usersManager.getUser();
 		challenge = null;
 		loginManager = new MojangConnectionManager();
+		
+		step = Step.LOGIN;
 
 		// Set up the login form.
 		mEmail = user.getUsername();
@@ -79,14 +81,17 @@ public class MojangLoginActivity extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setText(mPassword);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			
 			@Override
 			public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 				if(id == R.id.login || id == EditorInfo.IME_NULL) {
 					attemptLogin();
 					return true;
 				}
+				
 				return false;
 			}
+			
 		});
 
 		mLoginFormView = findViewById(R.id.login_form);
@@ -94,10 +99,12 @@ public class MojangLoginActivity extends Activity {
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
 		findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+			
 			@Override
 			public void onClick(View view) {
 				attemptLogin();
 			}
+			
 		});
 
 		mChallengeFormView = findViewById(R.id.challenge_form);
@@ -128,7 +135,8 @@ public class MojangLoginActivity extends Activity {
 			savedInstanceState.putString("challenge:answer", mChallengeAnswerView.getText().toString());
 		}
 
-		savedInstanceState.putInt("step", step);
+		savedInstanceState.putSerializable("step", step);
+
 	}
 
 	@Override
@@ -148,7 +156,7 @@ public class MojangLoginActivity extends Activity {
 		mChallengeQuestionView.setText(challenge.getQuestion());
 		mChallengeAnswerView.setText(bundle.getString("challenge:answer"));
 
-		showProgress(bundle.getInt("step", 0));
+		showProgress((Step) bundle.getSerializable("step"));
 	}
 
 	/**
@@ -194,7 +202,7 @@ public class MojangLoginActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			showProgress(STEP_LOADING);
+			showProgress(Step.LOADING);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);
 		}
@@ -206,7 +214,7 @@ public class MojangLoginActivity extends Activity {
 		}
 
 		mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-		showProgress(STEP_LOADING);
+		showProgress(Step.LOADING);
 		mAuthTask = new SumbitChallengeTask();
 		mAuthTask.execute((Void) null);
 	}
@@ -214,44 +222,44 @@ public class MojangLoginActivity extends Activity {
 	/**
 	 * Shows the progress UI and hides the login form.
 	 */
-	private void showProgress(final int step) {
+	private void showProgress(final Step step) {
 		int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 		this.step = step;
 
-		mLoginStatusView.animate().setDuration(shortAnimTime).alpha(step == STEP_LOADING ? 1 : 0)
+		mLoginStatusView.animate().setDuration(shortAnimTime).alpha(step == Step.LOADING ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
 			        @Override
 			        public void onAnimationEnd(Animator animation) {
-				        mLoginStatusView.setVisibility(step == STEP_LOADING ? View.VISIBLE : View.GONE);
+				        mLoginStatusView.setVisibility(step == Step.LOADING ? View.VISIBLE : View.GONE);
 			        }
 		        });
 
-		mLoginFormView.animate().setDuration(shortAnimTime).alpha(step == STEP_LOGIN ? 1 : 0)
+		mLoginFormView.animate().setDuration(shortAnimTime).alpha(step == Step.LOGIN ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
 			        @Override
 			        public void onAnimationEnd(Animator animation) {
-				        mLoginFormView.setVisibility(step == STEP_LOGIN ? View.VISIBLE : View.GONE);
+				        mLoginFormView.setVisibility(step == Step.LOGIN ? View.VISIBLE : View.GONE);
 			        }
 		        });
 
-		mChallengeFormView.animate().setDuration(shortAnimTime).alpha(step == STEP_CHALLENGE ? 1 : 0)
+		mChallengeFormView.animate().setDuration(shortAnimTime).alpha(step == Step.CHALLENGE ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
 			        @Override
 			        public void onAnimationEnd(Animator animation) {
-				        mChallengeFormView.setVisibility(step == STEP_CHALLENGE ? View.VISIBLE : View.GONE);
+				        mChallengeFormView.setVisibility(step == Step.CHALLENGE ? View.VISIBLE : View.GONE);
 			        }
 		        });
 
 		switch(step) {
-			case STEP_LOGIN:
+			case LOGIN:
 				setTitle(R.string.title_activity_mojang_login);
 				mEmailView.requestFocus();
 				break;
-			case STEP_CHALLENGE:
+			case CHALLENGE:
 				setTitle(R.string.title_activity_mojang_challenge);
 				mChallengeAnswerView.requestFocus();
 				break;
-			case STEP_LOADING:
+			case LOADING:
 				setTitle(R.string.title_activity_mojang_loading);
 				break;
 		}
@@ -290,12 +298,12 @@ public class MojangLoginActivity extends Activity {
 				finish();
 			} else if(ex instanceof InvalidMojangCredentialsException) {
 				// wrong username/password, try again
-				showProgress(STEP_LOGIN);
+				showProgress(Step.LOGIN);
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 			} else if(ex instanceof ChallengeRequirementException) {
 				// challenge required
 				mChallengeAnswerView.setText("");
-				showProgress(STEP_CHALLENGE);
+				showProgress(Step.CHALLENGE);
 				saveCredentials();
 
 				challenge = ((ChallengeRequirementException) ex).getChallenge();
@@ -306,7 +314,7 @@ public class MojangLoginActivity extends Activity {
 		@Override
 		protected void onCancelled() {
 			mAuthTask = null;
-			showProgress(STEP_LOGIN);
+			showProgress(Step.LOGIN);
 		}
 	}
 
@@ -333,14 +341,14 @@ public class MojangLoginActivity extends Activity {
 			} else {
 				Toast.makeText(MojangLoginActivity.this, ((InvalidMojangChallengeAnswerException) ex).getMessage(),
 				        Toast.LENGTH_LONG).show();
-				showProgress(STEP_LOGIN);
+				showProgress(Step.LOGIN);
 			}
 		}
 
 		@Override
 		protected void onCancelled() {
 			mAuthTask = null;
-			showProgress(STEP_CHALLENGE);
+			showProgress(Step.CHALLENGE);
 		}
 	}
 }
