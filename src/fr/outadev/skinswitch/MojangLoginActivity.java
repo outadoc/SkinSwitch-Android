@@ -12,11 +12,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import fr.outadev.skinswitch.network.ChallengeRequirementException;
-import fr.outadev.skinswitch.network.InvalidMojangChallengeAnswerException;
-import fr.outadev.skinswitch.network.InvalidMojangCredentialsException;
-import fr.outadev.skinswitch.network.LoginChallenge;
-import fr.outadev.skinswitch.network.MojangLoginManager;
+import fr.outadev.skinswitch.network.MojangConnectionManager;
+import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
+import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
+import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
+import fr.outadev.skinswitch.network.login.LoginChallenge;
 import fr.outadev.skinswitch.storage.User;
 import fr.outadev.skinswitch.storage.UsersManager;
 
@@ -53,7 +53,7 @@ public class MojangLoginActivity extends Activity {
 	private User user;
 
 	private LoginChallenge challenge;
-	private MojangLoginManager loginManager;
+	private MojangConnectionManager loginManager;
 
 	private static final int STEP_LOGIN = 0;
 	private static final int STEP_LOADING = 1;
@@ -68,7 +68,7 @@ public class MojangLoginActivity extends Activity {
 		usersManager = new UsersManager(this);
 		user = usersManager.getUser();
 		challenge = null;
-		loginManager = new MojangLoginManager();
+		loginManager = new MojangConnectionManager();
 
 		// Set up the login form.
 		mEmail = user.getUsername();

@@ -16,13 +16,24 @@ import android.util.Log;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
+import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
+import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
+import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
+import fr.outadev.skinswitch.network.login.LoginChallenge;
+import fr.outadev.skinswitch.network.upload.SkinUploadException;
 import fr.outadev.skinswitch.storage.User;
 
-public class MojangLoginManager {
+/**
+ * Manages the connection to minecraft.net.
+ * Allows you to sign in successfully, and send a skin.
+ * @author outadoc
+ *
+ */
+public class MojangConnectionManager {
 
 	private static final String BASE_URL = "https://minecraft.net";
 
-	public MojangLoginManager() {
+	public MojangConnectionManager() {
 		CookieManager cookieManager = new CookieManager();
 		CookieHandler.setDefault(cookieManager);
 	}

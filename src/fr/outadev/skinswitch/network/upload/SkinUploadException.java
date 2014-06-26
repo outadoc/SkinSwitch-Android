@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.network;
+package fr.outadev.skinswitch.network.upload;
 
 public class SkinUploadException extends Exception {
 

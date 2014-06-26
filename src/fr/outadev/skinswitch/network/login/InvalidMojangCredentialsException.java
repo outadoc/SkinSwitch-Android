@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.network;
+package fr.outadev.skinswitch.network.login;
 
 public class InvalidMojangCredentialsException extends Exception {
 

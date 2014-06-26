@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.network;
+package fr.outadev.skinswitch.network.login;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
