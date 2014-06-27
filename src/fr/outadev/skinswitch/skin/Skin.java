@@ -1,6 +1,14 @@
 package fr.outadev.skinswitch.skin;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * Represents a stored skin, as it is in the database.
@@ -14,6 +22,8 @@ public class Skin {
 	private String name;
 	private String description;
 	private Date creationDate;
+
+	public static final String SKIN_PATH = "skin/skin";
 
 	/**
 	 * Creates a new skin.
@@ -66,4 +76,37 @@ public class Skin {
 		this.creationDate = creationDate;
 	}
 
+	public String getRawSkinPath(Context context) {
+		return context.getFilesDir() + "/" + SKIN_PATH + "/" + id + ".png";
+	}
+
+	private Bitmap getBitmapFromDisk(String path) throws FileNotFoundException {
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+		Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+
+		if(bitmap == null) {
+			throw new FileNotFoundException("Could not find skin file for ID #" + id + " (path: " + path + ")");
+		}
+
+		return bitmap;
+	}
+
+	private void saveBitmapToDisk(Bitmap bitmap, String path) throws IOException {
+		FileOutputStream fos = new FileOutputStream(new File(path));
+		bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+		fos.close();
+	}
+
+	public File getRawSkinFile(Context context) {
+		return new File(getRawSkinPath(context));
+	}
+
+	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
+		return getBitmapFromDisk(getRawSkinPath(context));
+	}
+
+	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
+		saveBitmapToDisk(bitmap, getRawSkinPath(context));
+	}
 }
