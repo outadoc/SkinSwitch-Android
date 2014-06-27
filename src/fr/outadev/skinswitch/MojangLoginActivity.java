@@ -12,6 +12,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dd.processbutton.iml.ActionProcessButton;
+import com.dd.processbutton.iml.ActionProcessButton.Mode;
+
 import fr.outadev.skinswitch.network.MojangConnectionManager;
 import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
@@ -43,11 +47,12 @@ public class MojangLoginActivity extends Activity {
 	private EditText mChallengeAnswerView;
 
 	private View mLoginFormView;
-	private View mLoginStatusView;
 	private View mChallengeFormView;
 
-	private TextView mLoginStatusMessageView;
 	private TextView mChallengeQuestionView;
+
+	private ActionProcessButton mLoginButton;
+	private ActionProcessButton mChallengeButton;
 
 	private UsersManager usersManager;
 	private User user;
@@ -55,8 +60,10 @@ public class MojangLoginActivity extends Activity {
 	private LoginChallenge challenge;
 	private MojangConnectionManager loginManager;
 	
+	private static final int BUTTON_STATUS_LENGTH = 700;
+
 	private enum Step {
-		LOGIN, LOADING, CHALLENGE
+		LOGIN, CHALLENGE
 	};
 
 	@Override
@@ -69,7 +76,7 @@ public class MojangLoginActivity extends Activity {
 		user = usersManager.getUser();
 		challenge = null;
 		loginManager = new MojangConnectionManager();
-		
+
 		step = Step.LOGIN;
 
 		// Set up the login form.
@@ -81,38 +88,44 @@ public class MojangLoginActivity extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setText(mPassword);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			
+
 			@Override
 			public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 				if(id == R.id.login || id == EditorInfo.IME_NULL) {
 					attemptLogin();
 					return true;
 				}
-				
+
 				return false;
 			}
-			
+
 		});
 
 		mLoginFormView = findViewById(R.id.login_form);
-		mLoginStatusView = findViewById(R.id.login_status);
-		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
-		findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-			
+		mLoginButton = (ActionProcessButton) findViewById(R.id.sign_in_button);
+		mLoginButton.setMode(Mode.ENDLESS);
+		mLoginButton.setProgress(0);
+
+		mLoginButton.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View view) {
 				saveCredentials();
 				attemptLogin();
 			}
-			
+
 		});
 
 		mChallengeFormView = findViewById(R.id.challenge_form);
 		mChallengeQuestionView = (TextView) findViewById(R.id.lbl_challenge_question);
 		mChallengeAnswerView = (EditText) findViewById(R.id.txt_challenge_answer);
 
-		findViewById(R.id.b_submit_challenge).setOnClickListener(new View.OnClickListener() {
+		mChallengeButton = (ActionProcessButton) findViewById(R.id.b_submit_challenge);
+		mChallengeButton.setMode(Mode.ENDLESS);
+		mChallengeButton.setProgress(0);
+
+		mChallengeButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				attemptSubmitChallenge();
@@ -200,10 +213,8 @@ public class MojangLoginActivity extends Activity {
 			// form field with an error.
 			focusView.requestFocus();
 		} else {
-			// Show a progress spinner, and kick off a background task to
-			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			showProgress(Step.LOADING);
+			saveCredentials();
+			mLoginButton.setProgress(1);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);
 		}
@@ -214,8 +225,8 @@ public class MojangLoginActivity extends Activity {
 			return;
 		}
 
-		mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-		showProgress(Step.LOADING);
+		saveCredentials();
+		mChallengeButton.setProgress(1);
 		mAuthTask = new SumbitChallengeTask();
 		mAuthTask.execute((Void) null);
 	}
@@ -227,13 +238,8 @@ public class MojangLoginActivity extends Activity {
 		int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 		this.step = step;
 
-		mLoginStatusView.animate().setDuration(shortAnimTime).alpha(step == Step.LOADING ? 1 : 0)
-		        .setListener(new AnimatorListenerAdapter() {
-			        @Override
-			        public void onAnimationEnd(Animator animation) {
-				        mLoginStatusView.setVisibility(step == Step.LOADING ? View.VISIBLE : View.GONE);
-			        }
-		        });
+		mLoginButton.setProgress(0);
+		mChallengeButton.setProgress(0);
 
 		mLoginFormView.animate().setDuration(shortAnimTime).alpha(step == Step.LOGIN ? 1 : 0)
 		        .setListener(new AnimatorListenerAdapter() {
@@ -259,9 +265,6 @@ public class MojangLoginActivity extends Activity {
 			case CHALLENGE:
 				setTitle(R.string.title_activity_mojang_challenge);
 				mChallengeAnswerView.requestFocus();
-				break;
-			case LOADING:
-				setTitle(R.string.title_activity_mojang_loading);
 				break;
 		}
 
@@ -296,9 +299,17 @@ public class MojangLoginActivity extends Activity {
 			if(ex == null) {
 				// no problem, save the credentials and close
 				usersManager.setLoggedInSuccessfully(true);
-				finish();
+				mLoginButton.setProgress(100);
+				
+				new android.os.Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						finish();
+					}
+				}, BUTTON_STATUS_LENGTH);
 			} else if(ex instanceof InvalidMojangCredentialsException) {
 				// wrong username/password, try again
+				mLoginButton.setProgress(-1);
 				showProgress(Step.LOGIN);
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 			} else if(ex instanceof ChallengeRequirementException) {
@@ -334,14 +345,32 @@ public class MojangLoginActivity extends Activity {
 		protected void onPostExecute(final Exception ex) {
 			mAuthTask = null;
 
+			// if everything went as expected, display a success message on the
+			// button, and close the activity a bit later
 			if(ex == null) {
-				Toast.makeText(MojangLoginActivity.this, "Yay, right answer. ^-^", Toast.LENGTH_LONG).show();
+				mChallengeButton.setProgress(100);
 				saveCredentials();
-				finish();
+
+				new android.os.Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						finish();
+					}
+				}, BUTTON_STATUS_LENGTH);
+
 			} else {
+				// if there was a problem, display it in a toast, put the button
+				// in fail mode and show the login form a bit later
 				Toast.makeText(MojangLoginActivity.this, ((InvalidMojangChallengeAnswerException) ex).getMessage(),
 				        Toast.LENGTH_LONG).show();
-				showProgress(Step.LOGIN);
+				mChallengeButton.setProgress(-1);
+
+				new android.os.Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						showProgress(Step.LOGIN);
+					}
+				}, BUTTON_STATUS_LENGTH);
 			}
 		}
 

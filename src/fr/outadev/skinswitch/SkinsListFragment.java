@@ -15,12 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
+import fr.outadev.skinswitch.storage.UsersManager;
 
 public class SkinsListFragment extends Fragment {
 
 	private SkinsDatabase db;
+	private UsersManager usersManager;
+	
 	private GridView gridView;
 	private SkinsListAdapter skinsAdapter;
 	private List<Skin> skinsList;
@@ -31,6 +35,8 @@ public class SkinsListFragment extends Fragment {
 		setHasOptionsMenu(true);
 
 		db = new SkinsDatabase(getActivity());
+		usersManager = new UsersManager(getActivity());
+		
 		gridView = (GridView) view.findViewById(R.id.grid_view);
 		skinsList = new ArrayList<Skin>();
 		skinsAdapter = new SkinsListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
@@ -39,6 +45,16 @@ public class SkinsListFragment extends Fragment {
 		refreshSkins();
 
 		return view;
+	}
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+	    super.onPrepareOptionsMenu(menu);
+	    
+	    boolean isLoggedIn = usersManager.isLoggedInSuccessfully();
+	    
+	    menu.findItem(R.id.action_login).setVisible(!isLoggedIn);
+	    menu.findItem(R.id.action_logout).setVisible(isLoggedIn);
 	}
 
 	@Override
@@ -50,6 +66,9 @@ public class SkinsListFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch(item.getItemId()) {
+			case R.id.action_logout:
+				usersManager.setLoggedInSuccessfully(false);
+				Toast.makeText(getActivity(), "Logged out.", Toast.LENGTH_SHORT).show();
 			case R.id.action_login:
 				Intent intent = new Intent(getActivity(), MojangLoginActivity.class);
 				startActivity(intent);

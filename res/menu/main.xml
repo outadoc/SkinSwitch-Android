@@ -10,10 +10,15 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-    
     <item
         android:id="@+id/action_login"
         android:showAsAction="never"
-        android:title="@string/action_login"/>
+        android:title="@string/action_login"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_logout"
+        android:showAsAction="never"
+        android:title="@string/action_logout"
+        android:visible="false"/>
 
 </menu>
