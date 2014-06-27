@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -116,6 +117,8 @@ public class MojangLoginActivity extends Activity {
 			}
 
 		});
+		
+		((TextView) findViewById(R.id.lbl_forgot_passwd)).setMovementMethod(LinkMovementMethod.getInstance());
 
 		mChallengeFormView = findViewById(R.id.challenge_form);
 		mChallengeQuestionView = (TextView) findViewById(R.id.lbl_challenge_question);
