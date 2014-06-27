@@ -22,8 +22,8 @@ import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
 import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
 import fr.outadev.skinswitch.network.login.LoginChallenge;
-import fr.outadev.skinswitch.storage.User;
-import fr.outadev.skinswitch.storage.UsersManager;
+import fr.outadev.skinswitch.user.User;
+import fr.outadev.skinswitch.user.UsersManager;
 
 /**
  * Activity which displays a login screen to the user, offering registration as

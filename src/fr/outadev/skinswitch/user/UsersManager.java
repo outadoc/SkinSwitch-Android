@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.storage;
+package fr.outadev.skinswitch.user;
 
 import simbio.se.sau.Encryption;
 import android.content.Context;

@@ -20,7 +20,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
-import fr.outadev.skinswitch.storage.UsersManager;
+import fr.outadev.skinswitch.user.UsersManager;
 
 public class SkinsListFragment extends Fragment {
 
