@@ -1,7 +1,6 @@
 package fr.outadev.skinswitch;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -97,9 +96,9 @@ public class SkinsListFragment extends Fragment {
 				startActivity(intent);
 				return true;
 			case R.id.action_add:
-				SkinsDatabase db = new SkinsDatabase(getActivity());
+				/*SkinsDatabase db = new SkinsDatabase(getActivity());
 				db.addSkin(new Skin(-1, "Test", "Hihihi description", new Date()));
-				refreshSkins();
+				refreshSkins();*/
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

@@ -23,8 +23,6 @@ public class Skin {
 	private String description;
 	private Date creationDate;
 
-	public static final String SKIN_PATH = "skin/skin";
-
 	/**
 	 * Creates a new skin.
 	 * 
@@ -76,13 +74,14 @@ public class Skin {
 		this.creationDate = creationDate;
 	}
 
-	public String getRawSkinPath(Context context) {
-		return context.getFilesDir() + "/" + SKIN_PATH + "/" + id + ".png";
+	public String getRawSkinFileName(Context context) {
+		return "raw_" + id + ".png";
 	}
 
-	private Bitmap getBitmapFromDisk(String path) throws FileNotFoundException {
+	private Bitmap getBitmapFromDisk(String path, Context context) throws FileNotFoundException {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+		options.inScaled = false;
 		Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 
 		if(bitmap == null) {
@@ -92,21 +91,22 @@ public class Skin {
 		return bitmap;
 	}
 
-	private void saveBitmapToDisk(Bitmap bitmap, String path) throws IOException {
-		FileOutputStream fos = new FileOutputStream(new File(path));
+	private void saveBitmapToDisk(Bitmap bitmap, String filename, Context context) throws IOException {
+		FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
 		bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
 		fos.close();
+		System.out.println(filename);
 	}
 
 	public File getRawSkinFile(Context context) {
-		return new File(getRawSkinPath(context));
+		return new File(context.getFilesDir() + "/" + getRawSkinFileName(context));
 	}
 
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
-		return getBitmapFromDisk(getRawSkinPath(context));
+		return getBitmapFromDisk(context.getFilesDir() + "/" + getRawSkinFileName(context), context);
 	}
 
 	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
-		saveBitmapToDisk(bitmap, getRawSkinPath(context));
+		saveBitmapToDisk(bitmap, getRawSkinFileName(context), context);
 	}
 }
