@@ -14,7 +14,7 @@ public class MainActivity extends FragmentActivity {
 
 		UsersManager usersManager = new UsersManager(this);
 
-		if(!usersManager.userCreated()) {
+		if(!usersManager.isLoggedInSuccessfully()) {
 			Intent intent = new Intent(this, MojangLoginActivity.class);
 			startActivity(intent);
 		}

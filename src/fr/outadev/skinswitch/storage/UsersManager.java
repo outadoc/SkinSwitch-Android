@@ -17,6 +17,7 @@ public class UsersManager {
 
 	public static final String USERNAME_PREFS_ID = "mojang:username";
 	public static final String PASSWORD_PREFS_ID = "mojang:password";
+	public static final String LOGGED_IN_PREFS_ID = "isloggedin";
 
 	private static final String STORAGE_KEY = "thiskeyissofuckinglongIhopenobodywilleverfinditlulz1234";
 
@@ -35,11 +36,11 @@ public class UsersManager {
 	}
 
 	/**
-	 * Check if the user has already logged in.
+	 * Check if the credentials are set.
 	 * 
 	 * @return true if his credentials exist, false if not.
 	 */
-	public boolean userCreated() {
+	private boolean doCredentialsExist() {
 		return prefs.contains(USERNAME_PREFS_ID) && prefs.contains(PASSWORD_PREFS_ID);
 	}
 
@@ -74,6 +75,36 @@ public class UsersManager {
 		editor.putString(PASSWORD_PREFS_ID, encryption.encrypt(STORAGE_KEY, user.getPassword()));
 
 		editor.commit();
+	}
+
+	/**
+	 * Set if the user successfully logged in to the website or not.
+	 * 
+	 * @param loggedIn
+	 *            true if he/she logged in, false if he/she didn't.
+	 */
+	public void setLoggedInSuccessfully(boolean loggedIn) {
+		SharedPreferences.Editor editor = prefs.edit();
+
+		if(!doCredentialsExist()) {
+			loggedIn = false;
+		}
+
+		editor.putBoolean(LOGGED_IN_PREFS_ID, loggedIn);
+		editor.commit();
+	}
+
+	/**
+	 * Did the user log in successfully already?
+	 * 
+	 * @return true if he/she did, else false.
+	 */
+	public boolean isLoggedInSuccessfully() {
+		if(!doCredentialsExist()) {
+			return false;
+		}
+
+		return prefs.getBoolean(LOGGED_IN_PREFS_ID, false);
 	}
 
 }

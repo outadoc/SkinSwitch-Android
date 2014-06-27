@@ -102,6 +102,7 @@ public class MojangLoginActivity extends Activity {
 			
 			@Override
 			public void onClick(View view) {
+				saveCredentials();
 				attemptLogin();
 			}
 			
@@ -294,7 +295,7 @@ public class MojangLoginActivity extends Activity {
 
 			if(ex == null) {
 				// no problem, save the credentials and close
-				saveCredentials();
+				usersManager.setLoggedInSuccessfully(true);
 				finish();
 			} else if(ex instanceof InvalidMojangCredentialsException) {
 				// wrong username/password, try again
@@ -304,7 +305,6 @@ public class MojangLoginActivity extends Activity {
 				// challenge required
 				mChallengeAnswerView.setText("");
 				showProgress(Step.CHALLENGE);
-				saveCredentials();
 
 				challenge = ((ChallengeRequirementException) ex).getChallenge();
 				mChallengeQuestionView.setText(((ChallengeRequirementException) ex).getChallenge().getQuestion());
