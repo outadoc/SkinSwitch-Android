@@ -60,7 +60,7 @@ public class MojangLoginActivity extends Activity {
 	private LoginChallenge challenge;
 	private MojangConnectionManager loginManager;
 	
-	private static final int BUTTON_STATUS_LENGTH = 700;
+	private static final int BUTTON_STATUS_DELAY = 700;
 
 	private enum Step {
 		LOGIN, CHALLENGE
@@ -306,7 +306,7 @@ public class MojangLoginActivity extends Activity {
 					public void run() {
 						finish();
 					}
-				}, BUTTON_STATUS_LENGTH);
+				}, BUTTON_STATUS_DELAY);
 			} else if(ex instanceof InvalidMojangCredentialsException) {
 				// wrong username/password, try again
 				mLoginButton.setProgress(-1);
@@ -356,7 +356,7 @@ public class MojangLoginActivity extends Activity {
 					public void run() {
 						finish();
 					}
-				}, BUTTON_STATUS_LENGTH);
+				}, BUTTON_STATUS_DELAY);
 
 			} else {
 				// if there was a problem, display it in a toast, put the button
@@ -370,7 +370,7 @@ public class MojangLoginActivity extends Activity {
 					public void run() {
 						showProgress(Step.LOGIN);
 					}
-				}, BUTTON_STATUS_LENGTH);
+				}, BUTTON_STATUS_DELAY);
 			}
 		}
 
