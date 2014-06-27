@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -104,7 +103,7 @@ public class MojangConnectionManager {
 			} else {
 				error = body;
 			}
-		} catch(JSONException e) {
+		} catch(Exception e) {
 			error = body;
 		}
 
