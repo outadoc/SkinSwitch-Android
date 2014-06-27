@@ -100,22 +100,22 @@ public class SkinsListFragment extends Fragment {
 				startActivity(intent);
 				return true;
 			case R.id.action_add:
-				//that's just testing stuff to add skins to the database easily
+				// that's just testing stuff to add skins to the database easily
 				SkinsDatabase db = new SkinsDatabase(getActivity());
 				Skin newSkin = new Skin(-1, "Test", "Hihihi description", new Date());
 				db.addSkin(newSkin);
-				
-				//create a fake skin
+
+				// create a fake skin
 				try {
 					BitmapFactory.Options opt = new BitmapFactory.Options();
 					opt.inScaled = false;
 					Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.test_skin_outadoc, opt);
-	               
+
 					newSkin.saveRawSkinBitmap(getActivity(), btmp);
-                } catch(IOException e) {
-	                e.printStackTrace();
-                }
-				
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+
 				refreshSkins();
 				return true;
 			default:

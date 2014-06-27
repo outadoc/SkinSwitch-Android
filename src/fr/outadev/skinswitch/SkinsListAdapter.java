@@ -11,8 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.outadev.skinswitch.skin.Skin;
-import fr.outadev.skinswitch.skin.SkinRenderer;
-import fr.outadev.skinswitch.skin.SkinRenderer.Side;
 
 public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
@@ -35,8 +33,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 		skinTitle.setText(skin.getName());
 		
 		try {
-	        skinView.setImageBitmap(SkinRenderer.getCroppedHead(SkinRenderer.getSkinPreview(skin.getRawSkinBitmap(getContext()),
-	                Side.FRONT, 19)));
+	        skinView.setImageBitmap(skin.getSkinHeadBitmap(getContext()));
         } catch(FileNotFoundException e) {
 	        skinView.setImageResource(R.drawable.broken_image);
         }
