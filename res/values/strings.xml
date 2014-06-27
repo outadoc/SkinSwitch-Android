@@ -6,8 +6,9 @@
     <string name="action_add">Add</string>
     <string name="action_login">Login</string>
     <string name="action_logout">Logout</string>
-    
-    <string name="prompt_answer">Answer</string>
-    <string name="submit">Submit</string>
+    <string name="dialog_logout_title">Log Out</string>
+    <string name="dialog_logout_message">Do you really want to log out of your Minecraft account?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 </resources>

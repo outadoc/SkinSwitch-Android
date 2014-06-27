@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,7 +26,7 @@ public class SkinsListFragment extends Fragment {
 
 	private SkinsDatabase db;
 	private UsersManager usersManager;
-	
+
 	private GridView gridView;
 	private SkinsListAdapter skinsAdapter;
 	private List<Skin> skinsList;
@@ -36,7 +38,7 @@ public class SkinsListFragment extends Fragment {
 
 		db = new SkinsDatabase(getActivity());
 		usersManager = new UsersManager(getActivity());
-		
+
 		gridView = (GridView) view.findViewById(R.id.grid_view);
 		skinsList = new ArrayList<Skin>();
 		skinsAdapter = new SkinsListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
@@ -46,15 +48,15 @@ public class SkinsListFragment extends Fragment {
 
 		return view;
 	}
-	
+
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
-	    super.onPrepareOptionsMenu(menu);
-	    
-	    boolean isLoggedIn = usersManager.isLoggedInSuccessfully();
-	    
-	    menu.findItem(R.id.action_login).setVisible(!isLoggedIn);
-	    menu.findItem(R.id.action_logout).setVisible(isLoggedIn);
+		super.onPrepareOptionsMenu(menu);
+
+		boolean isLoggedIn = usersManager.isLoggedInSuccessfully();
+
+		menu.findItem(R.id.action_login).setVisible(!isLoggedIn);
+		menu.findItem(R.id.action_logout).setVisible(isLoggedIn);
 	}
 
 	@Override
@@ -66,10 +68,31 @@ public class SkinsListFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch(item.getItemId()) {
+
 			case R.id.action_logout:
-				usersManager.setLoggedInSuccessfully(false);
-				Toast.makeText(getActivity(), "Logged out.", Toast.LENGTH_SHORT).show();
+				// if we want to log out
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle(R.string.dialog_logout_title).setMessage(R.string.dialog_logout_message);
+
+				builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						usersManager.setLoggedInSuccessfully(false);
+						Toast.makeText(getActivity(), "Logged out.", Toast.LENGTH_SHORT).show();
+					}
+				});
+
+				builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+					}
+				});
+
+				builder.create().show();
+				return true;
 			case R.id.action_login:
+				// if we want to log in
 				Intent intent = new Intent(getActivity(), MojangLoginActivity.class);
 				startActivity(intent);
 				return true;
