@@ -61,7 +61,7 @@ public class MojangLoginActivity extends Activity {
 	private LoginChallenge challenge;
 	private MojangConnectionManager loginManager;
 	
-	private static final int BUTTON_STATUS_DELAY = 700;
+	private static final int BUTTON_STATUS_DELAY = 1000;
 
 	private enum Step {
 		LOGIN, CHALLENGE
