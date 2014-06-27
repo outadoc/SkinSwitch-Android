@@ -93,10 +93,11 @@ public class ActionProcessButton extends ProcessButton {
         mColor4 = color4;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void drawProgress(Canvas canvas) {
         if(getBackground() != getNormalDrawable()) {
-            setBackgroundDrawable(getNormalDrawable());
+        	setBackgroundDrawable(getNormalDrawable());
         }
 
         switch (mMode) {

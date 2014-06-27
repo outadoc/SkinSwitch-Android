@@ -40,9 +40,9 @@
                 android:id="@+id/lbl_forgot_passwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/forgot_passwd"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/forgot_passwd"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <com.dd.processbutton.iml.ActionProcessButton
@@ -59,9 +59,9 @@
                 custom:pb_colorNormal="@color/blue_normal"
                 custom:pb_colorPressed="@color/blue_pressed"
                 custom:pb_colorProgress="@color/purple_progress"
-                custom:pb_textComplete="Success"
-                custom:pb_textError="Error"
-                custom:pb_textProgress="Loading" />
+                custom:pb_textComplete="@string/button_success"
+                custom:pb_textError="@string/button_error"
+                custom:pb_textProgress="@string/button_loading" />
         </LinearLayout>
     </ScrollView>
 
@@ -91,14 +91,14 @@
                 android:inputType="textVisiblePassword"
                 android:maxLines="1"
                 android:singleLine="true" />
-            
+
             <TextView
                 android:id="@+id/lbl_challenge_help"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/challenge_help"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/challenge_help"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <com.dd.processbutton.iml.ActionProcessButton
@@ -115,9 +115,9 @@
                 custom:pb_colorNormal="@color/blue_normal"
                 custom:pb_colorPressed="@color/blue_pressed"
                 custom:pb_colorProgress="@color/purple_progress"
-                custom:pb_textComplete="Success"
-                custom:pb_textError="Error"
-                custom:pb_textProgress="Loading" />
+                custom:pb_textComplete="@string/button_success"
+                custom:pb_textError="@string/button_error"
+                custom:pb_textProgress="@string/button_loading" />
         </LinearLayout>
     </ScrollView>
 
