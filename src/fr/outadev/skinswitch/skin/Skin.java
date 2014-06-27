@@ -41,6 +41,10 @@ public class Skin {
 		this.description = description;
 		this.creationDate = creationDate;
 	}
+	
+	public Skin(String name, String description, Date creationDate) {
+		this(-1, name, description, creationDate);
+	}
 
 	public int getId() {
 		return id;

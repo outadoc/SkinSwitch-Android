@@ -1,11 +1,15 @@
 package fr.outadev.skinswitch;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -96,9 +100,23 @@ public class SkinsListFragment extends Fragment {
 				startActivity(intent);
 				return true;
 			case R.id.action_add:
-				/*SkinsDatabase db = new SkinsDatabase(getActivity());
-				db.addSkin(new Skin(-1, "Test", "Hihihi description", new Date()));
-				refreshSkins();*/
+				//that's just testing stuff to add skins to the database easily
+				SkinsDatabase db = new SkinsDatabase(getActivity());
+				Skin newSkin = new Skin(-1, "Test", "Hihihi description", new Date());
+				db.addSkin(newSkin);
+				
+				//create a fake skin
+				try {
+					BitmapFactory.Options opt = new BitmapFactory.Options();
+					opt.inScaled = false;
+					Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.test_skin_outadoc, opt);
+	               
+					newSkin.saveRawSkinBitmap(getActivity(), btmp);
+                } catch(IOException e) {
+	                e.printStackTrace();
+                }
+				
+				refreshSkins();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

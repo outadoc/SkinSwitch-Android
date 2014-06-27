@@ -38,8 +38,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 	        skinView.setImageBitmap(SkinRenderer.getCroppedHead(SkinRenderer.getSkinPreview(skin.getRawSkinBitmap(getContext()),
 	                Side.FRONT, 19)));
         } catch(FileNotFoundException e) {
-	        e.printStackTrace();
-	        skinView.setImageResource(R.drawable.ic_launcher);
+	        skinView.setImageResource(R.drawable.broken_image);
         }
 
 		return convertView;

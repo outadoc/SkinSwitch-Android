@@ -85,6 +85,8 @@ public class SkinsDatabase {
 
 		db.insertOrThrow("skins", null, values);
 		db.close();
+		
+		skin.setId(getLastInsertedId());
 	}
 
 	/**
@@ -107,5 +109,26 @@ public class SkinsDatabase {
 		SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
 		db.delete("skins", "id = ?", new String[] { Integer.valueOf(id).toString() });
 		db.close();
+	}
+	
+	/**
+	 * Returns the identifier of the last inserted skin.
+	 * @return -1 if there are no skins in the database, or the last inserted id.
+	 */
+	public int getLastInsertedId() {
+		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
+		Cursor cur = db.rawQuery("SELECT id FROM skins ORDER BY id DESC LIMIT 1", null);
+		
+		int id = -1;
+		
+		//if there are entries in the database
+		if(cur.moveToFirst()) {
+			id = cur.getInt(0);
+		}
+		
+		cur.close();
+		db.close();
+		
+		return id;
 	}
 }
