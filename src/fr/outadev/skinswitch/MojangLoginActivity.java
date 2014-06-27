@@ -119,6 +119,7 @@ public class MojangLoginActivity extends Activity {
 		});
 		
 		((TextView) findViewById(R.id.lbl_forgot_passwd)).setMovementMethod(LinkMovementMethod.getInstance());
+		((TextView) findViewById(R.id.lbl_challenge_help)).setMovementMethod(LinkMovementMethod.getInstance());
 
 		mChallengeFormView = findViewById(R.id.challenge_form);
 		mChallengeQuestionView = (TextView) findViewById(R.id.lbl_challenge_question);

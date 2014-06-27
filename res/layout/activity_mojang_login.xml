@@ -91,6 +91,15 @@
                 android:inputType="textVisiblePassword"
                 android:maxLines="1"
                 android:singleLine="true" />
+            
+            <TextView
+                android:id="@+id/lbl_challenge_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/challenge_help"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <com.dd.processbutton.iml.ActionProcessButton
                 android:id="@+id/b_submit_challenge"
