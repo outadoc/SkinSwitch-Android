@@ -12,7 +12,7 @@ import android.graphics.Rect;
  * @author outadoc
  * 
  */
-public class SkinRenderer {
+public abstract class SkinRenderer {
 
 	/**
 	 * Gets a cropped head from the skin.
@@ -75,15 +75,15 @@ public class SkinRenderer {
 
 			// if there's a specific skin for left arm, use it. else, flip the
 			// right arm's skin and use it instead.
-			arm_right = Bitmap.createBitmap(skin, 44, 20, 4, 12);
+			arm_left = Bitmap.createBitmap(skin, 44, 20, 4, 12);
 
-			arm_left = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 36, 52, 4, 12))) ? flipImage(arm_right)
+			arm_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 36, 52, 4, 12))) ? flipImage(arm_left)
 			        : Bitmap.createBitmap(skin, 36, 52, 4, 12);
 
 			// if there's a specific skin for left leg, use it. else, flip the
 			// right leg's skin and use it instead.
-			leg_right = Bitmap.createBitmap(skin, 4, 20, 4, 12);
-			leg_left = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 20, 52, 4, 12))) ? flipImage(leg_right)
+			leg_left = Bitmap.createBitmap(skin, 4, 20, 4, 12);
+			leg_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 20, 52, 4, 12))) ? flipImage(leg_left)
 			        : Bitmap.createBitmap(skin, 20, 52, 4, 12);
 
 			// it's armor time!
@@ -107,12 +107,12 @@ public class SkinRenderer {
 
 			chest = Bitmap.createBitmap(skin, 32, 20, 8, 12);
 
-			arm_right = Bitmap.createBitmap(skin, 52, 20, 4, 12);
-			arm_left = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52, 4, 12))) ? flipImage(arm_right)
+			arm_left = Bitmap.createBitmap(skin, 52, 20, 4, 12);
+			arm_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52, 4, 12))) ? flipImage(arm_left)
 			        : Bitmap.createBitmap(skin, 44, 52, 4, 12);
 
-			leg_right = Bitmap.createBitmap(skin, 12, 20, 4, 12);
-			leg_left = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52, 4, 12))) ? flipImage(leg_right)
+			leg_left = Bitmap.createBitmap(skin, 12, 20, 4, 12);
+			leg_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52, 4, 12))) ? flipImage(leg_left)
 			        : Bitmap.createBitmap(skin, 28, 52, 4, 12);
 
 			// it's armor time!

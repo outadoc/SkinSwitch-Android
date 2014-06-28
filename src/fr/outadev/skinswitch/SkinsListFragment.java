@@ -109,7 +109,7 @@ public class SkinsListFragment extends Fragment {
 				try {
 					BitmapFactory.Options opt = new BitmapFactory.Options();
 					opt.inScaled = false;
-					Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.test_skin_outadoc, opt);
+					Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.test_skin_etho, opt);
 
 					newSkin.saveRawSkinBitmap(getActivity(), btmp);
 				} catch(IOException e) {
