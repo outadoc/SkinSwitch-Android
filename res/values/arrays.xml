@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="new_skin_choices">
+        <item>From an existing player</item>
+        <item>Search the Web</item>
+        <item>From an URL</item>
+    </string-array>
+
+</resources>

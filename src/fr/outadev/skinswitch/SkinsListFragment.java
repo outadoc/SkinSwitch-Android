@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +24,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
+import fr.outadev.skinswitch.ui.SkinsListAdapter;
 import fr.outadev.skinswitch.user.UsersManager;
 
 public class SkinsListFragment extends Fragment {
@@ -72,7 +74,7 @@ public class SkinsListFragment extends Fragment {
 		// Handle item selection
 		switch(item.getItemId()) {
 
-			case R.id.action_logout:
+			case R.id.action_logout: {
 				// if we want to log out
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle(R.string.dialog_logout_title).setMessage(R.string.dialog_logout_message);
@@ -94,33 +96,60 @@ public class SkinsListFragment extends Fragment {
 
 				builder.create().show();
 				return true;
+			}
 			case R.id.action_login:
 				// if we want to log in
 				Intent intent = new Intent(getActivity(), MojangLoginActivity.class);
 				startActivity(intent);
 				return true;
-			case R.id.action_add:
-				// that's just testing stuff to add skins to the database easily
-				SkinsDatabase db = new SkinsDatabase(getActivity());
-				Skin newSkin = new Skin(-1, "Test", "Hihihi description", new Date());
-				db.addSkin(newSkin);
+			case R.id.action_add: {
 
-				// create a fake skin
-				try {
-					BitmapFactory.Options opt = new BitmapFactory.Options();
-					opt.inScaled = false;
-					Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.test_skin_etho, opt);
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setItems(R.array.new_skin_choices, new DialogInterface.OnClickListener() {
 
-					newSkin.saveRawSkinBitmap(getActivity(), btmp);
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch(which) {
+							case 0:
+							case 1:
+							case 2:
+								// that's just testing stuff to add skins to the
+								// database easily
+								SkinsDatabase db = new SkinsDatabase(getActivity());
+								Skin newSkin = new Skin(-1, "Test", "Hihihi description", new Date());
+								db.addSkin(newSkin);
 
-				refreshSkins();
+								// create a fake skin
+								try {
+									BitmapFactory.Options opt = new BitmapFactory.Options();
+									opt.inScaled = false;
+									Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(),
+									        test_randomNewSkin(), opt);
+
+									newSkin.saveRawSkinBitmap(getActivity(), btmp);
+								} catch(IOException e) {
+									e.printStackTrace();
+								}
+
+								refreshSkins();
+								break;
+						}
+					}
+				});
+
+				builder.create().show();
 				return true;
+			}
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private int test_randomNewSkin() {
+		Random rand = new Random();
+		int[] skins = new int[] { R.drawable.test_skin_etho, R.drawable.test_skin_dinnerbone, R.drawable.test_skin_outadoc,
+		        R.drawable.test_skin_ming_lang, R.drawable.test_skin };
+		return skins[rand.nextInt(skins.length)];
 	}
 
 	public void refreshSkins() {
