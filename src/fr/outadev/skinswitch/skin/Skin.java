@@ -189,4 +189,10 @@ public class Skin {
 			return bitmap;
 		}
 	}
+
+	@Override
+    public String toString() {
+	    return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + "]";
+    }
+	
 }
