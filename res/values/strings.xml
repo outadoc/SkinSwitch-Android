@@ -10,5 +10,6 @@
     <string name="dialog_logout_message">Do you really want to log out of your Minecraft account?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="add_skin_dialog_title">Add a new skin</string>
 
 </resources>

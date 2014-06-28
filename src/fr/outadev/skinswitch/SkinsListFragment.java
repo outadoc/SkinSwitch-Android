@@ -105,37 +105,39 @@ public class SkinsListFragment extends Fragment {
 			case R.id.action_add: {
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setItems(R.array.new_skin_choices, new DialogInterface.OnClickListener() {
+				builder.setTitle(R.string.add_skin_dialog_title).setItems(R.array.new_skin_choices,
+				        new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						switch(which) {
-							case 0:
-							case 1:
-							case 2:
-								// that's just testing stuff to add skins to the
-								// database easily
-								SkinsDatabase db = new SkinsDatabase(getActivity());
-								Skin newSkin = new Skin(-1, "Test", "Hihihi description", new Date());
-								db.addSkin(newSkin);
+					        @Override
+					        public void onClick(DialogInterface dialog, int which) {
+						        switch(which) {
+									case 0:
+									case 1:
+									case 2:
+										// that's just testing stuff to add
+										// skins to the
+										// database easily
+										SkinsDatabase db = new SkinsDatabase(getActivity());
+										Skin newSkin = new Skin(-1, "Test", "Hihihi description", new Date());
+										db.addSkin(newSkin);
 
-								// create a fake skin
-								try {
-									BitmapFactory.Options opt = new BitmapFactory.Options();
-									opt.inScaled = false;
-									Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(),
-									        test_randomNewSkin(), opt);
+										// create a fake skin
+										try {
+											BitmapFactory.Options opt = new BitmapFactory.Options();
+											opt.inScaled = false;
+											Bitmap btmp = BitmapFactory.decodeResource(getActivity().getResources(),
+											        test_randomNewSkin(), opt);
 
-									newSkin.saveRawSkinBitmap(getActivity(), btmp);
-								} catch(IOException e) {
-									e.printStackTrace();
+											newSkin.saveRawSkinBitmap(getActivity(), btmp);
+										} catch(IOException e) {
+											e.printStackTrace();
+										}
+
+										refreshSkins();
+										break;
 								}
-
-								refreshSkins();
-								break;
-						}
-					}
-				});
+							}
+				        });
 
 				builder.create().show();
 				return true;
