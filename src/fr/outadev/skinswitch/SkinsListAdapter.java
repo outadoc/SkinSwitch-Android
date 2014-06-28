@@ -8,16 +8,21 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.outadev.skinswitch.skin.Skin;
+import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
-	public SkinsListAdapter(Context context, int resource, List<Skin> array) {
+	private SkinsListFragment frag;
+
+	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<Skin> array) {
 		super(context, resource, array);
+		this.frag = frag;
 	}
 
 	@Override
@@ -31,6 +36,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 		TextView skinTitle = (TextView) convertView.findViewById(R.id.lbl_skin_title);
 
 		final Skin skin = getItem(position);
+
 		skinTitle.setText(skin.getName());
 
 		(new AsyncTask<Void, Void, Bitmap>() {
@@ -54,6 +60,17 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 			}
 
 		}).execute();
+
+		convertView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				SkinsDatabase db = new SkinsDatabase(getContext());
+				db.removeSkin(skin);
+				frag.refreshSkins();
+			}
+
+		});
 
 		return convertView;
 	}
