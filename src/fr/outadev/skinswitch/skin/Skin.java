@@ -45,8 +45,8 @@ public class Skin {
 	}
 
 	/**
-	 * Similar to {@link #Skin(int, String, String, Date) Skin(int, String, String, Date)}, except the ID
-	 * is automatically set to -1.
+	 * Similar to {@link #Skin(int, String, String, Date) Skin(int, String,
+	 * String, Date)}, except the ID is automatically set to -1.
 	 * 
 	 * @param name
 	 *            the name of the skin.
@@ -90,8 +90,7 @@ public class Skin {
 	protected void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	
-	
+
 	/**
 	 * 
 	 * Path getters
@@ -104,7 +103,8 @@ public class Skin {
 	 * 
 	 * @param context
 	 *            required to get the files directory of the app.
-	 * @return the absolute path of the raw skin image (doesn't have to actually exist).
+	 * @return the absolute path of the raw skin image (doesn't have to actually
+	 *         exist).
 	 */
 	protected String getRawSkinPath(Context context) {
 		return context.getFilesDir() + "/" + "raw_" + id + ".png";
@@ -115,7 +115,8 @@ public class Skin {
 	 * 
 	 * @param context
 	 *            required to get the files directory of the app.
-	 * @return the absolute path of the head image (doesn't have to actually exist).
+	 * @return the absolute path of the head image (doesn't have to actually
+	 *         exist).
 	 */
 	protected String getSkinHeadPath(Context context) {
 		return context.getCacheDir() + "/" + "head_" + id + ".png";
@@ -126,7 +127,8 @@ public class Skin {
 	 * 
 	 * @param context
 	 *            required to get the files directory of the app.
-	 * @return the absolute path of the front skin image (doesn't have to actually exist).
+	 * @return the absolute path of the front skin image (doesn't have to
+	 *         actually exist).
 	 */
 	protected String getFrontSkinPreviewPath(Context context) {
 		return context.getCacheDir() + "/" + "preview_front_" + id + ".png";
@@ -137,13 +139,13 @@ public class Skin {
 	 * 
 	 * @param context
 	 *            required to get the files directory of the app.
-	 * @return the absolute path of the back skin image (doesn't have to actually exist).
+	 * @return the absolute path of the back skin image (doesn't have to
+	 *         actually exist).
 	 */
 	protected String getBackSkinPreviewPath(Context context) {
 		return context.getCacheDir() + "/" + "preview_back_" + id + ".png";
 	}
-	
-	
+
 	/**
 	 * 
 	 * Filesystem read/write methods
@@ -153,10 +155,12 @@ public class Skin {
 	/**
 	 * Reads a bitmap from the filesystem at the specified path.
 	 * 
-	 * @param path the path of the bitmap to decode.
-	 * @param context 
+	 * @param path
+	 *            the path of the bitmap to decode.
+	 * @param context
 	 * @return the decoded bitmap.
-	 * @throws FileNotFoundException if no file could be found at that path.
+	 * @throws FileNotFoundException
+	 *             if no file could be found at that path.
 	 */
 	private Bitmap getBitmapFromDisk(String path, Context context) throws FileNotFoundException {
 		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -174,17 +178,20 @@ public class Skin {
 
 	/**
 	 * Writes a bitmap to the filesystem at the specified path.
-	 * @param bitmap the bitmap to write.
-	 * @param path the path at which the bitmap will be written.
-	 * @throws IOException if an error occurred.
+	 * 
+	 * @param bitmap
+	 *            the bitmap to write.
+	 * @param path
+	 *            the path at which the bitmap will be written.
+	 * @throws IOException
+	 *             if an error occurred.
 	 */
 	private void saveBitmapToDisk(Bitmap bitmap, String path) throws IOException {
 		FileOutputStream fos = new FileOutputStream(path);
 		bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
 		fos.close();
 	}
-	
-	
+
 	/**
 	 * 
 	 * Bitmap getters
@@ -192,7 +199,9 @@ public class Skin {
 	 */
 
 	/**
-	 * Gets the raw skin File object for this skin (can be sent to minecraft.net).
+	 * Gets the raw skin File object for this skin (can be sent to
+	 * minecraft.net).
+	 * 
 	 * @param context
 	 * @return a File object pointing to the skin's PNG file.
 	 */
@@ -202,9 +211,11 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the raw skin image.
+	 * 
 	 * @param context
 	 * @return a bitmap containing the raw skin.
-	 * @throws FileNotFoundException if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException
+	 *             if the raw skin wasn't set yet.
 	 */
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
 		return getBitmapFromDisk(getRawSkinPath(context), context);
@@ -212,9 +223,11 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the skin head image.
+	 * 
 	 * @param context
 	 * @return a bitmap containing the skin head.
-	 * @throws FileNotFoundException if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException
+	 *             if the raw skin wasn't set yet.
 	 */
 	public Bitmap getSkinHeadBitmap(Context context) throws FileNotFoundException {
 		try {
@@ -239,9 +252,11 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the front skin preview image.
+	 * 
 	 * @param context
 	 * @return a bitmap of the front skin preview.
-	 * @throws FileNotFoundException if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException
+	 *             if the raw skin wasn't set yet.
 	 */
 	public Bitmap getFrontSkinPreview(Context context) throws FileNotFoundException {
 		try {
@@ -266,9 +281,11 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the back skin preview image.
+	 * 
 	 * @param context
 	 * @return a bitmap of the back skin preview.
-	 * @throws FileNotFoundException if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException
+	 *             if the raw skin wasn't set yet.
 	 */
 	public Bitmap getBackSkinPreview(Context context) throws FileNotFoundException {
 		try {
@@ -290,19 +307,21 @@ public class Skin {
 			return bmpPrev;
 		}
 	}
-	
-	
+
 	/**
 	 * 
 	 * Bitmap setters
 	 * 
 	 */
-	
+
 	/**
 	 * Writes a raw skin bitmap to the filesystem.
+	 * 
 	 * @param context
-	 * @param bitmap the bitmap to write.
-	 * @throws IOException if an error occured when writing.
+	 * @param bitmap
+	 *            the bitmap to write.
+	 * @throws IOException
+	 *             if an error occured when writing.
 	 */
 	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
 		saveBitmapToDisk(bitmap, getRawSkinPath(context));
@@ -310,9 +329,12 @@ public class Skin {
 
 	/**
 	 * Writes a skin head bitmap to the filesystem.
+	 * 
 	 * @param context
-	 * @param bitmap the bitmap to write.
-	 * @throws IOException if an error occured when writing.
+	 * @param bitmap
+	 *            the bitmap to write.
+	 * @throws IOException
+	 *             if an error occured when writing.
 	 */
 	public void saveSkinHeadBitmap(Context context, Bitmap bitmap) throws IOException {
 		saveBitmapToDisk(bitmap, getSkinHeadPath(context));
@@ -320,9 +342,12 @@ public class Skin {
 
 	/**
 	 * Writes a front skin preview bitmap to the filesystem.
+	 * 
 	 * @param context
-	 * @param bitmap the bitmap to write.
-	 * @throws IOException if an error occured when writing.
+	 * @param bitmap
+	 *            the bitmap to write.
+	 * @throws IOException
+	 *             if an error occured when writing.
 	 */
 	public void saveFrontSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
 		saveBitmapToDisk(bitmap, getFrontSkinPreviewPath(context));
@@ -330,9 +355,12 @@ public class Skin {
 
 	/**
 	 * Writes a back skin preview bitmap to the filesystem.
+	 * 
 	 * @param context
-	 * @param bitmap the bitmap to write.
-	 * @throws IOException if an error occured when writing.
+	 * @param bitmap
+	 *            the bitmap to write.
+	 * @throws IOException
+	 *             if an error occured when writing.
 	 */
 	public void saveBackSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
 		saveBitmapToDisk(bitmap, getBackSkinPreviewPath(context));
