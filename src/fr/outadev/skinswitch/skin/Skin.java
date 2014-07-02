@@ -100,6 +100,7 @@ public class Skin {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 		options.inScaled = false;
+		
 		Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 
 		if(bitmap == null) {
@@ -144,15 +145,19 @@ public class Skin {
 			return getBitmapFromDisk(getSkinHeadPath(context), context);
 		} catch(FileNotFoundException e) {
 			Log.d("SkinSwitch", "creating head preview and cache for " + this);
-			Bitmap bitmap = SkinRenderer.getCroppedHead(getFrontSkinPreview(context));
+			
+			Bitmap bmpPrev = getFrontSkinPreview(context);
+			Bitmap bmpHead = SkinRenderer.getCroppedHead(bmpPrev);
+			
+			bmpPrev.recycle();
 
 			try {
-				saveSkinHeadBitmap(context, bitmap);
+				saveSkinHeadBitmap(context, bmpHead);
 			} catch(IOException e1) {
 				e1.printStackTrace();
 			}
 
-			return bitmap;
+			return bmpHead;
 		}
 	}
 
@@ -161,15 +166,19 @@ public class Skin {
 			return getBitmapFromDisk(getFrontSkinPreviewPath(context), context);
 		} catch(FileNotFoundException e) {
 			Log.d("SkinSwitch", "creating front preview and cache for " + this);
-			Bitmap bitmap = SkinRenderer.getSkinPreview(getRawSkinBitmap(context), Side.FRONT, 19);
+			
+			Bitmap bmpRaw = getRawSkinBitmap(context);
+			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.FRONT, 19);
+			
+			bmpRaw.recycle();
 
 			try {
-				saveFrontSkinPreviewBitmap(context, bitmap);
+				saveFrontSkinPreviewBitmap(context, bmpPrev);
 			} catch(IOException e1) {
 				e1.printStackTrace();
 			}
 
-			return bitmap;
+			return bmpPrev;
 		}
 	}
 
@@ -178,15 +187,19 @@ public class Skin {
 			return getBitmapFromDisk(getBackSkinPreviewPath(context), context);
 		} catch(FileNotFoundException e) {
 			Log.d("SkinSwitch", "creating back preview and cache for " + this);
-			Bitmap bitmap = SkinRenderer.getSkinPreview(getRawSkinBitmap(context), Side.BACK, 19);
+			
+			Bitmap bmpRaw = getRawSkinBitmap(context);
+			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.BACK, 19);
+			
+			bmpRaw.recycle();
 
 			try {
-				saveBackSkinPreviewBitmap(context, bitmap);
+				saveBackSkinPreviewBitmap(context, bmpPrev);
 			} catch(IOException e1) {
 				e1.printStackTrace();
 			}
 
-			return bitmap;
+			return bmpPrev;
 		}
 	}
 
