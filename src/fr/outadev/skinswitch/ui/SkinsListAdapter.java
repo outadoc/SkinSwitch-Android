@@ -35,9 +35,10 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 		}
 
 		final ImageView skinView = (ImageView) convertView.findViewById(R.id.img_skin_preview);
-		TextView skinTitle = (TextView) convertView.findViewById(R.id.lbl_skin_title);
+		final TextView skinTitle = (TextView) convertView.findViewById(R.id.lbl_skin_title);
 
 		final Skin skin = getItem(position);
+		
 		skinTitle.setText(skin.getName());
 
 		(new AsyncTask<Void, Void, Bitmap>() {
