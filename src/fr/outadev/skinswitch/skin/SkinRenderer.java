@@ -7,7 +7,8 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 
 /**
- * Renders a skin in different ways.
+ * Renders a skin in different ways. Create previews, like cropped heads or
+ * full-sized back and front skin previews.
  * 
  * @author outadoc
  * 
@@ -144,6 +145,21 @@ public abstract class SkinRenderer {
 		Bitmap final_leg_left = overlayArmor(leg_left, armor_leg_left);
 		Bitmap final_leg_right = overlayArmor(leg_right, armor_leg_right);
 
+		// free all the bitmaps we can
+		head.recycle();
+		chest.recycle();
+		arm_left.recycle();
+		arm_right.recycle();
+		leg_left.recycle();
+		leg_right.recycle();
+
+		armor_arm_left.recycle();
+		armor_arm_right.recycle();
+		armor_chest.recycle();
+		armor_head.recycle();
+		armor_leg_left.recycle();
+		armor_leg_right.recycle();
+
 		// we got everything, just stick the parts where they belong on the
 		// preview
 		canvas.drawBitmap(final_head, getSrcRect(final_head), getDestRect(final_head, 4, 0), null);
@@ -152,6 +168,14 @@ public abstract class SkinRenderer {
 		canvas.drawBitmap(final_arm_right, getSrcRect(final_arm_right), getDestRect(final_arm_right, 12, 8), null);
 		canvas.drawBitmap(final_leg_left, getSrcRect(final_leg_left), getDestRect(final_leg_left, 4, 20), null);
 		canvas.drawBitmap(final_leg_right, getSrcRect(final_leg_right), getDestRect(final_leg_right, 8, 20), null);
+
+		// free the last bitmaps
+		final_arm_left.recycle();
+		final_arm_right.recycle();
+		final_chest.recycle();
+		final_head.recycle();
+		final_leg_left.recycle();
+		final_leg_right.recycle();
 
 		return resizeImage(dest, zoom);
 	}
@@ -245,7 +269,9 @@ public abstract class SkinRenderer {
 	 * @return the resized image.
 	 */
 	private static Bitmap resizeImage(Bitmap image, int zoom) {
-		return Bitmap.createScaledBitmap(image, image.getWidth() * zoom, image.getHeight() * zoom, false);
+		Bitmap resized = Bitmap.createScaledBitmap(image, image.getWidth() * zoom, image.getHeight() * zoom, false);
+		image.recycle();
+		return resized;
 	}
 
 	/**
