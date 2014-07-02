@@ -162,7 +162,7 @@ public class Skin {
 	 * @throws FileNotFoundException
 	 *             if no file could be found at that path.
 	 */
-	private Bitmap getBitmapFromDisk(String path, Context context) throws FileNotFoundException {
+	private Bitmap readBitmapFromFileSystem(String path, Context context) throws FileNotFoundException {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 		options.inScaled = false;
@@ -186,7 +186,7 @@ public class Skin {
 	 * @throws IOException
 	 *             if an error occurred.
 	 */
-	private void saveBitmapToDisk(Bitmap bitmap, String path) throws IOException {
+	private void writeBitmapToFileSystem(Bitmap bitmap, String path) throws IOException {
 		FileOutputStream fos = new FileOutputStream(path);
 		bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
 		fos.close();
@@ -218,7 +218,7 @@ public class Skin {
 	 *             if the raw skin wasn't set yet.
 	 */
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
-		return getBitmapFromDisk(getRawSkinPath(context), context);
+		return readBitmapFromFileSystem(getRawSkinPath(context), context);
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class Skin {
 	 */
 	public Bitmap getSkinHeadBitmap(Context context) throws FileNotFoundException {
 		try {
-			return getBitmapFromDisk(getSkinHeadPath(context), context);
+			return readBitmapFromFileSystem(getSkinHeadPath(context), context);
 		} catch(FileNotFoundException e) {
 			Log.d("SkinSwitch", "creating head preview and cache for " + this);
 
@@ -260,7 +260,7 @@ public class Skin {
 	 */
 	public Bitmap getFrontSkinPreview(Context context) throws FileNotFoundException {
 		try {
-			return getBitmapFromDisk(getFrontSkinPreviewPath(context), context);
+			return readBitmapFromFileSystem(getFrontSkinPreviewPath(context), context);
 		} catch(FileNotFoundException e) {
 			Log.d("SkinSwitch", "creating front preview and cache for " + this);
 
@@ -289,7 +289,7 @@ public class Skin {
 	 */
 	public Bitmap getBackSkinPreview(Context context) throws FileNotFoundException {
 		try {
-			return getBitmapFromDisk(getBackSkinPreviewPath(context), context);
+			return readBitmapFromFileSystem(getBackSkinPreviewPath(context), context);
 		} catch(FileNotFoundException e) {
 			Log.d("SkinSwitch", "creating back preview and cache for " + this);
 
@@ -324,7 +324,7 @@ public class Skin {
 	 *             if an error occured when writing.
 	 */
 	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
-		saveBitmapToDisk(bitmap, getRawSkinPath(context));
+		writeBitmapToFileSystem(bitmap, getRawSkinPath(context));
 	}
 
 	/**
@@ -337,7 +337,7 @@ public class Skin {
 	 *             if an error occured when writing.
 	 */
 	public void saveSkinHeadBitmap(Context context, Bitmap bitmap) throws IOException {
-		saveBitmapToDisk(bitmap, getSkinHeadPath(context));
+		writeBitmapToFileSystem(bitmap, getSkinHeadPath(context));
 	}
 
 	/**
@@ -350,7 +350,7 @@ public class Skin {
 	 *             if an error occured when writing.
 	 */
 	public void saveFrontSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
-		saveBitmapToDisk(bitmap, getFrontSkinPreviewPath(context));
+		writeBitmapToFileSystem(bitmap, getFrontSkinPreviewPath(context));
 	}
 
 	/**
@@ -363,7 +363,7 @@ public class Skin {
 	 *             if an error occured when writing.
 	 */
 	public void saveBackSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
-		saveBitmapToDisk(bitmap, getBackSkinPreviewPath(context));
+		writeBitmapToFileSystem(bitmap, getBackSkinPreviewPath(context));
 	}
 
 	@Override
