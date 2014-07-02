@@ -353,6 +353,7 @@ public class MojangLoginActivity extends Activity {
 			// button, and close the activity a bit later
 			if(ex == null) {
 				mChallengeButton.setProgress(100);
+				usersManager.setLoggedInSuccessfully(true);
 				saveCredentials();
 
 				new android.os.Handler().postDelayed(new Runnable() {
