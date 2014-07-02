@@ -1,5 +1,9 @@
 package fr.outadev.skinswitch.skin;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +18,26 @@ import android.graphics.Rect;
  * 
  */
 public abstract class SkinRenderer {
+
+	/**
+	 * Represents the front or the back of a skin.
+	 * 
+	 * @author outadoc
+	 * 
+	 */
+	public enum Side {
+		FRONT, BACK
+	}
+
+	/**
+	 * Represents the different possible body parts of a skin.
+	 * 
+	 * @author outadoc
+	 *
+	 */
+	private enum BodyPart {
+		HEAD, CHEST, ARM_RIGHT, ARM_LEFT, LEG_RIGHT, LEG_LEFT
+	}
 
 	/**
 	 * Gets a cropped head from the skin.
@@ -64,120 +88,131 @@ public abstract class SkinRenderer {
 	 * @see Side
 	 */
 	public static Bitmap getSkinPreview(Bitmap skin, Side side, int zoom) {
-		Bitmap head, chest, arm_right, arm_left, leg_right, leg_left, armor_head, armor_chest, armor_arm_right, armor_arm_left, armor_leg_right, armor_leg_left;
+		HashMap<BodyPart, Bitmap> skinBits = new HashMap<BodyPart, Bitmap>();
+		HashMap<BodyPart, Bitmap> armorPieces = new HashMap<BodyPart, Bitmap>();
+
+		// Bitmap head, chest, arm_right, arm_left, leg_right, leg_left,
+		// armor_head, armor_chest, armor_arm_right, armor_arm_left,
+		// armor_leg_right, armor_leg_left;
 
 		if(side == null || side == Side.FRONT) {
 			// if we want a preview of the front of the skin or if nothing is
 			// specified
 			// get body parts, one at a time
-			head = Bitmap.createBitmap(skin, 8, 8, 8, 8);
-
-			chest = Bitmap.createBitmap(skin, 20, 20, 8, 12);
+			skinBits.put(BodyPart.HEAD, Bitmap.createBitmap(skin, 8, 8, 8, 8));
+			skinBits.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 20, 20, 8, 12));
 
 			// if there's a specific skin for left arm, use it. else, flip the
 			// right arm's skin and use it instead.
-			arm_left = Bitmap.createBitmap(skin, 44, 20, 4, 12);
+			skinBits.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 44, 20, 4, 12));
 
-			arm_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 36, 52, 4, 12))) ? flipImage(arm_left)
-			        : Bitmap.createBitmap(skin, 36, 52, 4, 12);
+			skinBits.put(BodyPart.ARM_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 36, 52,
+			        4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_LEFT)) : Bitmap.createBitmap(skin, 36, 52, 4, 12));
 
 			// if there's a specific skin for left leg, use it. else, flip the
 			// right leg's skin and use it instead.
-			leg_left = Bitmap.createBitmap(skin, 4, 20, 4, 12);
-			leg_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 20, 52, 4, 12))) ? flipImage(leg_left)
-			        : Bitmap.createBitmap(skin, 20, 52, 4, 12);
+			skinBits.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 4, 20, 4, 12));
+			skinBits.put(BodyPart.LEG_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 20, 52,
+			        4, 12))) ? flipImage(skinBits.get(BodyPart.LEG_LEFT)) : Bitmap.createBitmap(skin, 20, 52, 4, 12));
 
 			// it's armor time!
-			armor_head = Bitmap.createBitmap(skin, 40, 8, 8, 8);
+			armorPieces.put(BodyPart.HEAD, Bitmap.createBitmap(skin, 40, 8, 8, 8));
 
 			if(isNewSkinFormat(skin)) {
-				armor_chest = Bitmap.createBitmap(skin, 20, 36, 8, 12);
+				armorPieces.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 20, 36, 8, 12));
 
-				armor_arm_right = Bitmap.createBitmap(skin, 44, 36, 4, 12);
-				armor_arm_left = Bitmap.createBitmap(skin, 52, 52, 4, 12);
+				armorPieces.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 44, 36, 4, 12));
+				armorPieces.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 52, 52, 4, 12));
 
-				armor_leg_right = Bitmap.createBitmap(skin, 4, 36, 4, 12);
-				armor_leg_left = Bitmap.createBitmap(skin, 4, 52, 4, 12);
+				armorPieces.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 4, 36, 4, 12));
+				armorPieces.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 4, 52, 4, 12));
 			} else {
-				armor_chest = armor_arm_right = armor_arm_left = armor_leg_right = armor_leg_left = Bitmap.createBitmap(1, 1,
-				        skin.getConfig());
+				setEmptyArmor(armorPieces);
 			}
 		} else {
 			// if we want a preview of the back of the skin
-			head = Bitmap.createBitmap(skin, 24, 8, 8, 8);
+			skinBits.put(BodyPart.HEAD, Bitmap.createBitmap(skin, 24, 8, 8, 8));
 
-			chest = Bitmap.createBitmap(skin, 32, 20, 8, 12);
+			skinBits.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 32, 20, 8, 12));
 
-			arm_left = Bitmap.createBitmap(skin, 52, 20, 4, 12);
-			arm_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52, 4, 12))) ? flipImage(arm_left)
-			        : Bitmap.createBitmap(skin, 44, 52, 4, 12);
+			skinBits.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 52, 20, 4, 12));
+			skinBits.put(BodyPart.ARM_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52,
+			        4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_LEFT)) : Bitmap.createBitmap(skin, 44, 52, 4, 12));
 
-			leg_left = Bitmap.createBitmap(skin, 12, 20, 4, 12);
-			leg_right = (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52, 4, 12))) ? flipImage(leg_left)
-			        : Bitmap.createBitmap(skin, 28, 52, 4, 12);
+			skinBits.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 12, 20, 4, 12));
+			skinBits.put(BodyPart.LEG_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52,
+			        4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_RIGHT)) : Bitmap.createBitmap(skin, 28, 52, 4, 12));
 
 			// it's armor time!
-			armor_head = Bitmap.createBitmap(skin, 56, 8, 8, 8);
+			armorPieces.put(BodyPart.HEAD, Bitmap.createBitmap(skin, 56, 8, 8, 8));
 
 			if(isNewSkinFormat(skin)) {
-				armor_chest = Bitmap.createBitmap(skin, 32, 36, 8, 12);
+				armorPieces.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 32, 36, 8, 12));
 
-				armor_arm_right = Bitmap.createBitmap(skin, 52, 36, 4, 12);
-				armor_arm_left = Bitmap.createBitmap(skin, 60, 52, 4, 12);
+				armorPieces.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 52, 36, 4, 12));
+				armorPieces.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 60, 52, 4, 12));
 
-				armor_leg_right = Bitmap.createBitmap(skin, 12, 36, 4, 12);
-				armor_leg_left = Bitmap.createBitmap(skin, 12, 52, 4, 12);
+				armorPieces.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 12, 36, 4, 12));
+				armorPieces.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 12, 52, 4, 12));
 			} else {
-				armor_chest = armor_arm_right = armor_arm_left = armor_leg_right = armor_leg_left = Bitmap.createBitmap(1, 1,
-				        skin.getConfig());
+				setEmptyArmor(armorPieces);
 			}
 		}
 
 		Bitmap dest = Bitmap.createBitmap(16, 40, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(dest);
 
+		HashMap<BodyPart, Bitmap> finalParts = new HashMap<BodyPart, Bitmap>();
+
 		// at this point we most likely saturated the memory anyway, so.
 		// MOAR. BITMAPS.
-		Bitmap final_head = overlayArmor(head, armor_head);
-		Bitmap final_chest = overlayArmor(chest, armor_chest);
-		Bitmap final_arm_left = overlayArmor(arm_left, armor_arm_left);
-		Bitmap final_arm_right = overlayArmor(arm_right, armor_arm_right);
-		Bitmap final_leg_left = overlayArmor(leg_left, armor_leg_left);
-		Bitmap final_leg_right = overlayArmor(leg_right, armor_leg_right);
+		finalParts.put(BodyPart.HEAD, overlayArmor(BodyPart.HEAD, skinBits, armorPieces));
+		finalParts.put(BodyPart.CHEST, overlayArmor(BodyPart.CHEST, skinBits, armorPieces));
+		finalParts.put(BodyPart.ARM_LEFT, overlayArmor(BodyPart.ARM_LEFT, skinBits, armorPieces));
+		finalParts.put(BodyPart.ARM_RIGHT, overlayArmor(BodyPart.ARM_RIGHT, skinBits, armorPieces));
+		finalParts.put(BodyPart.LEG_LEFT, overlayArmor(BodyPart.LEG_LEFT, skinBits, armorPieces));
+		finalParts.put(BodyPart.LEG_RIGHT, overlayArmor(BodyPart.LEG_RIGHT, skinBits, armorPieces));
 
 		// free all the bitmaps we can
-		head.recycle();
-		chest.recycle();
-		arm_left.recycle();
-		arm_right.recycle();
-		leg_left.recycle();
-		leg_right.recycle();
-
-		armor_arm_left.recycle();
-		armor_arm_right.recycle();
-		armor_chest.recycle();
-		armor_head.recycle();
-		armor_leg_left.recycle();
-		armor_leg_right.recycle();
+		freeBitmapMap(skinBits);
+		freeBitmapMap(armorPieces);
 
 		// we got everything, just stick the parts where they belong on the
 		// preview
-		canvas.drawBitmap(final_head, getSrcRect(final_head), getDestRect(final_head, 4, 0), null);
-		canvas.drawBitmap(final_chest, getSrcRect(final_chest), getDestRect(final_chest, 4, 8), null);
-		canvas.drawBitmap(final_arm_left, getSrcRect(final_arm_left), getDestRect(final_arm_left, 0, 8), null);
-		canvas.drawBitmap(final_arm_right, getSrcRect(final_arm_right), getDestRect(final_arm_right, 12, 8), null);
-		canvas.drawBitmap(final_leg_left, getSrcRect(final_leg_left), getDestRect(final_leg_left, 4, 20), null);
-		canvas.drawBitmap(final_leg_right, getSrcRect(final_leg_right), getDestRect(final_leg_right, 8, 20), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.HEAD), getSrcRect(BodyPart.HEAD, finalParts),
+		        getDestRect(BodyPart.HEAD, finalParts, 4, 0), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.CHEST), getSrcRect(BodyPart.CHEST, finalParts),
+		        getDestRect(BodyPart.CHEST, finalParts, 4, 8), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.ARM_LEFT), getSrcRect(BodyPart.ARM_LEFT, finalParts),
+		        getDestRect(BodyPart.ARM_LEFT, finalParts, 0, 8), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.ARM_RIGHT), getSrcRect(BodyPart.ARM_RIGHT, finalParts),
+		        getDestRect(BodyPart.ARM_RIGHT, finalParts, 12, 8), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.LEG_LEFT), getSrcRect(BodyPart.LEG_LEFT, finalParts),
+		        getDestRect(BodyPart.LEG_LEFT, finalParts, 4, 20), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.LEG_RIGHT), getSrcRect(BodyPart.LEG_RIGHT, finalParts),
+		        getDestRect(BodyPart.LEG_RIGHT, finalParts, 8, 20), null);
 
 		// free the last bitmaps
-		final_arm_left.recycle();
-		final_arm_right.recycle();
-		final_chest.recycle();
-		final_head.recycle();
-		final_leg_left.recycle();
-		final_leg_right.recycle();
-
+		freeBitmapMap(finalParts);
 		return resizeImage(dest, zoom);
+	}
+
+	/**
+	 * Sets empty armor for all armor pieces.
+	 * 
+	 * @param armorPieces
+	 *            the hashmap containing the armor pieces.
+	 */
+	private static void setEmptyArmor(HashMap<BodyPart, Bitmap> armorPieces) {
+		Bitmap empty = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+
+		armorPieces.put(BodyPart.CHEST, empty);
+
+		armorPieces.put(BodyPart.ARM_RIGHT, empty);
+		armorPieces.put(BodyPart.ARM_LEFT, empty);
+
+		armorPieces.put(BodyPart.LEG_RIGHT, empty);
+		armorPieces.put(BodyPart.LEG_LEFT, empty);
 	}
 
 	/**
@@ -192,11 +227,35 @@ public abstract class SkinRenderer {
 		return(skin.getHeight() == skin.getWidth() && skin.getWidth() == 64);
 	}
 
-	private static Rect getSrcRect(Bitmap img) {
+	/**
+	 * Gets the bounds of a Bitmap.
+	 * 
+	 * @param part
+	 *            the body part to retrieve the bounds of.
+	 * @param map
+	 *            the hashmap that contains the bitmap to mesure.
+	 * @return the Rect dimensions of the bitmap.
+	 */
+	private static Rect getSrcRect(BodyPart part, HashMap<BodyPart, Bitmap> map) {
+		Bitmap img = map.get(part);
 		return new Rect(0, 0, img.getWidth(), img.getHeight());
 	}
 
-	private static Rect getDestRect(Bitmap img, int x, int y) {
+	/**
+	 * Gets the destination bounds of a Bitmap.
+	 * 
+	 * @param part
+	 *            the body part to retrieve the bounds of.
+	 * @param map
+	 *            the hashmap that contains the bitmap to mesure.
+	 * @param x
+	 *            the destination x axis.
+	 * @param y
+	 *            the destination y axis.
+	 * @return the Rect destination dimensions of the bitmap.
+	 */
+	private static Rect getDestRect(BodyPart part, HashMap<BodyPart, Bitmap> map, int x, int y) {
+		Bitmap img = map.get(part);
 		return new Rect(x, y, x + img.getWidth(), y + img.getHeight());
 	}
 
@@ -230,20 +289,36 @@ public abstract class SkinRenderer {
 	 *            the armour to overlay.
 	 * @return the combined armour and body part.
 	 */
-	private static Bitmap overlayArmor(Bitmap bodyPart, Bitmap armor) {
-		Bitmap copy = bodyPart.copy(bodyPart.getConfig(), true);
+	private static Bitmap overlayArmor(BodyPart which, HashMap<BodyPart, Bitmap> skinBits, HashMap<BodyPart, Bitmap> armorPieces) {
+		Bitmap bodyPartBitmap = skinBits.get(which);
+		Bitmap armorBitmap = armorPieces.get(which);
 
-		if(!areAllPixelsOfSameColor(armor)) {
-			for(int i = 0; i < bodyPart.getHeight(); i++) {
-				for(int j = 0; j < bodyPart.getWidth(); j++) {
-					if(Color.alpha(armor.getPixel(j, i)) == 255) {
-						copy.setPixel(j, i, armor.getPixel(j, i));
+		Bitmap copy = bodyPartBitmap.copy(bodyPartBitmap.getConfig(), true);
+
+		if(!areAllPixelsOfSameColor(armorBitmap)) {
+			for(int i = 0; i < bodyPartBitmap.getHeight(); i++) {
+				for(int j = 0; j < bodyPartBitmap.getWidth(); j++) {
+					if(Color.alpha(armorBitmap.getPixel(j, i)) == 255) {
+						copy.setPixel(j, i, armorBitmap.getPixel(j, i));
 					}
 				}
 			}
 		}
 
 		return copy;
+	}
+
+	/**
+	 * Recycles a whole Bitmap HashMap.
+	 * 
+	 * @param map
+	 *            the hashmap to recycle.
+	 */
+	private static void freeBitmapMap(HashMap<?, Bitmap> map) {
+		for(Iterator<?> iterator = map.entrySet().iterator(); iterator.hasNext();) {
+			Bitmap bmp = (Bitmap) ((Map.Entry.class.cast(iterator.next()))).getValue();
+			bmp.recycle();
+		}
 	}
 
 	/**
@@ -272,16 +347,6 @@ public abstract class SkinRenderer {
 		Bitmap resized = Bitmap.createScaledBitmap(image, image.getWidth() * zoom, image.getHeight() * zoom, false);
 		image.recycle();
 		return resized;
-	}
-
-	/**
-	 * Represents the front or the back of a skin.
-	 * 
-	 * @author outadoc
-	 * 
-	 */
-	public enum Side {
-		FRONT, BACK
 	}
 
 }
