@@ -1,6 +1,7 @@
 package fr.outadev.skinswitch.skin;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 
 import android.content.Context;
@@ -34,6 +35,22 @@ public class SkinManagerSkin extends Skin {
 	    }
 	    
 	    return bmp;
+	}
+	
+	@Override
+	public void saveBackSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
+	}
+	
+	@Override
+	public void saveFrontSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
+	}
+	
+	@Override
+	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
+	}
+	
+	@Override
+	public void saveSkinHeadBitmap(Context context, Bitmap bitmap) throws IOException {
 	}
 
 }
