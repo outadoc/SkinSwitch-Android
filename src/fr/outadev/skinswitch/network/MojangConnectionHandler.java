@@ -29,11 +29,11 @@ import fr.outadev.skinswitch.user.User;
  * @author outadoc
  * 
  */
-public class MojangConnectionManager {
+public class MojangConnectionHandler {
 
 	private static final String BASE_URL = "https://minecraft.net";
 
-	public MojangConnectionManager() {
+	public MojangConnectionHandler() {
 		CookieManager cookieManager = new CookieManager();
 		CookieHandler.setDefault(cookieManager);
 	}

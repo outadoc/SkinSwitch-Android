@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.dd.processbutton.iml.ActionProcessButton.Mode;
 
-import fr.outadev.skinswitch.network.MojangConnectionManager;
+import fr.outadev.skinswitch.network.MojangConnectionHandler;
 import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
 import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
@@ -59,7 +59,7 @@ public class MojangLoginActivity extends Activity {
 	private User user;
 
 	private LoginChallenge challenge;
-	private MojangConnectionManager loginManager;
+	private MojangConnectionHandler loginManager;
 	
 	private static final int BUTTON_STATUS_DELAY = 1000;
 
@@ -76,7 +76,7 @@ public class MojangLoginActivity extends Activity {
 		usersManager = new UsersManager(this);
 		user = usersManager.getUser();
 		challenge = null;
-		loginManager = new MojangConnectionManager();
+		loginManager = new MojangConnectionHandler();
 
 		step = Step.LOGIN;
 
