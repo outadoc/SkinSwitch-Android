@@ -9,6 +9,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.github.kevinsawicki.http.HttpRequest;
 
 import fr.outadev.skinswitch.skin.SkinManagerSkin;
@@ -94,6 +97,11 @@ public class SkinManagerConnectionHandler {
 		} catch(UnsupportedEncodingException e) {
 			return null;
 		}
+	}
+	
+	public Bitmap getSkinBitmap(int id) {
+		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).bytes();
+		return BitmapFactory.decodeByteArray(response, 0, response.length);
 	}
 
 	/**
