@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
 public class SkinManagerSkin extends Skin {
@@ -24,33 +25,29 @@ public class SkinManagerSkin extends Skin {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	
+
 	@Override
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
-	    SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
-	    Bitmap bmp = handler.fetchSkinBitmap(getId());
-	    
-	    if(bmp == null) {
-	    	throw new FileNotFoundException("Couldn't fetch skin for id=" + getId());
-	    }
-	    
-	    return bmp;
+		SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
+		Bitmap bmp = handler.fetchSkinBitmap(getId());
+
+		if(bmp == null) {
+			throw new FileNotFoundException("Couldn't fetch skin for id=" + getId());
+		}
+
+		return bmp;
 	}
-	
+
 	@Override
-	public void saveBackSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
+	protected Bitmap readBitmapFromFileSystem(String path, Context context) throws FileNotFoundException {
+		Log.d("SkinSwitch", "didn't load cache for " + this + "because it is a " + this.getClass().getName());
+		throw new FileNotFoundException();
 	}
-	
+
 	@Override
-	public void saveFrontSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
-	}
-	
-	@Override
-	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
-	}
-	
-	@Override
-	public void saveSkinHeadBitmap(Context context, Bitmap bitmap) throws IOException {
+	protected void writeBitmapToFileSystem(Bitmap bitmap, String path) throws IOException {
+		Log.d("SkinSwitch", "didn't save cache for " + this + "because it is a " + this.getClass().getName());
+		throw new FileNotFoundException();
 	}
 
 }

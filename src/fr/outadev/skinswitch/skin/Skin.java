@@ -162,7 +162,7 @@ public class Skin {
 	 * @throws FileNotFoundException
 	 *             if no file could be found at that path.
 	 */
-	private Bitmap readBitmapFromFileSystem(String path, Context context) throws FileNotFoundException {
+	protected Bitmap readBitmapFromFileSystem(String path, Context context) throws FileNotFoundException {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 		options.inScaled = false;
@@ -186,7 +186,7 @@ public class Skin {
 	 * @throws IOException
 	 *             if an error occurred.
 	 */
-	private void writeBitmapToFileSystem(Bitmap bitmap, String path) throws IOException {
+	protected void writeBitmapToFileSystem(Bitmap bitmap, String path) throws IOException {
 		FileOutputStream fos = new FileOutputStream(path);
 		bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
 		fos.close();
