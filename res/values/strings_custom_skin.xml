@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="lbl_add_skin_source">Minecraft Username or Skin URL</string>
+    <string name="lbl_add_skin_name">Skin Name</string>
+    <string name="lbl_add_skin_description">Skin Description</string>
+    <string name="hint_add_skin_source">Notch</string>
+    <string name="hint_add_skin_name">My Awesome Skin</string>
+    
+</resources>
