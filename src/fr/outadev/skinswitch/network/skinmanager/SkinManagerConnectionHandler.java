@@ -31,8 +31,8 @@ public class SkinManagerConnectionHandler {
 	 * 
 	 * @return an array containing the latest skins.
 	 */
-	public List<SkinManagerSkin> getLatestSkins() {
-		return getLatestSkins(15, 0);
+	public List<SkinManagerSkin> fetchLatestSkins() {
+		return fetchLatestSkins(15, 0);
 	}
 
 	/**
@@ -44,8 +44,8 @@ public class SkinManagerConnectionHandler {
 	 *            the index of the first skin to fetch.
 	 * @return an array containing the latest skins.
 	 */
-	public List<SkinManagerSkin> getLatestSkins(int count, int start) {
-		return getSkinsFromAPI("method=getLastestSkins&max=" + count + "&start=" + start);
+	public List<SkinManagerSkin> fetchLatestSkins(int count, int start) {
+		return fetchSkinsFromAPI("method=getLastestSkins&max=" + count + "&start=" + start);
 	}
 
 	/**
@@ -53,8 +53,8 @@ public class SkinManagerConnectionHandler {
 	 * 
 	 * @return an array containing random skins.
 	 */
-	public List<SkinManagerSkin> getRandomSkins() {
-		return getRandomSkins(15);
+	public List<SkinManagerSkin> fetchRandomSkins() {
+		return fetchRandomSkins(15);
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class SkinManagerConnectionHandler {
 	 *            the max number of skins to retrieve.
 	 * @return an array containing the random skins.
 	 */
-	public List<SkinManagerSkin> getRandomSkins(int count) {
-		return getSkinsFromAPI("method=getRandomSkins&max=" + count);
+	public List<SkinManagerSkin> fetchRandomSkins(int count) {
+		return fetchSkinsFromAPI("method=getRandomSkins&max=" + count);
 	}
 
 	/**
@@ -75,8 +75,8 @@ public class SkinManagerConnectionHandler {
 	 *            the search criteria.
 	 * @return an array of skins matching the criteria.
 	 */
-	public List<SkinManagerSkin> getSkinByName(String criteria) {
-		return getSkinByName(criteria, 15, 0);
+	public List<SkinManagerSkin> fetchSkinByName(String criteria) {
+		return fetchSkinByName(criteria, 15, 0);
 	}
 
 	/**
@@ -90,16 +90,16 @@ public class SkinManagerConnectionHandler {
 	 *            the index of the first skin to fetch.
 	 * @return an array of skins matching the criteria.
 	 */
-	public List<SkinManagerSkin> getSkinByName(String criteria, int count, int start) {
+	public List<SkinManagerSkin> fetchSkinByName(String criteria, int count, int start) {
 		try {
-			return getSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match="
+			return fetchSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match="
 			        + URLEncoder.encode(criteria, "UTF-8"));
 		} catch(UnsupportedEncodingException e) {
 			return null;
 		}
 	}
 	
-	public Bitmap getSkinBitmap(int id) {
+	public Bitmap fetchSkinBitmap(int id) {
 		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).useCaches(true).bytes();
 		return BitmapFactory.decodeByteArray(response, 0, response.length);
 	}
@@ -111,7 +111,7 @@ public class SkinManagerConnectionHandler {
 	 *            the GET parameters that will be given to the API.
 	 * @return an array of skins returned by the API.
 	 */
-	private List<SkinManagerSkin> getSkinsFromAPI(String parameters) {
+	private List<SkinManagerSkin> fetchSkinsFromAPI(String parameters) {
 		List<SkinManagerSkin> skinsList = new ArrayList<SkinManagerSkin>();
 		String response = HttpRequest.get(BASE_URL + "?" + parameters).body();
 
