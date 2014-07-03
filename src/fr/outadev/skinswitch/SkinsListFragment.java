@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -112,6 +113,11 @@ public class SkinsListFragment extends Fragment {
 					        public void onClick(DialogInterface dialog, int which) {
 						        switch(which) {
 									case 0:
+										ProgressDialog progDial = new ProgressDialog(getActivity());
+										progDial.setMessage("Downloading skin...");
+										progDial.setIndeterminate(true);
+										progDial.show();
+										break;
 									case 1:
 										// that's just testing stuff to add
 										// skins to the
