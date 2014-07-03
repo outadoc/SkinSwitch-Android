@@ -113,7 +113,6 @@ public class SkinsListFragment extends Fragment {
 						        switch(which) {
 									case 0:
 									case 1:
-									case 2:
 										// that's just testing stuff to add
 										// skins to the
 										// database easily

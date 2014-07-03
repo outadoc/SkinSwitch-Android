@@ -2,9 +2,8 @@
 <resources>
 
     <string-array name="new_skin_choices">
-        <item>From an existing player</item>
-        <item>Search the Web</item>
-        <item>From an URL</item>
+        <item>Choose from Skin Library</item>
+        <item>Create a Custom Skin</item>
     </string-array>
 
 </resources>
