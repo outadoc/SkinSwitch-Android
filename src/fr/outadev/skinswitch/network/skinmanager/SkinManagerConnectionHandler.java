@@ -100,7 +100,7 @@ public class SkinManagerConnectionHandler {
 	}
 	
 	public Bitmap getSkinBitmap(int id) {
-		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).bytes();
+		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).useCaches(true).bytes();
 		return BitmapFactory.decodeByteArray(response, 0, response.length);
 	}
 
