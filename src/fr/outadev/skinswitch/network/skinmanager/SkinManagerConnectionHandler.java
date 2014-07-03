@@ -20,8 +20,20 @@ public class SkinManagerConnectionHandler {
 	}
 
 	public List<SkinManagerSkin> getLatestSkins(int count, int start) {
+		return getSkinsFromAPI("method=getLastestSkins&max=" + count + "&start=" + start);
+	}
+	
+	public List<SkinManagerSkin> getRandomSkins() {
+		return getRandomSkins(15);
+	}
+	
+	public List<SkinManagerSkin> getRandomSkins(int count) {
+		return getSkinsFromAPI("method=getRandomSkins&max=" + count);
+	}
+	
+	private List<SkinManagerSkin> getSkinsFromAPI(String parameters) {
 		List<SkinManagerSkin> skinsList = new ArrayList<SkinManagerSkin>();
-		String response = HttpRequest.get(BASE_URL + "?method=getLastestSkins&max=" + count + "&start=" + start).body();
+		String response = HttpRequest.get(BASE_URL + "?" + parameters).body();
 
 		if(response != null) {
 			try {
@@ -45,5 +57,5 @@ public class SkinManagerConnectionHandler {
 
 		return null;
 	}
-
+ 
 }
