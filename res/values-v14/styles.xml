@@ -13,7 +13,7 @@
 
     <!-- ActionBar styles -->
     <style name="SkinSwitchActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">#6d482b</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="DialogActivity" parent="android:Theme.Holo.Light.Dialog"></style>
