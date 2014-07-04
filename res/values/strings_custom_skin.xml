@@ -5,7 +5,7 @@
     <string name="lbl_add_skin_source">Minecraft Username or Skin URL</string>
     <string name="lbl_add_skin_name">Skin Name</string>
     <string name="lbl_add_skin_description">Skin Description</string>
-    <string name="hint_add_skin_source">Notch</string>
+    <string name="hint_add_skin_source">Notch <i>or</i> http://website.com/skin.png</string>
     <string name="hint_add_skin_name">My Awesome Skin</string>
     <string name="error_incorrect_url">Must be a valid username or URL</string>
     
