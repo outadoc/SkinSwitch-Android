@@ -43,14 +43,18 @@ public class NewCustomSkinActivity extends Activity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.item_next:
-				attemptSkinAddition();
+				validateAndParseUserInput();
 				return true;
 		}
 
 		return super.onMenuItemSelected(featureId, item);
 	}
 
-	private void attemptSkinAddition() {
+	/**
+	 * Validates the user input, displays error messages if it's incorrect, and
+	 * tries to add the skin if the input has been validated successfully.
+	 */
+	private void validateAndParseUserInput() {
 		View errorField = null;
 		// create a new skin from the data that was entered
 		final Skin skin = new Skin(txt_name.getText().toString(), txt_description.getText().toString(), new Date());
@@ -84,66 +88,76 @@ public class NewCustomSkinActivity extends Activity {
 		if(errorField != null) {
 			errorField.requestFocus();
 		} else {
-			final ProgressDialog progDial = new ProgressDialog(this);
-			progDial.setMessage("Downloading skin...");
-			progDial.setIndeterminate(true);
-			progDial.setCancelable(false);
-
-			(new AsyncTask<Void, Void, Boolean>() {
-
-				@Override
-				protected void onPreExecute() {
-					progDial.show();
-				}
-
-				@Override
-				protected Boolean doInBackground(Void... params) {
-					return skin.isValidSource();
-				}
-
-				@Override
-				protected void onPostExecute(Boolean isValidSkinUrl) {
-					if(isValidSkinUrl) {
-						(new AsyncTask<Void, Void, Void>() {
-
-							@Override
-							protected Void doInBackground(Void... params) {
-								SkinsDatabase db = new SkinsDatabase(NewCustomSkinActivity.this);
-								db.addSkin(skin);
-
-								try {
-									skin.downloadSkinFromSource(NewCustomSkinActivity.this);
-								} catch(NetworkErrorException e) {
-									e.printStackTrace();
-								} catch(IOException e) {
-									e.printStackTrace();
-								}
-
-								return null;
-							}
-
-							@Override
-							protected void onPostExecute(Void result) {
-								progDial.hide();
-								progDial.dismiss();
-
-								Toast.makeText(NewCustomSkinActivity.this, "Skin added successfully!", Toast.LENGTH_LONG).show();
-								NewCustomSkinActivity.this.finish();
-							}
-
-						}).execute();
-
-					} else {
-						progDial.hide();
-						progDial.dismiss();
-
-						txt_source.setError(getString(R.string.error_incorrect_url));
-						txt_source.requestFocus();
-					}
-				}
-
-			}).execute();
+			downloadAndAddSkin(skin);
 		}
+	}
+
+	/**
+	 * Downloads a skin, adds it to the database, and saves it to the
+	 * filesystem.
+	 * 
+	 * @param skin
+	 */
+	private void downloadAndAddSkin(final Skin skin) {
+		final ProgressDialog progDial = new ProgressDialog(this);
+		progDial.setMessage("Downloading skin...");
+		progDial.setIndeterminate(true);
+		progDial.setCancelable(false);
+
+		(new AsyncTask<Void, Void, Boolean>() {
+
+			@Override
+			protected void onPreExecute() {
+				progDial.show();
+			}
+
+			@Override
+			protected Boolean doInBackground(Void... params) {
+				return skin.isValidSource();
+			}
+
+			@Override
+			protected void onPostExecute(Boolean isValidSkinUrl) {
+				if(isValidSkinUrl) {
+					(new AsyncTask<Void, Void, Void>() {
+
+						@Override
+						protected Void doInBackground(Void... params) {
+							SkinsDatabase db = new SkinsDatabase(NewCustomSkinActivity.this);
+							db.addSkin(skin);
+
+							try {
+								skin.downloadSkinFromSource(NewCustomSkinActivity.this);
+							} catch(NetworkErrorException e) {
+								e.printStackTrace();
+							} catch(IOException e) {
+								e.printStackTrace();
+							}
+
+							return null;
+						}
+
+						@Override
+						protected void onPostExecute(Void result) {
+							progDial.hide();
+							progDial.dismiss();
+
+							Toast.makeText(NewCustomSkinActivity.this, "Skin added successfully!", Toast.LENGTH_LONG).show();
+							NewCustomSkinActivity.this.finish();
+						}
+
+					}).execute();
+
+				} else {
+					progDial.hide();
+					progDial.dismiss();
+
+					txt_source.setError(getString(R.string.error_incorrect_url));
+					txt_source.requestFocus();
+				}
+			}
+
+		}).execute();
 	}
 
 }

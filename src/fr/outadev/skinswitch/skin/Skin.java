@@ -379,15 +379,32 @@ public class Skin {
 		writeBitmapToFileSystem(bitmap, getBackSkinPreviewPath(context));
 	}
 
+/**
+	 * Downloads and stores this skin's raw skin on the filesystem.
+	 * Source must be specified via {@link #setSource(String).
+	 * @param context
+	 * @throws NetworkErrorException if the skin couldn't be downloaded.
+	 * @throws IOException if the skin couldn't be saved.
+	 */
 	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
 		if(source == null) throw new NetworkErrorException("No source was set for " + this);
 
 		byte[] response = HttpRequest.get(source).trustAllHosts().useCaches(true).bytes();
+		if(response == null) throw new NetworkErrorException("Couldn't download " + this);
+
 		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
-		saveRawSkinBitmap(context, bmp);
-		bmp.recycle();
+
+		if(bmp != null) {
+			saveRawSkinBitmap(context, bmp);
+			bmp.recycle();
+		}
 	}
 
+	/**
+	 * Checks if the skin's source is a valid skin.
+	 * 
+	 * @return true if it's valid, false if it's not
+	 */
 	public boolean isValidSource() {
 		if(source == null) return false;
 
@@ -401,7 +418,7 @@ public class Skin {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 

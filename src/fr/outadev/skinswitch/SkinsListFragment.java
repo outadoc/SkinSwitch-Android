@@ -133,6 +133,9 @@ public class SkinsListFragment extends Fragment {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Refreshes the list of skins and the view.
+	 */
 	public void refreshSkins() {
 		(new AsyncTask<Void, Void, List<Skin>>() {
 
