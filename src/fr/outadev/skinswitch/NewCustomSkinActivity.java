@@ -103,8 +103,6 @@ public class NewCustomSkinActivity extends Activity {
 
 				@Override
 				protected void onPostExecute(Boolean isValidSkinUrl) {
-					progDial.hide();
-
 					if(isValidSkinUrl) {
 						(new AsyncTask<Void, Void, Void>() {
 
@@ -123,9 +121,12 @@ public class NewCustomSkinActivity extends Activity {
 
 								return null;
 							}
-							
+
 							@Override
-                            protected void onPostExecute(Void result) {
+							protected void onPostExecute(Void result) {
+								progDial.hide();
+								progDial.dismiss();
+
 								Toast.makeText(NewCustomSkinActivity.this, "Skin added successfully!", Toast.LENGTH_LONG).show();
 								NewCustomSkinActivity.this.finish();
 							}
@@ -133,6 +134,9 @@ public class NewCustomSkinActivity extends Activity {
 						}).execute();
 
 					} else {
+						progDial.hide();
+						progDial.dismiss();
+
 						txt_source.setError(getString(R.string.error_incorrect_url));
 						txt_source.requestFocus();
 					}
