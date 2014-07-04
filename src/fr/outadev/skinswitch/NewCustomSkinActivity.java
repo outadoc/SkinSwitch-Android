@@ -87,6 +87,7 @@ public class NewCustomSkinActivity extends Activity {
 			final ProgressDialog progDial = new ProgressDialog(this);
 			progDial.setMessage("Downloading skin...");
 			progDial.setIndeterminate(true);
+			progDial.setCancelable(false);
 
 			(new AsyncTask<Void, Void, Boolean>() {
 

@@ -389,7 +389,20 @@ public class Skin {
 	}
 
 	public boolean isValidSource() {
-		return (source != null) && (HttpRequest.get(source).ok());
+		if(source == null) return false;
+
+		byte[] response = HttpRequest.get(source).trustAllHosts().useCaches(true).bytes();
+
+		if(response != null) {
+			Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
+
+			if(bmp != null) {
+				bmp.recycle();
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	@Override
