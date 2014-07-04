@@ -6,10 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.github.kevinsawicki.http.HttpRequest;
+
 import fr.outadev.skinswitch.skin.SkinRenderer.Side;
 
 /**
@@ -24,6 +28,7 @@ public class Skin {
 	private String name;
 	private String description;
 	private Date creationDate;
+	private String source;
 
 	/**
 	 * Creates a new skin.
@@ -89,6 +94,14 @@ public class Skin {
 
 	protected void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	/**
@@ -366,9 +379,31 @@ public class Skin {
 		writeBitmapToFileSystem(bitmap, getBackSkinPreviewPath(context));
 	}
 
+	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
+		if(source == null) throw new NetworkErrorException("No source was set for " + this);
+
+		byte[] response = HttpRequest.get(source).trustAllHosts().useCaches(true).bytes();
+		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
+		saveRawSkinBitmap(context, bmp);
+		bmp.recycle();
+	}
+
+	public boolean isValidSource() {
+		return (source != null) && (HttpRequest.get(source).ok());
+	}
+
 	@Override
 	public String toString() {
-		return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + "]";
+		String str = "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate
+		        + "]";
+
+		if(source != null) {
+			str += ", source=" + source + "]";
+		} else {
+			str += "]";
+		}
+
+		return str;
 	}
 
 }

@@ -98,6 +98,7 @@ public class MojangLoginActivity extends Activity {
 			@Override
 			public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 				if(id == R.id.login || id == EditorInfo.IME_NULL) {
+					saveCredentials();
 					attemptLogin();
 					return true;
 				}
