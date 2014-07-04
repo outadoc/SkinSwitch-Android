@@ -1,7 +1,9 @@
 package fr.outadev.skinswitch;
 
+import java.io.IOException;
 import java.util.Date;
 
+import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import fr.outadev.skinswitch.skin.Skin;
+import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 public class NewCustomSkinActivity extends Activity {
 
@@ -84,30 +87,56 @@ public class NewCustomSkinActivity extends Activity {
 			final ProgressDialog progDial = new ProgressDialog(this);
 			progDial.setMessage("Downloading skin...");
 			progDial.setIndeterminate(true);
-			
+
 			(new AsyncTask<Void, Void, Boolean>() {
 
 				@Override
 				protected void onPreExecute() {
 					progDial.show();
 				}
-				
+
 				@Override
-                protected Boolean doInBackground(Void... params) {
-	                return skin.isValidSource();
-                }
-				
+				protected Boolean doInBackground(Void... params) {
+					return skin.isValidSource();
+				}
+
 				@Override
 				protected void onPostExecute(Boolean isValidSkinUrl) {
 					progDial.hide();
-					
+
 					if(isValidSkinUrl) {
-						Toast.makeText(NewCustomSkinActivity.this, "Valid skin URL", Toast.LENGTH_LONG).show();
+						(new AsyncTask<Void, Void, Void>() {
+
+							@Override
+							protected Void doInBackground(Void... params) {
+								SkinsDatabase db = new SkinsDatabase(NewCustomSkinActivity.this);
+								db.addSkin(skin);
+
+								try {
+									skin.downloadSkinFromSource(NewCustomSkinActivity.this);
+								} catch(NetworkErrorException e) {
+									e.printStackTrace();
+								} catch(IOException e) {
+									e.printStackTrace();
+								}
+
+								return null;
+							}
+							
+							@Override
+                            protected void onPostExecute(Void result) {
+								Toast.makeText(NewCustomSkinActivity.this, "Skin added successfully!", Toast.LENGTH_LONG).show();
+								NewCustomSkinActivity.this.finish();
+							}
+
+						}).execute();
+
 					} else {
-						Toast.makeText(NewCustomSkinActivity.this, "Invalid skin URL", Toast.LENGTH_LONG).show();
+						txt_source.setError(getString(R.string.error_incorrect_url));
+						txt_source.requestFocus();
 					}
 				}
-				
+
 			}).execute();
 		}
 	}
