@@ -100,11 +100,12 @@ public class SkinsListFragment extends Fragment {
 				builder.create().show();
 				return true;
 			}
-			case R.id.action_login:
+			case R.id.action_login: {
 				// if we want to log in
 				Intent intent = new Intent(getActivity(), MojangLoginActivity.class);
 				startActivity(intent);
 				return true;
+			}
 			case R.id.action_add: {
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -129,9 +130,9 @@ public class SkinsListFragment extends Fragment {
 				builder.create().show();
 				return true;
 			}
-			default:
-				return super.onOptionsItemSelected(item);
 		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void refreshSkins() {
