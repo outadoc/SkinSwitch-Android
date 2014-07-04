@@ -24,7 +24,7 @@ import fr.outadev.skinswitch.skin.SkinManagerSkin;
  */
 public class SkinManagerConnectionHandler {
 
-	private static final String BASE_URL = "http://skin.outadoc.fr/json/";
+	private static final String BASE_URL = "https://skin.outadoc.fr/json/";
 
 	/**
 	 * Gets the latest skins.
@@ -98,9 +98,9 @@ public class SkinManagerConnectionHandler {
 			return null;
 		}
 	}
-	
+
 	public Bitmap fetchSkinBitmap(int id) {
-		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).useCaches(true).bytes();
+		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).trustAllHosts().useCaches(true).bytes();
 		return BitmapFactory.decodeByteArray(response, 0, response.length);
 	}
 
@@ -113,7 +113,7 @@ public class SkinManagerConnectionHandler {
 	 */
 	private List<SkinManagerSkin> fetchSkinsFromAPI(String parameters) {
 		List<SkinManagerSkin> skinsList = new ArrayList<SkinManagerSkin>();
-		String response = HttpRequest.get(BASE_URL + "?" + parameters).body();
+		String response = HttpRequest.get(BASE_URL + "?" + parameters).trustAllHosts().body();
 
 		if(response != null) {
 			try {
