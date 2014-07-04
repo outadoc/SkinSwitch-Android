@@ -35,6 +35,10 @@
             android:name="fr.outadev.skinswitch.NewCustomSkinActivity"
             android:label="@string/title_activity_new_custom_skin" >
         </activity>
+        <activity
+            android:name="fr.outadev.skinswitch.SkinLibraryActivity"
+            android:label="@string/title_activity_skin_library" >
+        </activity>
     </application>
 
 </manifest>

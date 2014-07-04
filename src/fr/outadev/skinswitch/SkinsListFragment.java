@@ -114,6 +114,8 @@ public class SkinsListFragment extends Fragment {
 					        public void onClick(DialogInterface dialog, int which) {
 						        switch(which) {
 									case 0: {
+										Intent intent = new Intent(getActivity(), SkinLibraryActivity.class);
+										startActivity(intent);
 										break;
 									}
 									case 1: {
