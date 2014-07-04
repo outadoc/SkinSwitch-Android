@@ -11,9 +11,7 @@
     
     <style name="DialogActivity" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorPrimary">@color/colorPrimary</item>
-        <!-- darker variant of colorPrimary (for status bar, contextual app bars) -->
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!-- theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
