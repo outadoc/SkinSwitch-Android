@@ -1,8 +1,6 @@
 package fr.outadev.skinswitch;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -10,8 +8,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -119,7 +115,7 @@ public class SkinsListFragment extends Fragment {
 										progDial.show();
 										break;
 									case 1:
-										// that's just testing stuff to add
+										/*// that's just testing stuff to add
 										// skins to the
 										// database easily
 										SkinsDatabase db = new SkinsDatabase(getActivity());
@@ -138,7 +134,11 @@ public class SkinsListFragment extends Fragment {
 											e.printStackTrace();
 										}
 
-										refreshSkins();
+										refreshSkins();*/
+										
+										Intent intent = new Intent(getActivity(), NewCustomSkinActivity.class);
+										startActivity(intent);
+										
 										break;
 								}
 							}

@@ -8,5 +8,7 @@
         <!-- theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">#6d482b</item>
     </style>
+    
+    <style name="DialogActivity" parent="android:Theme.Material.Light.Dialog"></style>
 
 </resources>

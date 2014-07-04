@@ -28,8 +28,12 @@
         <activity
             android:name="fr.outadev.skinswitch.MojangLoginActivity"
             android:label="@string/title_activity_mojang_login"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            android:theme="@style/DialogActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name="fr.outadev.skinswitch.NewCustomSkinActivity"
+            android:label="@string/title_activity_new_custom_skin" >
         </activity>
     </application>
 

@@ -2,8 +2,10 @@ package fr.outadev.skinswitch;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -60,7 +62,7 @@ public class MojangLoginActivity extends Activity {
 
 	private LoginChallenge challenge;
 	private MojangConnectionHandler loginManager;
-	
+
 	private static final int BUTTON_STATUS_DELAY = 1000;
 
 	private enum Step {
@@ -70,8 +72,11 @@ public class MojangLoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_mojang_login);
+
+		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+			getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		}
 
 		usersManager = new UsersManager(this);
 		user = usersManager.getUser();
@@ -117,7 +122,7 @@ public class MojangLoginActivity extends Activity {
 			}
 
 		});
-		
+
 		((TextView) findViewById(R.id.lbl_forgot_passwd)).setMovementMethod(LinkMovementMethod.getInstance());
 		((TextView) findViewById(R.id.lbl_challenge_help)).setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -304,7 +309,7 @@ public class MojangLoginActivity extends Activity {
 				// no problem, save the credentials and close
 				usersManager.setLoggedInSuccessfully(true);
 				mLoginButton.setProgress(100);
-				
+
 				new android.os.Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
