@@ -44,8 +44,6 @@ public class SkinsListFragment extends Fragment {
 		skinsAdapter = new SkinsListAdapter(getActivity(), this, android.R.layout.simple_list_item_1, skinsList);
 		gridView.setAdapter(skinsAdapter);
 
-		refreshSkins();
-
 		return view;
 	}
 
