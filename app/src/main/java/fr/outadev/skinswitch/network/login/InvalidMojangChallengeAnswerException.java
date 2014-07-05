@@ -2,9 +2,8 @@ package fr.outadev.skinswitch.network.login;
 
 /**
  * Thrown if the answer to a challenge was wrong.
- * 
+ *
  * @author outadoc
- * 
  */
 public class InvalidMojangChallengeAnswerException extends Exception {
 

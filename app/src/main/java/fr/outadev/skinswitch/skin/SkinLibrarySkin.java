@@ -1,12 +1,13 @@
 package fr.outadev.skinswitch.skin;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
 public class SkinLibrarySkin extends Skin {

@@ -8,7 +8,7 @@
         <!-- theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@color/colorAccent</item>
     </style>
-    
+
     <style name="DialogActivity" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>

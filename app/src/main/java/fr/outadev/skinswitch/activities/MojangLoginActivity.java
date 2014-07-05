@@ -68,7 +68,9 @@ public class MojangLoginActivity extends Activity {
 
 	private enum Step {
 		LOGIN, CHALLENGE
-	};
+	}
+
+	;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -177,7 +179,7 @@ public class MojangLoginActivity extends Activity {
 		mPasswordView.setText(mPassword);
 
 		challenge = new LoginChallenge(bundle.getString("challenge:id"), bundle.getString("challenge:question"),
-		        bundle.getString("challenge:auth"));
+				bundle.getString("challenge:auth"));
 		mChallengeQuestionView.setText(challenge.getQuestion());
 		mChallengeAnswerView.setText(bundle.getString("challenge:answer"));
 
@@ -253,20 +255,20 @@ public class MojangLoginActivity extends Activity {
 		mChallengeButton.setProgress(0);
 
 		mLoginFormView.animate().setDuration(shortAnimTime).alpha(step == Step.LOGIN ? 1 : 0)
-		        .setListener(new AnimatorListenerAdapter() {
-			        @Override
-			        public void onAnimationEnd(Animator animation) {
-				        mLoginFormView.setVisibility(step == Step.LOGIN ? View.VISIBLE : View.GONE);
-			        }
-		        });
+				.setListener(new AnimatorListenerAdapter() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						mLoginFormView.setVisibility(step == Step.LOGIN ? View.VISIBLE : View.GONE);
+					}
+				});
 
 		mChallengeFormView.animate().setDuration(shortAnimTime).alpha(step == Step.CHALLENGE ? 1 : 0)
-		        .setListener(new AnimatorListenerAdapter() {
-			        @Override
-			        public void onAnimationEnd(Animator animation) {
-				        mChallengeFormView.setVisibility(step == Step.CHALLENGE ? View.VISIBLE : View.GONE);
-			        }
-		        });
+				.setListener(new AnimatorListenerAdapter() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						mChallengeFormView.setVisibility(step == Step.CHALLENGE ? View.VISIBLE : View.GONE);
+					}
+				});
 
 		switch(step) {
 			case LOGIN:
@@ -374,7 +376,7 @@ public class MojangLoginActivity extends Activity {
 				// if there was a problem, display it in a toast, put the button
 				// in fail mode and show the login form a bit later
 				Toast.makeText(MojangLoginActivity.this, ((InvalidMojangChallengeAnswerException) ex).getMessage(),
-				        Toast.LENGTH_LONG).show();
+						Toast.LENGTH_LONG).show();
 				mChallengeButton.setProgress(-1);
 
 				new android.os.Handler().postDelayed(new Runnable() {

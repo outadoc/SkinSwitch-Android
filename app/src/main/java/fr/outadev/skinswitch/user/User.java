@@ -2,9 +2,8 @@ package fr.outadev.skinswitch.user;
 
 /**
  * Represents a user, with his/her username and decrypted password.
- * 
+ *
  * @author outadoc
- * 
  */
 public class User {
 

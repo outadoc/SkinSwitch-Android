@@ -1,8 +1,5 @@
 package fr.outadev.skinswitch.activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.adapters.SkinsListAdapter;
 import fr.outadev.skinswitch.skin.Skin;
@@ -109,11 +110,11 @@ public class SkinsListFragment extends Fragment {
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle(R.string.add_skin_dialog_title).setItems(R.array.new_skin_choices,
-				        new DialogInterface.OnClickListener() {
+						new DialogInterface.OnClickListener() {
 
-					        @Override
-					        public void onClick(DialogInterface dialog, int which) {
-						        switch(which) {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								switch(which) {
 									case 0: {
 										Intent intent = new Intent(getActivity(), SkinLibraryActivity.class);
 										startActivity(intent);
@@ -126,7 +127,8 @@ public class SkinsListFragment extends Fragment {
 									}
 								}
 							}
-				        });
+						}
+				);
 
 				builder.create().show();
 				return true;

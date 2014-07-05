@@ -1,8 +1,5 @@
 package fr.outadev.skinswitch.adapters;
 
-import java.io.FileNotFoundException;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -13,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.activities.SkinsListFragment;
 import fr.outadev.skinswitch.skin.Skin;
@@ -38,7 +39,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 		final TextView skinTitle = (TextView) convertView.findViewById(R.id.lbl_skin_title);
 
 		final Skin skin = getItem(position);
-		
+
 		skinTitle.setText(skin.getName());
 
 		(new AsyncTask<Void, Void, Bitmap>() {

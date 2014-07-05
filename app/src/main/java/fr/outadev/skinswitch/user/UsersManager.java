@@ -1,14 +1,14 @@
 package fr.outadev.skinswitch.user;
 
-import simbio.se.sau.Encryption;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import simbio.se.sau.Encryption;
+
 /**
  * Stores and manages the user's credentials.
- * 
+ *
  * @author outadoc
- * 
  */
 public class UsersManager {
 
@@ -28,7 +28,7 @@ public class UsersManager {
 
 	/**
 	 * Gets the User that was stored.
-	 * 
+	 *
 	 * @return the user.
 	 */
 	public User getUser() {
@@ -37,7 +37,7 @@ public class UsersManager {
 
 	/**
 	 * Check if the credentials are set.
-	 * 
+	 *
 	 * @return true if his credentials exist, false if not.
 	 */
 	private boolean doCredentialsExist() {
@@ -46,7 +46,7 @@ public class UsersManager {
 
 	/**
 	 * Gets the decrypted username.
-	 * 
+	 *
 	 * @return the username.
 	 */
 	private String getUsername() {
@@ -55,7 +55,7 @@ public class UsersManager {
 
 	/**
 	 * Gets the decrypted password.
-	 * 
+	 *
 	 * @return the password.
 	 */
 	private String getPassword() {
@@ -64,9 +64,8 @@ public class UsersManager {
 
 	/**
 	 * Securely stores the user's credentials.
-	 * 
-	 * @param user
-	 *            the user to store.
+	 *
+	 * @param user the user to store.
 	 */
 	public void saveUserCredentials(User user) {
 		SharedPreferences.Editor editor = prefs.edit();
@@ -79,9 +78,8 @@ public class UsersManager {
 
 	/**
 	 * Set if the user successfully logged in to the website or not.
-	 * 
-	 * @param loggedIn
-	 *            true if he/she logged in, false if he/she didn't.
+	 *
+	 * @param loggedIn true if he/she logged in, false if he/she didn't.
 	 */
 	public void setLoggedInSuccessfully(boolean loggedIn) {
 		SharedPreferences.Editor editor = prefs.edit();
@@ -96,7 +94,7 @@ public class UsersManager {
 
 	/**
 	 * Did the user log in successfully already?
-	 * 
+	 *
 	 * @return true if he/she did, else false.
 	 */
 	public boolean isLoggedInSuccessfully() {

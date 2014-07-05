@@ -1,8 +1,5 @@
 package fr.outadev.skinswitch.activities;
 
-import java.io.IOException;
-import java.util.Date;
-
 import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -14,6 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.Date;
+
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
@@ -96,7 +97,7 @@ public class NewCustomSkinActivity extends Activity {
 	/**
 	 * Downloads a skin, adds it to the database, and saves it to the
 	 * filesystem.
-	 * 
+	 *
 	 * @param skin
 	 */
 	private void downloadAndAddSkin(final Skin skin) {

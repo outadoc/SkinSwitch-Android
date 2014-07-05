@@ -1,10 +1,11 @@
 package simbio.se.sau;
 
+import android.util.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
-import android.util.Base64;
 
 public class Encryption {
 
@@ -37,7 +38,9 @@ public class Encryption {
 	}
 
 	public String encrypt(String key, String data) {
-		if(key == null || data == null) return null;
+		if(key == null || data == null) {
+			return null;
+		}
 
 		try {
 			DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(charsetName));
@@ -53,7 +56,9 @@ public class Encryption {
 	}
 
 	public String decrypt(String key, String data) {
-		if(key == null || data == null) return null;
+		if(key == null || data == null) {
+			return null;
+		}
 
 		try {
 			byte[] dataBytes = Base64.decode(data, base64Mode);

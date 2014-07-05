@@ -1,26 +1,25 @@
 package fr.outadev.skinswitch.network.skinmanager;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 
 /**
  * Handles the requests to the Skin Manager API.
- * 
- * @author outadoc
  *
+ * @author outadoc
  */
 public class SkinManagerConnectionHandler {
 
@@ -32,7 +31,7 @@ public class SkinManagerConnectionHandler {
 
 	/**
 	 * Gets the latest skins.
-	 * 
+	 *
 	 * @return an array containing the latest skins.
 	 */
 	public List<SkinLibrarySkin> fetchLatestSkins() {
@@ -41,11 +40,9 @@ public class SkinManagerConnectionHandler {
 
 	/**
 	 * Gets the n latest skins.
-	 * 
-	 * @param count
-	 *            the max number of skins to fetch.
-	 * @param start
-	 *            the index of the first skin to fetch.
+	 *
+	 * @param count the max number of skins to fetch.
+	 * @param start the index of the first skin to fetch.
 	 * @return an array containing the latest skins.
 	 */
 	public List<SkinLibrarySkin> fetchLatestSkins(int count, int start) {
@@ -54,7 +51,7 @@ public class SkinManagerConnectionHandler {
 
 	/**
 	 * Gets random skins.
-	 * 
+	 *
 	 * @return an array containing random skins.
 	 */
 	public List<SkinLibrarySkin> fetchRandomSkins() {
@@ -63,9 +60,8 @@ public class SkinManagerConnectionHandler {
 
 	/**
 	 * Gets n random skins.
-	 * 
-	 * @param count
-	 *            the max number of skins to retrieve.
+	 *
+	 * @param count the max number of skins to retrieve.
 	 * @return an array containing the random skins.
 	 */
 	public List<SkinLibrarySkin> fetchRandomSkins(int count) {
@@ -74,9 +70,8 @@ public class SkinManagerConnectionHandler {
 
 	/**
 	 * Gets a list of skins that match the criteria.
-	 * 
-	 * @param criteria
-	 *            the search criteria.
+	 *
+	 * @param criteria the search criteria.
 	 * @return an array of skins matching the criteria.
 	 */
 	public List<SkinLibrarySkin> fetchSkinByName(String criteria) {
@@ -85,19 +80,16 @@ public class SkinManagerConnectionHandler {
 
 	/**
 	 * Gets a list of skins that match the criteria.
-	 * 
-	 * @param criteria
-	 *            the search criteria.
-	 * @param count
-	 *            the max number of skins to fetch.
-	 * @param start
-	 *            the index of the first skin to fetch.
+	 *
+	 * @param criteria the search criteria.
+	 * @param count    the max number of skins to fetch.
+	 * @param start    the index of the first skin to fetch.
 	 * @return an array of skins matching the criteria.
 	 */
 	public List<SkinLibrarySkin> fetchSkinByName(String criteria, int count, int start) {
 		try {
 			return fetchSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match="
-			        + URLEncoder.encode(criteria, "UTF-8"));
+					+ URLEncoder.encode(criteria, "UTF-8"));
 		} catch(UnsupportedEncodingException e) {
 			return null;
 		}
@@ -110,9 +102,8 @@ public class SkinManagerConnectionHandler {
 
 	/**
 	 * Gets a list of skins from the API.
-	 * 
-	 * @param parameters
-	 *            the GET parameters that will be given to the API.
+	 *
+	 * @param parameters the GET parameters that will be given to the API.
 	 * @return an array of skins returned by the API.
 	 */
 	private List<SkinLibrarySkin> fetchSkinsFromAPI(String parameters) {
@@ -127,7 +118,7 @@ public class SkinManagerConnectionHandler {
 					for(int i = 0; i < resultArray.length(); i++) {
 						JSONObject currSkinObj = resultArray.getJSONObject(i);
 						SkinLibrarySkin skin = new SkinLibrarySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
-						        currSkinObj.getString("description"), null, currSkinObj.getString("owner_username"));
+								currSkinObj.getString("description"), null, currSkinObj.getString("owner_username"));
 						skinsList.add(skin);
 					}
 

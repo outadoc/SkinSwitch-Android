@@ -1,11 +1,5 @@
 package fr.outadev.skinswitch.skin;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
-
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,13 +8,18 @@ import android.util.Log;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
+
 import fr.outadev.skinswitch.skin.SkinRenderer.Side;
 
 /**
  * Represents a stored skin, as it is in the database.
- * 
+ *
  * @author outadoc
- * 
  */
 public class Skin {
 
@@ -32,15 +31,11 @@ public class Skin {
 
 	/**
 	 * Creates a new skin.
-	 * 
-	 * @param id
-	 *            the skin ID.
-	 * @param name
-	 *            the name of the skin.
-	 * @param description
-	 *            the description of the skin.
-	 * @param creationDate
-	 *            the date of creation of the skin.
+	 *
+	 * @param id           the skin ID.
+	 * @param name         the name of the skin.
+	 * @param description  the description of the skin.
+	 * @param creationDate the date of creation of the skin.
 	 */
 	public Skin(int id, String name, String description, Date creationDate) {
 		this.id = id;
@@ -52,13 +47,10 @@ public class Skin {
 	/**
 	 * Similar to {@link #Skin(int, String, String, Date) Skin(int, String,
 	 * String, Date)}, except the ID is automatically set to -1.
-	 * 
-	 * @param name
-	 *            the name of the skin.
-	 * @param description
-	 *            the description of the skin.
-	 * @param creationDate
-	 *            the date of creation of the skin.
+	 *
+	 * @param name         the name of the skin.
+	 * @param description  the description of the skin.
+	 * @param creationDate the date of creation of the skin.
 	 */
 	public Skin(String name, String description, Date creationDate) {
 		this(-1, name, description, creationDate);
@@ -105,19 +97,18 @@ public class Skin {
 	}
 
 	/**
-	 * 
+	 *
 	 * Path getters
-	 * 
+	 *
 	 */
 
 	/**
 	 * Gets the path on the filesystem of the raw skin image (which is sent to
 	 * minecraft.net).
-	 * 
-	 * @param context
-	 *            required to get the files directory of the app.
+	 *
+	 * @param context required to get the files directory of the app.
 	 * @return the absolute path of the raw skin image (doesn't have to actually
-	 *         exist).
+	 * exist).
 	 */
 	protected String getRawSkinPath(Context context) {
 		return context.getFilesDir() + "/" + "raw_" + id + ".png";
@@ -125,11 +116,10 @@ public class Skin {
 
 	/**
 	 * Gets the path on the filesystem of the head preview image.
-	 * 
-	 * @param context
-	 *            required to get the files directory of the app.
+	 *
+	 * @param context required to get the files directory of the app.
 	 * @return the absolute path of the head image (doesn't have to actually
-	 *         exist).
+	 * exist).
 	 */
 	protected String getSkinHeadPath(Context context) {
 		return context.getCacheDir() + "/" + "head_" + id + ".png";
@@ -137,11 +127,10 @@ public class Skin {
 
 	/**
 	 * Gets the path on the filesystem of the front skin preview image.
-	 * 
-	 * @param context
-	 *            required to get the files directory of the app.
+	 *
+	 * @param context required to get the files directory of the app.
 	 * @return the absolute path of the front skin image (doesn't have to
-	 *         actually exist).
+	 * actually exist).
 	 */
 	protected String getFrontSkinPreviewPath(Context context) {
 		return context.getCacheDir() + "/" + "preview_front_" + id + ".png";
@@ -149,31 +138,28 @@ public class Skin {
 
 	/**
 	 * Gets the path on the filesystem of the back skin preview image.
-	 * 
-	 * @param context
-	 *            required to get the files directory of the app.
+	 *
+	 * @param context required to get the files directory of the app.
 	 * @return the absolute path of the back skin image (doesn't have to
-	 *         actually exist).
+	 * actually exist).
 	 */
 	protected String getBackSkinPreviewPath(Context context) {
 		return context.getCacheDir() + "/" + "preview_back_" + id + ".png";
 	}
 
 	/**
-	 * 
+	 *
 	 * Filesystem read/write methods
-	 * 
+	 *
 	 */
 
 	/**
 	 * Reads a bitmap from the filesystem at the specified path.
-	 * 
-	 * @param path
-	 *            the path of the bitmap to decode.
+	 *
+	 * @param path    the path of the bitmap to decode.
 	 * @param context
 	 * @return the decoded bitmap.
-	 * @throws FileNotFoundException
-	 *             if no file could be found at that path.
+	 * @throws FileNotFoundException if no file could be found at that path.
 	 */
 	protected Bitmap readBitmapFromFileSystem(String path, Context context) throws FileNotFoundException {
 		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -191,13 +177,10 @@ public class Skin {
 
 	/**
 	 * Writes a bitmap to the filesystem at the specified path.
-	 * 
-	 * @param bitmap
-	 *            the bitmap to write.
-	 * @param path
-	 *            the path at which the bitmap will be written.
-	 * @throws IOException
-	 *             if an error occurred.
+	 *
+	 * @param bitmap the bitmap to write.
+	 * @param path   the path at which the bitmap will be written.
+	 * @throws IOException if an error occurred.
 	 */
 	protected void writeBitmapToFileSystem(Bitmap bitmap, String path) throws IOException {
 		FileOutputStream fos = new FileOutputStream(path);
@@ -206,15 +189,15 @@ public class Skin {
 	}
 
 	/**
-	 * 
+	 *
 	 * Bitmap getters
-	 * 
+	 *
 	 */
 
 	/**
 	 * Gets the raw skin File object for this skin (can be sent to
 	 * minecraft.net).
-	 * 
+	 *
 	 * @param context
 	 * @return a File object pointing to the skin's PNG file.
 	 */
@@ -224,11 +207,10 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the raw skin image.
-	 * 
+	 *
 	 * @param context
 	 * @return a bitmap containing the raw skin.
-	 * @throws FileNotFoundException
-	 *             if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException if the raw skin wasn't set yet.
 	 */
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
 		return readBitmapFromFileSystem(getRawSkinPath(context), context);
@@ -236,11 +218,10 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the skin head image.
-	 * 
+	 *
 	 * @param context
 	 * @return a bitmap containing the skin head.
-	 * @throws FileNotFoundException
-	 *             if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException if the raw skin wasn't set yet.
 	 */
 	public Bitmap getSkinHeadBitmap(Context context) throws FileNotFoundException {
 		try {
@@ -265,11 +246,10 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the front skin preview image.
-	 * 
+	 *
 	 * @param context
 	 * @return a bitmap of the front skin preview.
-	 * @throws FileNotFoundException
-	 *             if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException if the raw skin wasn't set yet.
 	 */
 	public Bitmap getFrontSkinPreview(Context context) throws FileNotFoundException {
 		try {
@@ -294,11 +274,10 @@ public class Skin {
 
 	/**
 	 * Gets a bitmap of the back skin preview image.
-	 * 
+	 *
 	 * @param context
 	 * @return a bitmap of the back skin preview.
-	 * @throws FileNotFoundException
-	 *             if the raw skin wasn't set yet.
+	 * @throws FileNotFoundException if the raw skin wasn't set yet.
 	 */
 	public Bitmap getBackSkinPreview(Context context) throws FileNotFoundException {
 		try {
@@ -322,19 +301,17 @@ public class Skin {
 	}
 
 	/**
-	 * 
+	 *
 	 * Bitmap setters
-	 * 
+	 *
 	 */
 
 	/**
 	 * Writes a raw skin bitmap to the filesystem.
-	 * 
+	 *
 	 * @param context
-	 * @param bitmap
-	 *            the bitmap to write.
-	 * @throws IOException
-	 *             if an error occured when writing.
+	 * @param bitmap  the bitmap to write.
+	 * @throws IOException if an error occured when writing.
 	 */
 	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
 		writeBitmapToFileSystem(bitmap, getRawSkinPath(context));
@@ -342,12 +319,10 @@ public class Skin {
 
 	/**
 	 * Writes a skin head bitmap to the filesystem.
-	 * 
+	 *
 	 * @param context
-	 * @param bitmap
-	 *            the bitmap to write.
-	 * @throws IOException
-	 *             if an error occured when writing.
+	 * @param bitmap  the bitmap to write.
+	 * @throws IOException if an error occured when writing.
 	 */
 	public void saveSkinHeadBitmap(Context context, Bitmap bitmap) throws IOException {
 		writeBitmapToFileSystem(bitmap, getSkinHeadPath(context));
@@ -355,12 +330,10 @@ public class Skin {
 
 	/**
 	 * Writes a front skin preview bitmap to the filesystem.
-	 * 
+	 *
 	 * @param context
-	 * @param bitmap
-	 *            the bitmap to write.
-	 * @throws IOException
-	 *             if an error occured when writing.
+	 * @param bitmap  the bitmap to write.
+	 * @throws IOException if an error occured when writing.
 	 */
 	public void saveFrontSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
 		writeBitmapToFileSystem(bitmap, getFrontSkinPreviewPath(context));
@@ -368,29 +341,32 @@ public class Skin {
 
 	/**
 	 * Writes a back skin preview bitmap to the filesystem.
-	 * 
+	 *
 	 * @param context
-	 * @param bitmap
-	 *            the bitmap to write.
-	 * @throws IOException
-	 *             if an error occured when writing.
+	 * @param bitmap  the bitmap to write.
+	 * @throws IOException if an error occured when writing.
 	 */
 	public void saveBackSkinPreviewBitmap(Context context, Bitmap bitmap) throws IOException {
 		writeBitmapToFileSystem(bitmap, getBackSkinPreviewPath(context));
 	}
 
-/**
+	/**
 	 * Downloads and stores this skin's raw skin on the filesystem.
 	 * Source must be specified via {@link #setSource(String).
+	 *
 	 * @param context
 	 * @throws NetworkErrorException if the skin couldn't be downloaded.
-	 * @throws IOException if the skin couldn't be saved.
+	 * @throws IOException           if the skin couldn't be saved.
 	 */
 	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
-		if(source == null) throw new NetworkErrorException("No source was set for " + this);
+		if(source == null) {
+			throw new NetworkErrorException("No source was set for " + this);
+		}
 
 		byte[] response = HttpRequest.get(source).trustAllHosts().useCaches(true).bytes();
-		if(response == null) throw new NetworkErrorException("Couldn't download " + this);
+		if(response == null) {
+			throw new NetworkErrorException("Couldn't download " + this);
+		}
 
 		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
 
@@ -402,11 +378,13 @@ public class Skin {
 
 	/**
 	 * Checks if the skin's source is a valid skin.
-	 * 
+	 *
 	 * @return true if it's valid, false if it's not
 	 */
 	public boolean isValidSource() {
-		if(source == null) return false;
+		if(source == null) {
+			return false;
+		}
 
 		byte[] response = HttpRequest.get(source).trustAllHosts().useCaches(true).bytes();
 
@@ -425,7 +403,7 @@ public class Skin {
 	@Override
 	public String toString() {
 		String str = "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate
-		        + "]";
+				+ "]";
 
 		if(source != null) {
 			str += ", source=" + source + "]";

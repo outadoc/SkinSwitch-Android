@@ -1,12 +1,13 @@
 package fr.outadev.skinswitch.adapters;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import java.util.List;
+
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 

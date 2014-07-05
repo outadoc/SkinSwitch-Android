@@ -2,9 +2,8 @@ package fr.outadev.skinswitch.network.login;
 
 /**
  * Thrown if the user has to answer a security question.
- * 
+ *
  * @author outadoc
- * 
  */
 public class ChallengeRequirementException extends Exception {
 
@@ -17,7 +16,7 @@ public class ChallengeRequirementException extends Exception {
 
 	/**
 	 * Gets the challenge the user will have to answer.
-	 * 
+	 *
 	 * @return the challenge.
 	 */
 	public LoginChallenge getChallenge() {

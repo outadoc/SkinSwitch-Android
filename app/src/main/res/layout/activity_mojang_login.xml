@@ -1,14 +1,14 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    tools:context="fr.outadev.skinswitch.activities.MojangLoginActivity" >
+       xmlns:tools="http://schemas.android.com/tools"
+       xmlns:custom="http://schemas.android.com/apk/res-auto"
+       tools:context="fr.outadev.skinswitch.activities.MojangLoginActivity">
 
     <!-- Login form -->
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <LinearLayout
             style="@style/LoginFormContainer"
@@ -24,7 +24,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"/>
 
             <EditText
                 android:id="@+id/password"
@@ -36,7 +36,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"/>
 
             <TextView
                 android:id="@+id/lbl_forgot_passwd"
@@ -45,7 +45,7 @@
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/forgot_passwd"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <com.dd.processbutton.iml.ActionProcessButton
                 android:id="@+id/sign_in_button"
@@ -63,7 +63,7 @@
                 custom:pb_colorProgress="@color/purple_progress"
                 custom:pb_textComplete="@string/button_success"
                 custom:pb_textError="@string/button_error"
-                custom:pb_textProgress="@string/button_loading" />
+                custom:pb_textProgress="@string/button_loading"/>
         </LinearLayout>
     </ScrollView>
 
@@ -73,7 +73,7 @@
         android:id="@+id/challenge_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <LinearLayout
             style="@style/LoginFormContainer"
@@ -85,7 +85,7 @@
                 android:id="@+id/lbl_challenge_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <EditText
                 android:id="@+id/txt_challenge_answer"
@@ -94,7 +94,7 @@
                 android:hint="@string/prompt_answer"
                 android:inputType="textVisiblePassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"/>
 
             <TextView
                 android:id="@+id/lbl_challenge_help"
@@ -103,7 +103,7 @@
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/challenge_help"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <com.dd.processbutton.iml.ActionProcessButton
                 android:id="@+id/b_submit_challenge"
@@ -121,7 +121,7 @@
                 custom:pb_colorProgress="@color/purple_progress"
                 custom:pb_textComplete="@string/button_success"
                 custom:pb_textError="@string/button_error"
-                custom:pb_textProgress="@string/button_loading" />
+                custom:pb_textProgress="@string/button_loading"/>
         </LinearLayout>
     </ScrollView>
 
