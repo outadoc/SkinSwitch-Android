@@ -237,7 +237,6 @@ public class Skin {
 			try {
 				saveSkinHeadBitmap(context, bmpHead);
 			} catch(IOException e1) {
-				e1.printStackTrace();
 			}
 
 			return bmpHead;
@@ -265,7 +264,6 @@ public class Skin {
 			try {
 				saveFrontSkinPreviewBitmap(context, bmpPrev);
 			} catch(IOException e1) {
-				e1.printStackTrace();
 			}
 
 			return bmpPrev;
@@ -293,7 +291,6 @@ public class Skin {
 			try {
 				saveBackSkinPreviewBitmap(context, bmpPrev);
 			} catch(IOException e1) {
-				e1.printStackTrace();
 			}
 
 			return bmpPrev;
