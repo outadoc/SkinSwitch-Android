@@ -44,10 +44,8 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 				try {
 					return getItem(position).getFrontSkinPreview(getContext());
 				} catch(FileNotFoundException e) {
-
+					return null;
 				}
-
-				return null;
 			}
 
 			@Override
