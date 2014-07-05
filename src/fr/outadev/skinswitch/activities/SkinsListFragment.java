@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch;
+package fr.outadev.skinswitch.activities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
+import fr.outadev.skinswitch.R;
+import fr.outadev.skinswitch.R.array;
+import fr.outadev.skinswitch.R.id;
+import fr.outadev.skinswitch.R.layout;
+import fr.outadev.skinswitch.R.menu;
+import fr.outadev.skinswitch.R.string;
+import fr.outadev.skinswitch.adapters.SkinsListAdapter;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
-import fr.outadev.skinswitch.ui.SkinsListAdapter;
 import fr.outadev.skinswitch.user.UsersManager;
 
 public class SkinsListFragment extends Fragment {

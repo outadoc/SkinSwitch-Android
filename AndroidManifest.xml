@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="fr.outadev.skinswitch.MainActivity"
+            android:name="fr.outadev.skinswitch.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,17 +26,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="fr.outadev.skinswitch.MojangLoginActivity"
+            android:name="fr.outadev.skinswitch.activities.MojangLoginActivity"
             android:label="@string/title_activity_mojang_login"
             android:theme="@style/DialogActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
-            android:name="fr.outadev.skinswitch.NewCustomSkinActivity"
+            android:name="fr.outadev.skinswitch.activities.NewCustomSkinActivity"
             android:label="@string/title_activity_new_custom_skin" >
         </activity>
         <activity
-            android:name="fr.outadev.skinswitch.SkinLibraryActivity"
+            android:name="fr.outadev.skinswitch.activities.SkinLibraryActivity"
             android:label="@string/title_activity_skin_library" >
         </activity>
     </application>

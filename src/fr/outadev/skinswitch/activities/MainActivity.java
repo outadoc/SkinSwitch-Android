@@ -1,8 +1,10 @@
-package fr.outadev.skinswitch;
+package fr.outadev.skinswitch.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import fr.outadev.skinswitch.R;
+import fr.outadev.skinswitch.R.layout;
 import fr.outadev.skinswitch.user.UsersManager;
 
 public class MainActivity extends FragmentActivity {

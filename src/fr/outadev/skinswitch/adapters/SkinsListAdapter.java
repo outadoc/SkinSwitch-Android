@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.ui;
+package fr.outadev.skinswitch.adapters;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.SkinsListFragment;
+import fr.outadev.skinswitch.activities.SkinsListFragment;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 

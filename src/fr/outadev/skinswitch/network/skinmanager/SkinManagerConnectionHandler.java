@@ -26,6 +26,10 @@ public class SkinManagerConnectionHandler {
 
 	private static final String BASE_URL = "https://skin.outadoc.fr/json/";
 
+	public enum EndPoints {
+		LATEST_SKINS, RANDOM_SKINS, SEARCH_SKINS
+	}
+
 	/**
 	 * Gets the latest skins.
 	 * 
