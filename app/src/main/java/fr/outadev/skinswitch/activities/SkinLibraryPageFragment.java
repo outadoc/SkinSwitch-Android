@@ -3,6 +3,7 @@ package fr.outadev.skinswitch.activities;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class SkinLibraryPageFragment extends Fragment {
 	private EndPoint endPoint;
 	private List<SkinLibrarySkin> skinsList;
 	private SkinLibraryListAdapter adapter;
+	private SwipeRefreshLayout swipeRefreshLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +33,18 @@ public class SkinLibraryPageFragment extends Fragment {
 		endPoint = (EndPoint) args.get(ARG_ENDPOINT);
 
 		View view = inflater.inflate(R.layout.fragment_skin_library_list, container, false);
+
+		swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+		swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimary,
+				R.color.colorAccent);
+		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				loadSkinsFromNetwork();
+			}
+
+		});
 
 		ListView listView = (ListView) view.findViewById(R.id.skins_library_list);
 		skinsList = new ArrayList<SkinLibrarySkin>();
@@ -43,6 +57,11 @@ public class SkinLibraryPageFragment extends Fragment {
 
 	private void loadSkinsFromNetwork() {
 		(new AsyncTask<Void, Void, List<SkinLibrarySkin>>() {
+
+			@Override
+			protected void onPreExecute() {
+				swipeRefreshLayout.setRefreshing(true);
+			}
 
 			@Override
 			protected List<SkinLibrarySkin> doInBackground(Void... params) {
@@ -67,6 +86,8 @@ public class SkinLibraryPageFragment extends Fragment {
 					skinsList.addAll(result);
 					adapter.notifyDataSetChanged();
 				}
+
+				swipeRefreshLayout.setRefreshing(false);
 			}
 
 		}).execute();
