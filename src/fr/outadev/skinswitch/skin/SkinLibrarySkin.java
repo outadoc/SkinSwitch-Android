@@ -9,11 +9,11 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
-public class SkinManagerSkin extends Skin {
+public class SkinLibrarySkin extends Skin {
 
 	private String owner;
 
-	public SkinManagerSkin(int id, String name, String description, Date creationDate, String owner) {
+	public SkinLibrarySkin(int id, String name, String description, Date creationDate, String owner) {
 		super(id, name, description, creationDate);
 		this.owner = owner;
 	}
