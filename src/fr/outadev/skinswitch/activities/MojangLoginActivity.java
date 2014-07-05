@@ -20,9 +20,6 @@ import com.dd.processbutton.iml.ActionProcessButton;
 import com.dd.processbutton.iml.ActionProcessButton.Mode;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.R.id;
-import fr.outadev.skinswitch.R.layout;
-import fr.outadev.skinswitch.R.string;
 import fr.outadev.skinswitch.network.MojangConnectionHandler;
 import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;

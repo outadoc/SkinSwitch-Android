@@ -15,10 +15,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.R.id;
-import fr.outadev.skinswitch.R.layout;
-import fr.outadev.skinswitch.R.menu;
-import fr.outadev.skinswitch.R.string;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
