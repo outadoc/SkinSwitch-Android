@@ -31,11 +31,15 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 		TextView txt_skin_name = (TextView) convertView.findViewById(R.id.lbl_skin_name);
 		TextView txt_skin_description = (TextView) convertView.findViewById(R.id.lbl_skin_description);
+		TextView txt_skin_author = (TextView) convertView.findViewById(R.id.lbl_skin_author);
+
 		final ImageView img_skin_preview = (ImageView) convertView.findViewById(R.id.img_skin_preview);
 
 		txt_skin_name.setText(getItem(position).getName());
 		txt_skin_description.setText((getItem(position).getDescription().length() != 0) ? getItem(position).getDescription() :
 				getContext().getResources().getString(R.string.no_description_available));
+		txt_skin_author.setText("Author: " + getItem(position).getOwner());
+
 		img_skin_preview.setImageResource(R.drawable.char_front); //loading
 
 		(new AsyncTask<Void, Void, Bitmap>() {

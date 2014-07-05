@@ -11,7 +11,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		card_view:cardCornerRadius="4dp">
+		card_view:cardCornerRadius="2dp">
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -22,12 +22,14 @@
 				android:id="@+id/img_skin_preview"
 				android:layout_width="100dp"
 				android:layout_height="200dp"
-				android:layout_margin="10dp" />
+				android:layout_margin="13dp"
+				android:elevation="3dp"/>
 
 			<LinearLayout
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_margin="10dp"
+				android:layout_marginTop="15dp"
+				android:layout_marginRight="10dp"
 				android:orientation="vertical">
 
 				<TextView
@@ -38,11 +40,18 @@
 					android:textSize="22sp" />
 
 				<TextView
+					android:id="@+id/lbl_skin_author"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dp"
+					android:textSize="15sp" />
+
+				<TextView
 					android:id="@+id/lbl_skin_description"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="5dp"
-					android:layout_marginLeft="5dp"
+					android:layout_marginTop="15dp"
+					android:layout_marginLeft="7dp"
 					android:textSize="16sp" />
 			</LinearLayout>
 		</LinearLayout>
