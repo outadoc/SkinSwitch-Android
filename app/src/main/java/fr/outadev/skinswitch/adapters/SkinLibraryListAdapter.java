@@ -34,7 +34,8 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		final ImageView img_skin_preview = (ImageView) convertView.findViewById(R.id.img_skin_preview);
 
 		txt_skin_name.setText(getItem(position).getName());
-		txt_skin_description.setText(getItem(position).getDescription());
+		txt_skin_description.setText((getItem(position).getDescription().length() != 0) ? getItem(position).getDescription() :
+				getContext().getResources().getString(R.string.no_description_available));
 		img_skin_preview.setImageResource(R.drawable.char_front); //loading
 
 		(new AsyncTask<Void, Void, Bitmap>() {

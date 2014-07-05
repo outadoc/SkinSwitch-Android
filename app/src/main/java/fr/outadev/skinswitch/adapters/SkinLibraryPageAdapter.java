@@ -21,10 +21,10 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
 		switch(index) {
 			case 0:
-				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
+				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.RANDOM_SKINS);
 				break;
 			case 1:
-				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.RANDOM_SKINS);
+				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
 				break;
 			case 2:
 				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.SEARCH_SKINS);
@@ -46,9 +46,9 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 	public CharSequence getPageTitle(int position) {
 		switch(position) {
 			case 0:
-				return "LATEST";
-			case 1:
 				return "RANDOM";
+			case 1:
+				return "LATEST";
 			case 2:
 				return "SEARCH";
 			default:
