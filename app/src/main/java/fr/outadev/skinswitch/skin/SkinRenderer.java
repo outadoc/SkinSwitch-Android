@@ -283,10 +283,8 @@ public abstract class SkinRenderer {
 	/**
 	 * Overlays the armour on a body part.
 	 * 
-	 * @param bodyPart
+	 * @param which
 	 *            the part of the skin we have to overlay the armour on.
-	 * @param armor
-	 *            the armour to overlay.
 	 * @return the combined armour and body part.
 	 */
 	private static Bitmap overlayArmor(BodyPart which, HashMap<BodyPart, Bitmap> skinBits, HashMap<BodyPart, Bitmap> armorPieces) {
