@@ -84,7 +84,7 @@ public class Skin {
 		return creationDate;
 	}
 
-	protected void setCreationDate(Date creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 
@@ -356,11 +356,11 @@ public class Skin {
 	 * @throws IOException           if the skin couldn't be saved.
 	 */
 	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
-		if(source == null) {
+		if(getSource() == null) {
 			throw new NetworkErrorException("No source was set for " + this);
 		}
 
-		byte[] response = HttpRequest.get(source).trustAllHosts().useCaches(true).bytes();
+		byte[] response = HttpRequest.get(getSource()).trustAllHosts().useCaches(true).bytes();
 		if(response == null) {
 			throw new NetworkErrorException("Couldn't download " + this);
 		}

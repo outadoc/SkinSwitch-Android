@@ -23,7 +23,7 @@ import fr.outadev.skinswitch.skin.SkinLibrarySkin;
  */
 public class SkinManagerConnectionHandler {
 
-	private static final String BASE_URL = "https://skin.outadoc.fr/json/";
+	public static final String BASE_URL = "https://skin.outadoc.fr/json/";
 
 	public enum EndPoint {
 		LATEST_SKINS, RANDOM_SKINS, SEARCH_SKINS
@@ -119,6 +119,8 @@ public class SkinManagerConnectionHandler {
 						JSONObject currSkinObj = resultArray.getJSONObject(i);
 						SkinLibrarySkin skin = new SkinLibrarySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
 								currSkinObj.getString("description"), null, currSkinObj.getString("owner_username"));
+						skin.setSource(BASE_URL + "?method=getSkin&id=" + currSkinObj.getInt("id"));
+						skin.setSkinManagerId(currSkinObj.getInt("id"));
 						skinsList.add(skin);
 					}
 

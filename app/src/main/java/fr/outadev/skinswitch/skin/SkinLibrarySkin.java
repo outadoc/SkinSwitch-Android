@@ -13,6 +13,7 @@ import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 public class SkinLibrarySkin extends Skin {
 
 	private String owner;
+	private int skinManagerId;
 
 	public SkinLibrarySkin(int id, String name, String description, Date creationDate, String owner) {
 		super(id, name, description, creationDate);
@@ -27,10 +28,14 @@ public class SkinLibrarySkin extends Skin {
 		this.owner = owner;
 	}
 
+	public void setSkinManagerId(int skinManagerId) {
+		this.skinManagerId = skinManagerId;
+	}
+
 	@Override
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
 		SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
-		Bitmap bmp = handler.fetchSkinBitmap(getId());
+		Bitmap bmp = handler.fetchSkinBitmap(skinManagerId);
 
 		if(bmp == null) {
 			throw new FileNotFoundException("Couldn't fetch skin for id=" + getId());
@@ -49,6 +54,12 @@ public class SkinLibrarySkin extends Skin {
 	protected void writeBitmapToFileSystem(Bitmap bitmap, String path) throws IOException {
 		Log.d("SkinSwitch", "didn't save cache for " + this + "because it is a " + this.getClass().getName());
 		throw new FileNotFoundException();
+	}
+
+	public Skin toSkin() {
+		Skin skin = new Skin(getId(), getName(), getDescription(), getCreationDate());
+		skin.setSource(getSource());
+		return skin;
 	}
 
 }

@@ -1,8 +1,10 @@
 package fr.outadev.skinswitch.adapters;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
+import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
@@ -60,6 +65,37 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 				}
 			}
 		}).execute();
+
+		CardView cardView = (CardView) convertView.findViewById(R.id.card_view);
+		cardView.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				(new AsyncTask<Void, Void, Void>() {
+
+					@Override
+					protected Void doInBackground(Void... voids) {
+						SkinLibrarySkin skin = getItem(position);
+						skin.setCreationDate(new Date());
+						SkinsDatabase db = new SkinsDatabase(getContext());
+						db.addSkin(skin);
+
+						try {
+							skin.toSkin().downloadSkinFromSource(getContext());
+						} catch(NetworkErrorException e) {
+							e.printStackTrace();
+						} catch(IOException e) {
+							e.printStackTrace();
+						}
+
+						return null;
+					}
+
+				}).execute();
+
+			}
+
+		});
 
 		return convertView;
 	}
