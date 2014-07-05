@@ -1,6 +1,7 @@
 package fr.outadev.skinswitch.adapters;
 
 import android.accounts.NetworkErrorException;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -23,8 +24,11 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
-	public SkinLibraryListAdapter(Context context, int resource, List<SkinLibrarySkin> objects) {
-		super(context, resource, objects);
+	private Activity parentActivity;
+
+	public SkinLibraryListAdapter(Activity parent, int resource, List<SkinLibrarySkin> objects) {
+		super(parent, resource, objects);
+		this.parentActivity = parent;
 	}
 
 	@Override
@@ -71,6 +75,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 			@Override
 			public void onClick(View view) {
+
 				(new AsyncTask<Void, Void, Void>() {
 
 					@Override
@@ -88,7 +93,18 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 							e.printStackTrace();
 						}
 
+						try {
+							Thread.sleep(500);
+						} catch(InterruptedException e) {
+
+						}
+
 						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void aVoid) {
+						parentActivity.finish();
 					}
 
 				}).execute();
