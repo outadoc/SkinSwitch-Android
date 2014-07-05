@@ -81,10 +81,6 @@ public abstract class SkinRenderer {
 		HashMap<BodyPart, Bitmap> skinBits = new HashMap<BodyPart, Bitmap>();
 		HashMap<BodyPart, Bitmap> armorPieces = new HashMap<BodyPart, Bitmap>();
 
-		// Bitmap head, chest, arm_right, arm_left, leg_right, leg_left,
-		// armor_head, armor_chest, armor_arm_right, armor_arm_left,
-		// armor_leg_right, armor_leg_left;
-
 		if(side == null || side == Side.FRONT) {
 			// if we want a preview of the front of the skin or if nothing is
 			// specified
@@ -149,7 +145,7 @@ public abstract class SkinRenderer {
 			}
 		}
 
-		Bitmap dest = Bitmap.createBitmap(16, 40, Bitmap.Config.ARGB_8888);
+		Bitmap dest = Bitmap.createBitmap(16, 32, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(dest);
 
 		HashMap<BodyPart, Bitmap> finalParts = new HashMap<BodyPart, Bitmap>();
