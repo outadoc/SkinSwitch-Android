@@ -265,7 +265,8 @@ public abstract class SkinRenderer {
 	 * @param which the part of the skin we have to overlay the armour on.
 	 * @return the combined armour and body part.
 	 */
-	private static Bitmap overlayArmor(BodyPart which, HashMap<BodyPart, Bitmap> skinBits, HashMap<BodyPart, Bitmap> armorPieces) {
+	private static Bitmap overlayArmor(BodyPart which, HashMap<BodyPart, Bitmap> skinBits, HashMap<BodyPart,
+			Bitmap> armorPieces) {
 		Bitmap bodyPartBitmap = skinBits.get(which);
 		Bitmap armorBitmap = armorPieces.get(which);
 

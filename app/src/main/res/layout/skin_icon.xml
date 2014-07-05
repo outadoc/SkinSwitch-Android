@@ -4,27 +4,27 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:gravity="center"
-        android:background="@drawable/item_frame"
-        android:elevation="3dp">
+	<FrameLayout
+		android:layout_width="75dp"
+		android:layout_height="75dp"
+		android:gravity="center"
+		android:background="@drawable/item_frame"
+		android:elevation="3dp">
 
-        <ImageView
-            android:id="@+id/img_skin_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="14dp"
-            android:elevation="5dp"/>
-    </FrameLayout>
+		<ImageView
+			android:id="@+id/img_skin_preview"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_margin="14dp"
+			android:elevation="5dp" />
+	</FrameLayout>
 
-    <TextView
-        android:id="@+id/lbl_skin_title"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"/>
+	<TextView
+		android:id="@+id/lbl_skin_title"
+		android:gravity="center"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textAlignment="center"
+		android:textColor="@android:color/white" />
 
 </LinearLayout>

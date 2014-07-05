@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="new_skin_choices">
-        <item>Choose from Skin Library</item>
-        <item>Create a Custom Skin</item>
-    </string-array>
+	<string-array name="new_skin_choices">
+		<item>Choose from Skin Library</item>
+		<item>Create a Custom Skin</item>
+	</string-array>
 
 </resources>

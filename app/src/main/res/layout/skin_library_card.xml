@@ -23,7 +23,7 @@
 				android:layout_width="100dp"
 				android:layout_height="200dp"
 				android:layout_margin="13dp"
-				android:elevation="3dp"/>
+				android:elevation="3dp" />
 
 			<LinearLayout
 				android:layout_width="wrap_content"
