@@ -29,6 +29,7 @@ public class SkinLibraryPageFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
+
 		Bundle args = getArguments();
 		endPoint = (EndPoint) args.get(ARG_ENDPOINT);
 

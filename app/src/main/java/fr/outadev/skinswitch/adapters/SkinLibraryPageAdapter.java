@@ -10,6 +10,10 @@ import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.En
 
 public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
+	public static final int INDEX_RANDOM_SKINS = 0;
+	public static final int INDEX_LATEST_SKINS = 1;
+	public static final int INDEX_SEARCH_SKINS = 2;
+
 	public SkinLibraryPageAdapter(FragmentManager fm) {
 		super(fm);
 	}
@@ -20,13 +24,13 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 		Bundle args = new Bundle();
 
 		switch(index) {
-			case 0:
+			case INDEX_RANDOM_SKINS:
 				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.RANDOM_SKINS);
 				break;
-			case 1:
+			case INDEX_LATEST_SKINS:
 				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
 				break;
-			case 2:
+			case INDEX_SEARCH_SKINS:
 				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.SEARCH_SKINS);
 				break;
 			default:
@@ -45,11 +49,11 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 	@Override
 	public CharSequence getPageTitle(int position) {
 		switch(position) {
-			case 0:
+			case INDEX_RANDOM_SKINS:
 				return "RANDOM";
-			case 1:
+			case INDEX_LATEST_SKINS:
 				return "LATEST";
-			case 2:
+			case INDEX_SEARCH_SKINS:
 				return "SEARCH";
 			default:
 				return null;
