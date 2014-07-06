@@ -109,8 +109,6 @@ public class SkinLibraryPageFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(List<SkinLibrarySkin> result) {
-				System.out.println(result);
-
 				if(result != null) {
 					if(!append) {
 						skinsList.clear();
