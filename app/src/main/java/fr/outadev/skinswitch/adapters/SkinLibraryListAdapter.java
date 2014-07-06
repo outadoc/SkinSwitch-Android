@@ -1,6 +1,8 @@
 package fr.outadev.skinswitch.adapters;
 
 import android.accounts.NetworkErrorException;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,10 +27,12 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
 public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 	private Activity parentActivity;
+	private final int animTime;
 
 	public SkinLibraryListAdapter(Activity parent, int resource, List<SkinLibrarySkin> objects) {
 		super(parent, resource, objects);
 		this.parentActivity = parent;
+		animTime = getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime);
 	}
 
 	@Override
@@ -42,16 +46,26 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		TextView txt_skin_description = (TextView) convertView.findViewById(R.id.lbl_skin_description);
 		TextView txt_skin_author = (TextView) convertView.findViewById(R.id.lbl_skin_author);
 
-		final ImageView img_skin_preview = (ImageView) convertView.findViewById(R.id.img_skin_preview);
+		final ImageView img_skin_preview_front = (ImageView) convertView.findViewById(R.id.img_skin_preview);
+		final ImageView img_skin_preview_back = (ImageView) convertView.findViewById(R.id.img_skin_preview_back);
+
+		img_skin_preview_front.setVisibility(View.VISIBLE);
+		img_skin_preview_front.setAlpha(1F);
+
+		img_skin_preview_back.setVisibility(View.GONE);
 
 		txt_skin_name.setText(getItem(position).getName());
 		txt_skin_description.setText((getItem(position).getDescription().length() != 0) ? getItem(position).getDescription() :
 				getContext().getResources().getString(R.string.no_description_available));
 		txt_skin_author.setText("Author: " + getItem(position).getOwner());
 
-		img_skin_preview.setImageResource(R.drawable.char_front); //loading
+		//loading images
+		img_skin_preview_front.setImageResource(R.drawable.char_front);
+		img_skin_preview_back.setImageResource(R.drawable.char_back);
 
 		(new AsyncTask<Void, Void, Bitmap>() {
+
+			// get front preview
 
 			@Override
 			protected Bitmap doInBackground(Void... voids) {
@@ -65,10 +79,49 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 			@Override
 			protected void onPostExecute(Bitmap bitmap) {
 				if(bitmap != null) {
-					img_skin_preview.setImageBitmap(bitmap);
+					img_skin_preview_front.setImageBitmap(bitmap);
+
+					(new AsyncTask<Void, Void, Bitmap>() {
+
+						// get back preview
+
+						@Override
+						protected Bitmap doInBackground(Void... voids) {
+							try {
+								return getItem(position).getBackSkinPreview(getContext());
+							} catch(FileNotFoundException e) {
+								return null;
+							}
+						}
+
+						@Override
+						protected void onPostExecute(Bitmap bitmap) {
+							if(bitmap != null) {
+								img_skin_preview_back.setImageBitmap(bitmap);
+							}
+						}
+					}).execute();
 				}
 			}
 		}).execute();
+
+		img_skin_preview_front.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				crossfade(img_skin_preview_front, img_skin_preview_back);
+			}
+
+		});
+
+		img_skin_preview_back.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				crossfade(img_skin_preview_back, img_skin_preview_front);
+			}
+
+		});
 
 		CardView cardView = (CardView) convertView.findViewById(R.id.card_view);
 		cardView.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +167,34 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		});
 
 		return convertView;
+	}
+
+	private void crossfade(final View oldView, final View newView) {
+
+		// Set the new view to 0% opacity but visible, so that it is visible
+		// (but fully transparent) during the animation.
+		newView.setAlpha(0f);
+		newView.setVisibility(View.VISIBLE);
+
+		// Animate the new view to 100% opacity, and clear any animation
+		// listener set on the view.
+		newView.animate()
+				.alpha(1f)
+				.setDuration(animTime)
+				.setListener(null);
+
+		// Animate the old view to 0% opacity. After the animation ends,
+		// set its visibility to GONE as an optimization step (it won't
+		// participate in layout passes, etc.)
+		oldView.animate()
+				.alpha(0f)
+				.setDuration(animTime)
+				.setListener(new AnimatorListenerAdapter() {
+					@Override
+					public void onAnimationEnd(Animator animation) {
+						oldView.setVisibility(View.GONE);
+					}
+				});
 	}
 
 }
