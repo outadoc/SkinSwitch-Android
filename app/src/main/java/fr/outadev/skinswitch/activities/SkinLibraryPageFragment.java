@@ -47,8 +47,8 @@ public class SkinLibraryPageFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_skin_library_list, container, false);
 
 		swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-		swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimary,
-				R.color.colorAccent);
+		swipeRefreshLayout.setColorSchemeResources(R.color.loading_bar_one, R.color.loading_bar_two, R.color.loading_bar_one,
+				R.color.loading_bar_two);
 		swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
 			@Override
