@@ -32,6 +32,10 @@ public class SkinLibrarySkin extends Skin {
 		this.skinManagerId = skinManagerId;
 	}
 
+	public int getSkinManagerId() {
+		return skinManagerId;
+	}
+
 	@Override
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
 		SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();

@@ -42,6 +42,8 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 			convertView = inflater.inflate(R.layout.skin_library_card, parent, false);
 		}
 
+		final SkinLibrarySkin skin = getItem(position);
+
 		TextView txt_skin_name = (TextView) convertView.findViewById(R.id.lbl_skin_name);
 		TextView txt_skin_description = (TextView) convertView.findViewById(R.id.lbl_skin_description);
 		TextView txt_skin_author = (TextView) convertView.findViewById(R.id.lbl_skin_author);
@@ -54,10 +56,10 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 		img_skin_preview_back.setVisibility(View.GONE);
 
-		txt_skin_name.setText(getItem(position).getName());
-		txt_skin_description.setText((getItem(position).getDescription().length() != 0) ? getItem(position).getDescription() :
+		txt_skin_name.setText(skin.getName());
+		txt_skin_description.setText((skin.getDescription().length() != 0) ? skin.getDescription() :
 				getContext().getResources().getString(R.string.no_description_available));
-		txt_skin_author.setText("Author: " + getItem(position).getOwner());
+		txt_skin_author.setText("Author: " + skin.getOwner());
 
 		//loading images
 		img_skin_preview_front.setImageResource(R.drawable.char_front);
@@ -66,6 +68,16 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		(new AsyncTask<Void, Void, Bitmap>() {
 
 			// get front preview
+
+			private Object tag;
+
+			@Override
+			protected void onPreExecute() {
+				tag = skin.getSkinManagerId();
+
+				img_skin_preview_front.setTag(skin.getSkinManagerId());
+				img_skin_preview_back.setTag(skin.getSkinManagerId());
+			}
 
 			@Override
 			protected Bitmap doInBackground(Void... voids) {
@@ -78,7 +90,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 			@Override
 			protected void onPostExecute(Bitmap bitmap) {
-				if(bitmap != null) {
+				if(bitmap != null && tag.equals(img_skin_preview_front.getTag())) {
 					img_skin_preview_front.setImageBitmap(bitmap);
 
 					(new AsyncTask<Void, Void, Bitmap>() {
@@ -96,7 +108,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 						@Override
 						protected void onPostExecute(Bitmap bitmap) {
-							if(bitmap != null) {
+							if(bitmap != null && tag.equals(img_skin_preview_back.getTag())) {
 								img_skin_preview_back.setImageBitmap(bitmap);
 							}
 						}
