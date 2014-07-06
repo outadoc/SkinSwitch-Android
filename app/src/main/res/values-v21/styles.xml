@@ -7,6 +7,8 @@
 		<item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
 		<!-- theme UI controls like checkboxes and text fields -->
 		<item name="android:colorAccent">@color/colorAccent</item>
+		<item name="android:navigationBarColor">?android:colorPrimaryDark</item>
+		<item name="android:statusBarColor">?android:colorPrimaryDark</item>
 	</style>
 
 	<style name="DialogActivity" parent="android:Theme.Material.Light.Dialog">
