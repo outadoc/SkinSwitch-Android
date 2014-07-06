@@ -70,8 +70,6 @@ public class MojangLoginActivity extends Activity {
 		LOGIN, CHALLENGE
 	}
 
-	;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,7 +91,7 @@ public class MojangLoginActivity extends Activity {
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
 
-		mPassword = user.getPassword();
+		mPassword = new String();
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setText(mPassword);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
