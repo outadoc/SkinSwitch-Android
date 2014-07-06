@@ -121,13 +121,13 @@ public abstract class SkinRenderer {
 
 			skinBits.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 32, 20, 8, 12));
 
-			skinBits.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 52, 20, 4, 12));
-			skinBits.put(BodyPart.ARM_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52,
-					4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_LEFT)) : Bitmap.createBitmap(skin, 44, 52, 4, 12));
+			skinBits.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 52, 20, 4, 12));
+			skinBits.put(BodyPart.ARM_LEFT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52,
+					4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_RIGHT)) : Bitmap.createBitmap(skin, 44, 52, 4, 12));
 
-			skinBits.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 12, 20, 4, 12));
-			skinBits.put(BodyPart.LEG_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52,
-					4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_RIGHT)) : Bitmap.createBitmap(skin, 28, 52, 4, 12));
+			skinBits.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 12, 20, 4, 12));
+			skinBits.put(BodyPart.LEG_LEFT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52,
+					4, 12))) ? flipImage(skinBits.get(BodyPart.LEG_RIGHT)) : Bitmap.createBitmap(skin, 28, 52, 4, 12));
 
 			// it's armor time!
 			armorPieces.put(BodyPart.HEAD, Bitmap.createBitmap(skin, 56, 8, 8, 8));
