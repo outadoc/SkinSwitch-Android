@@ -373,8 +373,7 @@ public class MojangLoginActivity extends Activity {
 			} else {
 				// if there was a problem, display it in a toast, put the button
 				// in fail mode and show the login form a bit later
-				Toast.makeText(MojangLoginActivity.this, ((InvalidMojangChallengeAnswerException) ex).getMessage(),
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(MojangLoginActivity.this, ex.getMessage(), Toast.LENGTH_LONG).show();
 				mChallengeButton.setProgress(-1);
 
 				new android.os.Handler().postDelayed(new Runnable() {
