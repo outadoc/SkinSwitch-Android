@@ -3,5 +3,6 @@
 
 	<string name="title_activity_skin_library">Skin Library</string>
 	<string name="no_description_available">No description available.</string>
+	<string name="hint_search_library">Search in Library…</string>
 
 </resources>
