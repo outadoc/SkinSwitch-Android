@@ -147,7 +147,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 						}
 
 						try {
-							Thread.sleep(500);
+							Thread.sleep(300);
 						} catch(InterruptedException e) {
 
 						}
