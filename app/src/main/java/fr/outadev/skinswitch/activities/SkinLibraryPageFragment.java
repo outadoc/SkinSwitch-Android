@@ -20,8 +20,12 @@ import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 
 public class SkinLibraryPageFragment extends Fragment {
 
-	public static final String ARG_ENDPOINT = "EndPoint"; //$NON-NLS-1$
+	public static final String ARG_ENDPOINT = "EndPoint";
+	public static final String ARG_SEARCH_QUERY = "SearchQuery";
+
 	private EndPoint endPoint;
+	private String searchQuery;
+
 	private List<SkinLibrarySkin> skinsList;
 	private SkinLibraryListAdapter adapter;
 	private SwipeRefreshLayout swipeRefreshLayout;
@@ -31,7 +35,14 @@ public class SkinLibraryPageFragment extends Fragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		Bundle args = getArguments();
-		endPoint = (EndPoint) args.get(ARG_ENDPOINT);
+
+		if(args == null) {
+			endPoint = EndPoint.RANDOM_SKINS;
+			searchQuery = ".";
+		} else {
+			endPoint = (EndPoint) args.get(ARG_ENDPOINT);
+			searchQuery = args.getString(ARG_SEARCH_QUERY);
+		}
 
 		View view = inflater.inflate(R.layout.fragment_skin_library_list, container, false);
 
@@ -74,7 +85,7 @@ public class SkinLibraryPageFragment extends Fragment {
 					case RANDOM_SKINS:
 						return handler.fetchRandomSkins();
 					case SEARCH_SKINS:
-						return handler.fetchSkinByName("outadoc");
+						return handler.fetchSkinByName(searchQuery);
 					default:
 						return null;
 				}

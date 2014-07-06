@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="fr.outadev.skinswitch"
-          android:versionCode="1"
-          android:versionName="1.0">
+<manifest
+	package="fr.outadev.skinswitch"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:versionCode="1"
+	android:versionName="1.0">
 
 	<uses-sdk
 		android:minSdkVersion="L"
@@ -38,6 +39,22 @@
 		<activity
 			android:name="fr.outadev.skinswitch.activities.SkinLibraryActivity"
 			android:label="@string/title_activity_skin_library">
+			<meta-data
+				android:name="android.app.default_searchable"
+				android:value="fr.outadev.skinswitch.activities.LibrarySearchActivity" />
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="fr.outadev.skinswitch.activities.LibrarySearchActivity"
+			android:label="Search">
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+			<meta-data
+				android:name="android.app.searchable"
+				android:resource="@xml/searchable" />
 		</activity>
 	</application>
 
