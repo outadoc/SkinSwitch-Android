@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
+import fr.outadev.skinswitch.adapters.EndlessScrollListener;
 import fr.outadev.skinswitch.adapters.SkinLibraryListAdapter;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.EndPoint;
@@ -29,6 +30,8 @@ public class SkinLibraryPageFragment extends Fragment {
 	private List<SkinLibrarySkin> skinsList;
 	private SkinLibraryListAdapter adapter;
 	private SwipeRefreshLayout swipeRefreshLayout;
+
+	private static final int MAX_SKINS_LOAD_COUNT = 15;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,11 +66,24 @@ public class SkinLibraryPageFragment extends Fragment {
 		adapter = new SkinLibraryListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
 		listView.setAdapter(adapter);
 
-		loadSkinsFromNetwork();
+		listView.setOnScrollListener(new EndlessScrollListener() {
+
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				loadSkinsFromNetwork(true);
+			}
+
+		});
+
+		loadSkinsFromNetwork(false);
 		return view;
 	}
 
 	private void loadSkinsFromNetwork() {
+		loadSkinsFromNetwork(false);
+	}
+
+	private void loadSkinsFromNetwork(final boolean append) {
 		(new AsyncTask<Void, Void, List<SkinLibrarySkin>>() {
 
 			@Override
@@ -81,11 +97,11 @@ public class SkinLibraryPageFragment extends Fragment {
 
 				switch(endPoint) {
 					case LATEST_SKINS:
-						return handler.fetchLatestSkins();
+						return handler.fetchLatestSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
 					case RANDOM_SKINS:
-						return handler.fetchRandomSkins();
+						return handler.fetchRandomSkins(MAX_SKINS_LOAD_COUNT);
 					case SEARCH_SKINS:
-						return handler.fetchSkinByName(searchQuery);
+						return handler.fetchSkinByName(searchQuery, MAX_SKINS_LOAD_COUNT, skinsList.size());
 					default:
 						return null;
 				}
@@ -93,8 +109,13 @@ public class SkinLibraryPageFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(List<SkinLibrarySkin> result) {
+				System.out.println(result);
+
 				if(result != null) {
-					skinsList.clear();
+					if(!append) {
+						skinsList.clear();
+					}
+
 					skinsList.addAll(result);
 					adapter.notifyDataSetChanged();
 				}
