@@ -5,10 +5,6 @@
 	android:versionCode="1"
 	android:versionName="1.0">
 
-	<uses-sdk
-		android:minSdkVersion="L"
-		android:targetSdkVersion="L" />
-
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
@@ -34,27 +30,41 @@
 		</activity>
 		<activity
 			android:name="fr.outadev.skinswitch.activities.NewCustomSkinActivity"
-			android:label="@string/title_activity_new_custom_skin">
+			android:label="@string/title_activity_new_custom_skin"
+			android:parentActivityName="fr.outadev.skinswitch.activities.MainActivity">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="fr.outadev.skinswitch.activities.MainActivity" />
 		</activity>
 		<activity
 			android:name="fr.outadev.skinswitch.activities.SkinLibraryActivity"
-			android:label="@string/title_activity_skin_library">
+			android:label="@string/title_activity_skin_library"
+			android:parentActivityName="fr.outadev.skinswitch.activities.MainActivity">
 			<meta-data
 				android:name="android.app.default_searchable"
 				android:value="fr.outadev.skinswitch.activities.LibrarySearchActivity" />
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="fr.outadev.skinswitch.activities.MainActivity" />
+
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
 		</activity>
 		<activity
 			android:name="fr.outadev.skinswitch.activities.LibrarySearchActivity"
-			android:label="Search">
+			android:label="Search"
+			android:parentActivityName="fr.outadev.skinswitch.activities.SkinLibraryActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
+
 			<meta-data
 				android:name="android.app.searchable"
 				android:resource="@xml/searchable" />
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="fr.outadev.skinswitch.activities.SkinLibraryActivity" />
 		</activity>
 	</application>
 
