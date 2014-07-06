@@ -2,7 +2,14 @@ package fr.outadev.skinswitch.adapters;
 
 import android.widget.AbsListView;
 
+/**
+ * Implements a scroll listener that allows for endless scroll.
+ *
+ * @author Nathan Esquenazi
+ * @see https://github.com/thecodepath/android_guides/wiki/Endless-Scrolling-with-AdapterViews
+ */
 public abstract class EndlessScrollListener implements AbsListView.OnScrollListener {
+
 	// The minimum amount of items to have below your current scroll position
 	// before loading more.
 	private int visibleThreshold = 5;
