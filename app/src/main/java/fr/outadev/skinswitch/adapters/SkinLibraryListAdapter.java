@@ -1,8 +1,6 @@
 package fr.outadev.skinswitch.adapters;
 
 import android.accounts.NetworkErrorException;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,13 +19,14 @@ import java.util.Date;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
+import fr.outadev.skinswitch.Util;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
-	private Activity parentActivity;
 	private final int animTime;
+	private Activity parentActivity;
 
 	public SkinLibraryListAdapter(Activity parent, int resource, List<SkinLibrarySkin> objects) {
 		super(parent, resource, objects);
@@ -121,7 +120,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 			@Override
 			public void onClick(View view) {
-				crossfade(img_skin_preview_front, img_skin_preview_back);
+				Util.crossfade(img_skin_preview_front, img_skin_preview_back, animTime);
 			}
 
 		});
@@ -130,7 +129,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 			@Override
 			public void onClick(View view) {
-				crossfade(img_skin_preview_back, img_skin_preview_front);
+				Util.crossfade(img_skin_preview_back, img_skin_preview_front, animTime);
 			}
 
 		});
@@ -179,34 +178,6 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		});
 
 		return convertView;
-	}
-
-	private void crossfade(final View oldView, final View newView) {
-
-		// Set the new view to 0% opacity but visible, so that it is visible
-		// (but fully transparent) during the animation.
-		newView.setAlpha(0f);
-		newView.setVisibility(View.VISIBLE);
-
-		// Animate the new view to 100% opacity, and clear any animation
-		// listener set on the view.
-		newView.animate()
-				.alpha(1f)
-				.setDuration(animTime)
-				.setListener(null);
-
-		// Animate the old view to 0% opacity. After the animation ends,
-		// set its visibility to GONE as an optimization step (it won't
-		// participate in layout passes, etc.)
-		oldView.animate()
-				.alpha(0f)
-				.setDuration(animTime)
-				.setListener(new AnimatorListenerAdapter() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						oldView.setVisibility(View.GONE);
-					}
-				});
 	}
 
 }

@@ -398,6 +398,20 @@ public class Skin implements Serializable {
 		return false;
 	}
 
+	private boolean deleteFile(String path) {
+		File file = new File(path);
+		return file.delete();
+	}
+
+	public void deleteAllSkinResFromFilesystem(Context context) {
+		deleteFile(getSkinHeadPath(context));
+		deleteFile(getBackSkinPreviewPath(context));
+		deleteFile(getFrontSkinPreviewPath(context));
+		deleteFile(getRawSkinPath(context));
+
+		Log.i("SkinSwitch", "deleted all local res files for " + this);
+	}
+
 	@Override
 	public String toString() {
 		String str = "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate
