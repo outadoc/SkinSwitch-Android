@@ -3,7 +3,8 @@
 
 	<item
 		android:id="@+id/item_next"
-		android:showAsAction="withText|always"
-		android:title="Next" />
+		android:showAsAction="always"
+		android:title="Next"
+		android:icon="@drawable/ic_action_done" />
 
 </menu>
