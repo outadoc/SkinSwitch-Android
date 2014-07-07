@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
 
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
@@ -14,6 +15,8 @@ public class LibrarySearchActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if(Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
 			String query = getIntent().getStringExtra(SearchManager.QUERY);
@@ -27,5 +30,16 @@ public class LibrarySearchActivity extends FragmentActivity {
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			ft.add(android.R.id.content, searchFrag).commit();
 		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case android.R.id.home:
+				this.finish();
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 }

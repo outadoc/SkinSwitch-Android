@@ -26,6 +26,7 @@ public class DetailActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		skin = (Skin) getIntent().getSerializableExtra("skin");
 
@@ -67,5 +68,16 @@ public class DetailActivity extends Activity {
 		sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out " + skin.getName() + "! " + skin.getSource() + " #SkinSwitch");
 		sendIntent.setType("text/plain");
 		return sendIntent;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case android.R.id.home:
+				this.finish();
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 }

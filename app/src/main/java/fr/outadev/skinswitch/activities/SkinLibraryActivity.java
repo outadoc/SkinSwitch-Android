@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
 
 import fr.outadev.skinswitch.R;
@@ -19,6 +20,8 @@ public class SkinLibraryActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_skin_library);
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager());
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -36,6 +39,17 @@ public class SkinLibraryActivity extends FragmentActivity {
 		searchView.setIconifiedByDefault(true);
 
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case android.R.id.home:
+				this.finish();
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 }

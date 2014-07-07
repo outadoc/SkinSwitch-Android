@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,11 +69,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
 			@Override
 			public void onClick(View v) {
-				/*SkinsDatabase db = new SkinsDatabase(getContext());
-				db.removeSkin(skin);
-				frag.refreshSkins();*/
 				Intent intent = new Intent(getContext(), DetailActivity.class);
-				Bundle args = new Bundle();
 				intent.putExtra("skin", skin);
 				getContext().startActivity(intent);
 			}

@@ -30,6 +30,8 @@ public class NewCustomSkinActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_custom_skin);
 
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		txt_name = (EditText) findViewById(R.id.txt_skin_name);
 		txt_description = (EditText) findViewById(R.id.txt_skin_description);
 		txt_source = (EditText) findViewById(R.id.txt_skin_source);
@@ -46,6 +48,9 @@ public class NewCustomSkinActivity extends Activity {
 		switch(item.getItemId()) {
 			case R.id.item_next:
 				validateAndParseUserInput();
+				return true;
+			case android.R.id.home:
+				this.finish();
 				return true;
 		}
 
