@@ -37,7 +37,7 @@ public class NewCustomSkinActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_add_custom_skin, menu);
+		getMenuInflater().inflate(R.menu.add_custom_skin, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 

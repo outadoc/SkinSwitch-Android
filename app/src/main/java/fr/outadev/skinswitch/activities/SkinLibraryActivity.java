@@ -27,7 +27,7 @@ public class SkinLibraryActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_search_in_library, menu);
+		getMenuInflater().inflate(R.menu.search_in_library, menu);
 
 		//set up search view
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);

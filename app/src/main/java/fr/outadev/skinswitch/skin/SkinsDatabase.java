@@ -31,11 +31,12 @@ public class SkinsDatabase {
 	 */
 	public Skin getSkin(int id) {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
-		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp"}, "id = ?", new String[]{Integer
+		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp", "source"}, "id = ?", new String[]{Integer
 				.valueOf(id).toString()}, null, null, "name");
 
 		if(cur.moveToFirst()) {
 			Skin skin = new Skin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)));
+			skin.setSource(cur.getString(3));
 			cur.close();
 			db.close();
 			return skin;
@@ -52,12 +53,15 @@ public class SkinsDatabase {
 	 */
 	public List<Skin> getAllSkins() {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
-		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp"}, null, null, null, null, "name");
+		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp", "source"}, null, null, null, null,
+				"name");
 
 		List<Skin> skins = new ArrayList<Skin>();
 
 		while(cur.moveToNext()) {
-			skins.add(new Skin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3))));
+			Skin tmp = new Skin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)));
+			tmp.setSource(cur.getString(4));
+			skins.add(tmp);
 		}
 
 		cur.close();
@@ -78,6 +82,7 @@ public class SkinsDatabase {
 		values.put("name", skin.getName());
 		values.put("description", skin.getDescription());
 		values.put("timestamp", skin.getCreationDate().getTime());
+		values.put("source", skin.getSource());
 
 		db.insertOrThrow("skins", null, values);
 		db.close();
