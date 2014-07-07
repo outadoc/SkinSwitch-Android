@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 
@@ -194,7 +195,7 @@ public class DetailActivity extends Activity {
 							@Override
 							protected void onPostExecute(Exception e) {
 								if(e != null) {
-									e.printStackTrace();
+									Toast.makeText(DetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 								}
 							}
 
