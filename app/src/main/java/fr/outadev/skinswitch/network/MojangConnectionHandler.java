@@ -112,9 +112,11 @@ public class MojangConnectionHandler {
 	 * @throws SkinUploadException if the upload failed.
 	 */
 	public void uploadSkinToMojang(File skin) throws SkinUploadException {
+		// first off, we need an authenticity token to upload the skin ;-;
 		String profileBody = HttpRequest.get(BASE_URL + "/profile").body();
 		String authToken = null;
 
+		// parse the request and get the auth token
 		Pattern patternAuthToken = Pattern.compile("<input type=\"hidden\" name=\"authenticityToken\" value=\"([0-9a-f]*)\">");
 		Matcher matcher = patternAuthToken.matcher(profileBody);
 
@@ -122,24 +124,24 @@ public class MojangConnectionHandler {
 			authToken = matcher.group(1);
 		}
 
+		// once we have that, send the actual skin
 		HttpRequest skinRequest = HttpRequest.post(BASE_URL + "/profile/skin")
 				.followRedirects(true)
 				.part("authenticityToken", authToken)
 				.part("skin", skin.getName(), "image/png", skin);
 
-		System.out.println(skinRequest.body());
+		String body = skinRequest.body();
 
-		/*String cookies = skinRequest.header("Set-Cookie");
-
-		if(cookies != null) {
-			Pattern errorPattern = Pattern.compile("PLAY_ERRORS=(%00skin%3A)?([a-zA-Z0-9+.]*)%00;(Path=.*),");
-			matcher = errorPattern.matcher(cookies);
+		//check for upload errors
+		if(body != null) {
+			Pattern errorPattern = Pattern.compile("<span class=\"error\">(.+)</span>");
+			matcher = errorPattern.matcher(body);
 
 			if(matcher.find()) {
-				String error = matcher.group(2);
+				String error = matcher.group(1);
 				throw new SkinUploadException(error);
 			}
-		}*/
+		}
 
 	}
 
