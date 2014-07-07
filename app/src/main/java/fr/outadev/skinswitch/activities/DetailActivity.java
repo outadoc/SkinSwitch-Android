@@ -19,8 +19,10 @@ import java.io.FileNotFoundException;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Util;
+import fr.outadev.skinswitch.network.MojangConnectionHandler;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
+import fr.outadev.skinswitch.user.UsersManager;
 
 /**
  * Created by outadoc on 06/07/14.
@@ -165,7 +167,44 @@ public class DetailActivity extends Activity {
 
 			@Override
 			public void onClick(View view) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+				builder.setTitle("Wear " + skin.getName() + "?").setMessage("Do you really want to replace your current " +
+						"Minecraft skin with " + skin.getName() + "?");
 
+				builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int id) {
+						(new AsyncTask<Void, Void, Exception>() {
+
+							@Override
+							protected Exception doInBackground(Void... voids) {
+								MojangConnectionHandler handler = new MojangConnectionHandler();
+								UsersManager um = new UsersManager(DetailActivity.this);
+
+								try {
+									handler.loginWithCredentials(um.getUser());
+									handler.uploadSkinToMojang(skin.getRawSkinFile(DetailActivity.this));
+								} catch(Exception e) {
+									return e;
+								}
+
+								return null;
+							}
+
+							@Override
+							protected void onPostExecute(Exception e) {
+								if(e != null) {
+									e.printStackTrace();
+								}
+							}
+
+						}).execute();
+					}
+
+				});
+
+				builder.setNegativeButton(R.string.no, null);
+				builder.create().show();
 			}
 
 		});

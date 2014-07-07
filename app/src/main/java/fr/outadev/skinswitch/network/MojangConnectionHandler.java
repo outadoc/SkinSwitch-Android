@@ -112,19 +112,34 @@ public class MojangConnectionHandler {
 	 * @throws SkinUploadException if the upload failed.
 	 */
 	public void uploadSkinToMojang(File skin) throws SkinUploadException {
-		HttpRequest skinRequest = HttpRequest.post(BASE_URL + "/profile/skin").followRedirects(false).contentType("image/png")
-				.part("skin", skin);
-		String cookies = skinRequest.header("Set-Cookie");
+		String profileBody = HttpRequest.get(BASE_URL + "/profile").body();
+		String authToken = null;
+
+		Pattern patternAuthToken = Pattern.compile("<input type=\"hidden\" name=\"authenticityToken\" value=\"([0-9a-f]*)\">");
+		Matcher matcher = patternAuthToken.matcher(profileBody);
+
+		if(matcher.find()) {
+			authToken = matcher.group(1);
+		}
+
+		HttpRequest skinRequest = HttpRequest.post(BASE_URL + "/profile/skin")
+				.followRedirects(true)
+				.part("authenticityToken", authToken)
+				.part("skin", skin.getName(), "image/png", skin);
+
+		System.out.println(skinRequest.body());
+
+		/*String cookies = skinRequest.header("Set-Cookie");
 
 		if(cookies != null) {
 			Pattern errorPattern = Pattern.compile("PLAY_ERRORS=(%00skin%3A)?([a-zA-Z0-9+.]*)%00;(Path=.*),");
-			Matcher matcher = errorPattern.matcher(cookies);
+			matcher = errorPattern.matcher(cookies);
 
 			if(matcher.find()) {
 				String error = matcher.group(2);
 				throw new SkinUploadException(error);
 			}
-		}
+		}*/
 
 	}
 
