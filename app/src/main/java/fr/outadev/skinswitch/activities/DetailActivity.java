@@ -74,16 +74,12 @@ public class DetailActivity extends Activity {
 		final ImageView img_skin_preview_front = (ImageView) findViewById(R.id.skin_preview_front);
 		final ImageView img_skin_preview_back = (ImageView) findViewById(R.id.skin_preview_back);
 
-		(new AsyncTask<Void, Void, Void>() {
-
-			Bitmap bmp_front;
-			Bitmap bmp_back;
+		(new AsyncTask<Void, Void, Bitmap>() {
 
 			@Override
-			protected Void doInBackground(Void... voids) {
+			protected Bitmap doInBackground(Void... voids) {
 				try {
-					bmp_front = skin.getFrontSkinPreview(DetailActivity.this);
-					bmp_back = skin.getBackSkinPreview(DetailActivity.this);
+					return skin.getFrontSkinPreview(DetailActivity.this);
 				} catch(FileNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -92,12 +88,34 @@ public class DetailActivity extends Activity {
 			}
 
 			@Override
-			protected void onPostExecute(Void void0) {
-				if(bmp_front != null && bmp_back != null) {
-					img_skin_preview_front.setImageBitmap(bmp_front);
-					img_skin_preview_back.setImageBitmap(bmp_back);
+			protected void onPostExecute(Bitmap bmp) {
+				if(bmp != null) {
+					img_skin_preview_front.setImageBitmap(bmp);
 				}
+
+				(new AsyncTask<Void, Void, Bitmap>() {
+
+					@Override
+					protected Bitmap doInBackground(Void... voids) {
+						try {
+							return skin.getBackSkinPreview(DetailActivity.this);
+						} catch(FileNotFoundException e) {
+							e.printStackTrace();
+						}
+
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Bitmap bmp) {
+						if(bmp != null) {
+							img_skin_preview_back.setImageBitmap(bmp);
+						}
+					}
+
+				}).execute();
 			}
+
 		}).execute();
 
 		img_skin_preview_front.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +214,9 @@ public class DetailActivity extends Activity {
 							protected void onPostExecute(Exception e) {
 								if(e != null) {
 									Toast.makeText(DetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+								} else {
+									Toast.makeText(DetailActivity.this, "Skin uploaded successfully!",
+											Toast.LENGTH_SHORT).show();
 								}
 							}
 
