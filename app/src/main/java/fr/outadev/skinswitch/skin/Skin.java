@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 
 import fr.outadev.skinswitch.skin.SkinRenderer.Side;
@@ -21,7 +22,7 @@ import fr.outadev.skinswitch.skin.SkinRenderer.Side;
  *
  * @author outadoc
  */
-public class Skin {
+public class Skin implements Serializable {
 
 	private int id;
 	private String name;

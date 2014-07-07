@@ -29,6 +29,10 @@
 			android:windowSoftInputMode="adjustResize|stateVisible">
 		</activity>
 		<activity
+			android:name="fr.outadev.skinswitch.activities.DetailActivity"
+			android:label="Skin Details">
+		</activity>
+		<activity
 			android:name="fr.outadev.skinswitch.activities.NewCustomSkinActivity"
 			android:label="@string/title_activity_new_custom_skin"
 			android:parentActivityName="fr.outadev.skinswitch.activities.MainActivity">

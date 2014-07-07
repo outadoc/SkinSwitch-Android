@@ -1,8 +1,10 @@
 package fr.outadev.skinswitch.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,9 +17,9 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
+import fr.outadev.skinswitch.activities.DetailActivity;
 import fr.outadev.skinswitch.activities.SkinsListFragment;
 import fr.outadev.skinswitch.skin.Skin;
-import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
@@ -68,9 +70,13 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
 			@Override
 			public void onClick(View v) {
-				SkinsDatabase db = new SkinsDatabase(getContext());
+				/*SkinsDatabase db = new SkinsDatabase(getContext());
 				db.removeSkin(skin);
-				frag.refreshSkins();
+				frag.refreshSkins();*/
+				Intent intent = new Intent(getContext(), DetailActivity.class);
+				Bundle args = new Bundle();
+				intent.putExtra("skin", skin);
+				getContext().startActivity(intent);
 			}
 
 		});
