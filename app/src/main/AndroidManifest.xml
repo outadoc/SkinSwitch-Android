@@ -30,7 +30,8 @@
 		</activity>
 		<activity
 			android:name="fr.outadev.skinswitch.activities.DetailActivity"
-			android:label="Skin Details">
+			android:label="Skin Details"
+			android:theme="@style/AppBaseTheme.WhiteAccent">
 		</activity>
 		<activity
 			android:name="fr.outadev.skinswitch.activities.NewCustomSkinActivity"
