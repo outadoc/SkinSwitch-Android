@@ -36,16 +36,39 @@
 					android:visibility="gone" />
 			</FrameLayout>
 
-			<ImageButton
-				android:id="@+id/b_upload_skin"
+			<FrameLayout
 				android:layout_width="@dimen/floating_button_size"
 				android:layout_height="@dimen/floating_button_size"
 				android:layout_gravity="bottom|right"
 				android:layout_marginBottom="16dp"
 				android:layout_marginRight="16dp"
 				android:background="@drawable/button_background"
-				android:elevation="@dimen/button_elevation"
-				android:src="@drawable/ic_action_done" />
+				android:elevation="@dimen/button_elevation">
+
+				<ImageButton
+					android:id="@+id/b_upload_skin"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@drawable/button_background"
+					android:src="@drawable/ic_action_done" />
+
+				<FrameLayout
+					android:id="@+id/b_loading"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@drawable/button_background"
+					android:padding="3dp"
+					android:visibility="gone">
+
+					<ProgressBar
+						style="?android:attr/progressBarStyle"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:background="@drawable/progress_white" />
+				</FrameLayout>
+
+			</FrameLayout>
+
 
 			<ImageButton
 				android:id="@+id/b_delete"

@@ -38,6 +38,7 @@ public class DetailActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
+
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		skin = (Skin) getIntent().getSerializableExtra("skin");
@@ -46,6 +47,8 @@ public class DetailActivity extends Activity {
 		setupSkinPreviews();
 		setupText();
 		setupButtons();
+
+		setLoading(false);
 	}
 
 	@Override
@@ -196,6 +199,11 @@ public class DetailActivity extends Activity {
 						(new AsyncTask<Void, Void, Exception>() {
 
 							@Override
+							protected void onPreExecute() {
+								setLoading(true);
+							}
+
+							@Override
 							protected Exception doInBackground(Void... voids) {
 								MojangConnectionHandler handler = new MojangConnectionHandler();
 								UsersManager um = new UsersManager(DetailActivity.this);
@@ -218,6 +226,8 @@ public class DetailActivity extends Activity {
 									Toast.makeText(DetailActivity.this, "Skin uploaded successfully!",
 											Toast.LENGTH_SHORT).show();
 								}
+
+								setLoading(false);
 							}
 
 						}).execute();
@@ -237,5 +247,13 @@ public class DetailActivity extends Activity {
 		sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out " + skin.getName() + "! " + skin.getSource() + " #SkinSwitch");
 		sendIntent.setType("text/plain");
 		return sendIntent;
+	}
+
+	private void setLoading(boolean loading) {
+		View bLoading = findViewById(R.id.b_loading);
+		View bWear = findViewById(R.id.b_upload_skin);
+
+		bLoading.setVisibility((loading) ? View.VISIBLE : View.GONE);
+		bWear.setVisibility((loading) ? View.GONE : View.VISIBLE);
 	}
 }
