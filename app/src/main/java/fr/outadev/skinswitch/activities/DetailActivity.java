@@ -30,6 +30,7 @@ import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Util;
 import fr.outadev.skinswitch.network.MojangConnectionHandler;
 import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
+import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 import fr.outadev.skinswitch.user.UsersManager;
@@ -208,6 +209,16 @@ public class DetailActivity extends Activity {
 
 			@Override
 			public void onClick(View view) {
+				UsersManager usersManager = new UsersManager(DetailActivity.this);
+
+				//if the user isn't logged in, pop up the login window
+				if(!usersManager.isLoggedInSuccessfully()) {
+					Intent intent = new Intent(DetailActivity.this, MojangLoginActivity.class);
+					startActivity(intent);
+					return;
+				}
+
+				//else, ask for a confirmation
 				AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
 				builder.setTitle("Wear " + skin.getName() + "?").setMessage("Do you really want to replace your current " +
 						"Minecraft skin with " + skin.getName() + "?");
@@ -240,13 +251,19 @@ public class DetailActivity extends Activity {
 							@Override
 							protected void onPostExecute(Exception e) {
 								if(e != null) {
+									//display the error if any
 									if(e.getMessage() != null && !e.getMessage().isEmpty()) {
 										Toast.makeText(DetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 									}
 
+									//if the user needs to fill in a challenge
 									if(e instanceof ChallengeRequirementException) {
 										Intent intent = new Intent(DetailActivity.this, MojangLoginActivity.class);
 										intent.putExtra("step", MojangLoginActivity.Step.CHALLENGE);
+										startActivity(intent);
+									} else if(e instanceof InvalidMojangCredentialsException) {
+										//if the user needs to relog in
+										Intent intent = new Intent(DetailActivity.this, MojangLoginActivity.class);
 										startActivity(intent);
 									}
 
