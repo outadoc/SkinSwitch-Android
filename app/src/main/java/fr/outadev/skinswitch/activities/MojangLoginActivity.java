@@ -34,41 +34,28 @@ import fr.outadev.skinswitch.user.UsersManager;
  */
 public class MojangLoginActivity extends Activity {
 
+	private static final int BUTTON_STATUS_DELAY = 1000;
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
 	private AsyncTask<Void, Void, Exception> mAuthTask = null;
-
 	private Step step;
-
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
-
 	// UI references.
 	private EditText mEmailView;
 	private EditText mPasswordView;
 	private EditText mChallengeAnswerView;
-
 	private View mLoginFormView;
 	private View mChallengeFormView;
-
 	private TextView mChallengeQuestionView;
-
 	private ActionProcessButton mLoginButton;
 	private ActionProcessButton mChallengeButton;
-
 	private UsersManager usersManager;
 	private User user;
-
 	private LoginChallenge challenge;
 	private MojangConnectionHandler loginManager;
-
-	private static final int BUTTON_STATUS_DELAY = 1000;
-
-	private enum Step {
-		LOGIN, CHALLENGE
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +71,18 @@ public class MojangLoginActivity extends Activity {
 		challenge = null;
 		loginManager = new MojangConnectionHandler();
 
-		step = Step.LOGIN;
+		step = (Step) getIntent().getSerializableExtra("step");
+
+		if(step == null) {
+			step = Step.LOGIN;
+		}
 
 		// Set up the login form.
 		mEmail = user.getUsername();
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
 
-		mPassword = new String();
+		mPassword = "";
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setText(mPassword);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -142,26 +133,12 @@ public class MojangLoginActivity extends Activity {
 				attemptSubmitChallenge();
 			}
 		});
-	}
 
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
-		super.onSaveInstanceState(savedInstanceState);
-
-		if(user != null) {
-			savedInstanceState.putString("user:username", user.getUsername());
-			savedInstanceState.putString("user:password", user.getPassword());
+		if(step == Step.CHALLENGE) {
+			mPassword = user.getPassword();
+			mPasswordView.setText(mPassword);
+			attemptLogin();
 		}
-
-		if(challenge != null) {
-			savedInstanceState.putString("challenge:id", challenge.getId());
-			savedInstanceState.putString("challenge:question", challenge.getQuestion());
-			savedInstanceState.putString("challenge:auth", challenge.getAuthToken());
-			savedInstanceState.putString("challenge:answer", mChallengeAnswerView.getText().toString());
-		}
-
-		savedInstanceState.putSerializable("step", step);
-
 	}
 
 	@Override
@@ -182,6 +159,26 @@ public class MojangLoginActivity extends Activity {
 		mChallengeAnswerView.setText(bundle.getString("challenge:answer"));
 
 		showProgress((Step) bundle.getSerializable("step"));
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+
+		if(user != null) {
+			savedInstanceState.putString("user:username", user.getUsername());
+			savedInstanceState.putString("user:password", user.getPassword());
+		}
+
+		if(challenge != null) {
+			savedInstanceState.putString("challenge:id", challenge.getId());
+			savedInstanceState.putString("challenge:question", challenge.getQuestion());
+			savedInstanceState.putString("challenge:auth", challenge.getAuthToken());
+			savedInstanceState.putString("challenge:answer", mChallengeAnswerView.getText().toString());
+		}
+
+		savedInstanceState.putSerializable("step", step);
+
 	}
 
 	/**
@@ -285,6 +282,10 @@ public class MojangLoginActivity extends Activity {
 		user.setUsername(mEmail);
 		user.setPassword(mPassword);
 		usersManager.saveUserCredentials(user);
+	}
+
+	public enum Step {
+		LOGIN, CHALLENGE
 	}
 
 	/**
