@@ -20,11 +20,11 @@
 
 			<FrameLayout
 				android:layout_width="175dp"
-				android:layout_height="350dp"
+				android:layout_height="325dp"
 				android:layout_gravity="center_horizontal"
-				android:layout_marginTop="20dp">
+				android:layout_marginTop="45dp">
 
-				<ImageView
+			<ImageView
 					android:id="@+id/skin_preview_front"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent" />
@@ -37,6 +37,7 @@
 			</FrameLayout>
 
 			<FrameLayout
+				android:id="@+id/b_upload_skin_container"
 				android:layout_width="@dimen/floating_button_size"
 				android:layout_height="@dimen/floating_button_size"
 				android:layout_gravity="bottom|right"
@@ -84,6 +85,7 @@
 				android:id="@+id/information_container"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:background="#FFFFFF"
 				android:visibility="invisible">
 
 			</FrameLayout>
