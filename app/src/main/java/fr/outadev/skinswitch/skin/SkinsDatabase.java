@@ -54,7 +54,7 @@ public class SkinsDatabase {
 	public List<BasicSkin> getAllSkins() {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
 		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp", "source"}, null, null, null, null,
-				"name");
+				"UPPER(name)");
 
 		List<BasicSkin> skins = new ArrayList<BasicSkin>();
 
@@ -62,6 +62,7 @@ public class SkinsDatabase {
 			BasicSkin tmp = new BasicSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)));
 			tmp.setSource(cur.getString(4));
 			skins.add(tmp);
+			System.out.println(tmp);
 		}
 
 		cur.close();
