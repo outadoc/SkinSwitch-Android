@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.adapters;
+package fr.outadev.skinswitch.skinlibrary;
 
 import android.accounts.NetworkErrorException;
 import android.app.Activity;

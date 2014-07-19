@@ -5,7 +5,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="fr.outadev.skinswitch.activities.DetailActivity">
+	tools:context="fr.outadev.skinswitch.skinlist.DetailActivity">
 
 	<LinearLayout
 		android:id="@+id/container"
@@ -24,7 +24,7 @@
 				android:layout_gravity="center_horizontal"
 				android:layout_marginTop="45dp">
 
-			<ImageView
+				<ImageView
 					android:id="@+id/skin_preview_front"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent" />

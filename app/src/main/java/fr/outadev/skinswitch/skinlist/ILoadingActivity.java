@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.skinlist;
 
 /**
  * Created by outadoc on 19/07/14.

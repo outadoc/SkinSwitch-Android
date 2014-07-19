@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.skinlist;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +27,7 @@ import java.io.FileNotFoundException;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Util;
-import fr.outadev.skinswitch.skin.Skin;
+import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
@@ -35,7 +35,7 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
  */
 public class DetailActivity extends Activity implements ILoadingActivity {
 
-	private Skin skin;
+	private BasicSkin skin;
 	private int animTime;
 
 	private ImageButton b_delete;
@@ -50,7 +50,7 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		skin = (Skin) getIntent().getSerializableExtra("skin");
+		skin = (BasicSkin) getIntent().getSerializableExtra("skin");
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
 		b_delete = (ImageButton) findViewById(R.id.b_delete);

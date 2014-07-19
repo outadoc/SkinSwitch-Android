@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.skinlist;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.adapters.SkinsListAdapter;
-import fr.outadev.skinswitch.skin.Skin;
+import fr.outadev.skinswitch.network.login.MojangLoginActivity;
+import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
+import fr.outadev.skinswitch.skinlibrary.SkinLibraryActivity;
 import fr.outadev.skinswitch.user.UsersManager;
 
 public class SkinsListFragment extends Fragment {
@@ -30,7 +31,7 @@ public class SkinsListFragment extends Fragment {
 	private UsersManager usersManager;
 
 	private SkinsListAdapter skinsAdapter;
-	private List<Skin> skinsList;
+	private List<BasicSkin> skinsList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class SkinsListFragment extends Fragment {
 		usersManager = new UsersManager(getActivity());
 
 		GridView gridView = (GridView) view.findViewById(R.id.grid_view);
-		skinsList = new ArrayList<Skin>();
+		skinsList = new ArrayList<BasicSkin>();
 		skinsAdapter = new SkinsListAdapter(getActivity(), this, android.R.layout.simple_list_item_1, skinsList);
 		gridView.setAdapter(skinsAdapter);
 
@@ -141,7 +142,7 @@ public class SkinsListFragment extends Fragment {
 	 * Refreshes the list of skins and the view.
 	 */
 	public void refreshSkins() {
-		(new AsyncTask<Void, Void, List<Skin>>() {
+		(new AsyncTask<Void, Void, List<BasicSkin>>() {
 
 			@Override
 			protected void onPreExecute() {
@@ -149,12 +150,12 @@ public class SkinsListFragment extends Fragment {
 			}
 
 			@Override
-			protected List<Skin> doInBackground(Void... params) {
+			protected List<BasicSkin> doInBackground(Void... params) {
 				return db.getAllSkins();
 			}
 
 			@Override
-			protected void onPostExecute(List<Skin> result) {
+			protected void onPostExecute(List<BasicSkin> result) {
 				skinsList.addAll(result);
 				skinsAdapter.notifyDataSetChanged();
 			}

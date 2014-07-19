@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.skinlibrary;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.adapters.SkinLibraryPageAdapter;
 
 public class SkinLibraryActivity extends FragmentActivity {
 

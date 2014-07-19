@@ -1,11 +1,10 @@
-package fr.outadev.skinswitch.adapters;
+package fr.outadev.skinswitch.skinlibrary;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import fr.outadev.skinswitch.activities.SkinLibraryPageFragment;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.EndPoint;
 
 public class SkinLibraryPageAdapter extends FragmentPagerAdapter {

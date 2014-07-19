@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.skinlist;
 
 import android.accounts.NetworkErrorException;
 import android.app.Activity;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.skin.Skin;
+import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 public class NewCustomSkinActivity extends Activity {
@@ -38,12 +38,6 @@ public class NewCustomSkinActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.add_custom_skin, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.item_next:
@@ -57,6 +51,12 @@ public class NewCustomSkinActivity extends Activity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.add_custom_skin, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
 	/**
 	 * Validates the user input, displays error messages if it's incorrect, and
 	 * tries to add the skin if the input has been validated successfully.
@@ -64,7 +64,7 @@ public class NewCustomSkinActivity extends Activity {
 	private void validateAndParseUserInput() {
 		View errorField = null;
 		// create a new skin from the data that was entered
-		final Skin skin = new Skin(txt_name.getText().toString(), txt_description.getText().toString(), new Date());
+		final BasicSkin skin = new BasicSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date());
 
 		// check skin name
 		if(TextUtils.isEmpty(skin.getName())) {
@@ -105,7 +105,7 @@ public class NewCustomSkinActivity extends Activity {
 	 *
 	 * @param skin
 	 */
-	private void downloadAndAddSkin(final Skin skin) {
+	private void downloadAndAddSkin(final BasicSkin skin) {
 		final ProgressDialog progDial = new ProgressDialog(this);
 		progDial.setMessage("Downloading skin...");
 		progDial.setIndeterminate(true);

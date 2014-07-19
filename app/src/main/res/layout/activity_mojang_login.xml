@@ -1,7 +1,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:tools="http://schemas.android.com/tools"
        xmlns:custom="http://schemas.android.com/apk/res-auto"
-       tools:context="fr.outadev.skinswitch.activities.MojangLoginActivity">
+       xmlns:tools="http://schemas.android.com/tools"
+       tools:context="fr.outadev.skinswitch.network.login.MojangLoginActivity">
 
 	<!-- Login form -->
 
@@ -12,9 +12,9 @@
 
 		<LinearLayout
 			style="@style/LoginFormContainer"
-			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:orientation="vertical">
 
 			<EditText
 				android:id="@+id/email"
@@ -77,9 +77,9 @@
 
 		<LinearLayout
 			style="@style/LoginFormContainer"
-			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:orientation="vertical">
 
 			<TextView
 				android:id="@+id/lbl_challenge_question"

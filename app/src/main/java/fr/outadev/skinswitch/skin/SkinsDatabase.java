@@ -29,13 +29,13 @@ public class SkinsDatabase {
 	 * @param id the id of the skin.
 	 * @return the skin, if it exists; else, null.
 	 */
-	public Skin getSkin(int id) {
+	public BasicSkin getSkin(int id) {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
 		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp", "source"}, "id = ?", new String[]{Integer
 				.valueOf(id).toString()}, null, null, "name");
 
 		if(cur.moveToFirst()) {
-			Skin skin = new Skin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)));
+			BasicSkin skin = new BasicSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)));
 			skin.setSource(cur.getString(3));
 			cur.close();
 			db.close();
@@ -51,15 +51,15 @@ public class SkinsDatabase {
 	 *
 	 * @return a List of skins contained in the database.
 	 */
-	public List<Skin> getAllSkins() {
+	public List<BasicSkin> getAllSkins() {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
 		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp", "source"}, null, null, null, null,
 				"name");
 
-		List<Skin> skins = new ArrayList<Skin>();
+		List<BasicSkin> skins = new ArrayList<BasicSkin>();
 
 		while(cur.moveToNext()) {
-			Skin tmp = new Skin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)));
+			BasicSkin tmp = new BasicSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)));
 			tmp.setSource(cur.getString(4));
 			skins.add(tmp);
 		}
@@ -75,7 +75,7 @@ public class SkinsDatabase {
 	 * @param skin the skin to add.
 	 * @throws SQLException if it couldn't be added.
 	 */
-	public void addSkin(Skin skin) throws SQLException {
+	public void addSkin(BasicSkin skin) throws SQLException {
 		SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
@@ -95,7 +95,7 @@ public class SkinsDatabase {
 	 *
 	 * @param skin the skin to remove.
 	 */
-	public void removeSkin(Skin skin) {
+	public void removeSkin(BasicSkin skin) {
 		removeSkin(skin.getId());
 	}
 

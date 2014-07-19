@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.network.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,10 +21,6 @@ import com.dd.processbutton.iml.ActionProcessButton.Mode;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.network.MojangConnectionHandler;
-import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
-import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
-import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
-import fr.outadev.skinswitch.network.login.LoginChallenge;
 import fr.outadev.skinswitch.user.User;
 import fr.outadev.skinswitch.user.UsersManager;
 

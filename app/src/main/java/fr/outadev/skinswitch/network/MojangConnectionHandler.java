@@ -19,7 +19,6 @@ import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
 import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
 import fr.outadev.skinswitch.network.login.LoginChallenge;
-import fr.outadev.skinswitch.network.upload.SkinUploadException;
 import fr.outadev.skinswitch.user.User;
 
 /**
@@ -144,5 +143,4 @@ public class MojangConnectionHandler {
 		}
 
 	}
-
 }

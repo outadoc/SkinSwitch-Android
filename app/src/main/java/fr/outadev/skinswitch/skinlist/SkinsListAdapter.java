@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.adapters;
+package fr.outadev.skinswitch.skinlist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,15 +21,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.activities.DetailActivity;
-import fr.outadev.skinswitch.activities.SkinsListFragment;
-import fr.outadev.skinswitch.skin.Skin;
+import fr.outadev.skinswitch.skin.BasicSkin;
 
-public class SkinsListAdapter extends ArrayAdapter<Skin> {
+public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 	private SkinsListFragment frag;
 
-	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<Skin> array) {
+	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<BasicSkin> array) {
 		super(context, resource, array);
 		this.frag = frag;
 	}
@@ -44,7 +42,7 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 		final ImageView skinView = (ImageView) convertView.findViewById(R.id.img_skin_preview);
 		final TextView skinTitle = (TextView) convertView.findViewById(R.id.lbl_skin_title);
 
-		final Skin skin = getItem(position);
+		final BasicSkin skin = getItem(position);
 
 		skinTitle.setText(skin.getName());
 

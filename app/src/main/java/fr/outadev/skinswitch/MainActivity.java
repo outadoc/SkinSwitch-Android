@@ -1,10 +1,11 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import fr.outadev.skinswitch.R;
+import fr.outadev.skinswitch.network.login.MojangLoginActivity;
+import fr.outadev.skinswitch.skinlist.ILoadingActivity;
 import fr.outadev.skinswitch.user.UsersManager;
 
 public class MainActivity extends FragmentActivity implements ILoadingActivity {

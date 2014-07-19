@@ -10,7 +10,7 @@ import java.util.Date;
 
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
-public class SkinLibrarySkin extends Skin {
+public class SkinLibrarySkin extends BasicSkin {
 
 	private String owner;
 	private int skinManagerId;
@@ -28,24 +28,12 @@ public class SkinLibrarySkin extends Skin {
 		this.owner = owner;
 	}
 
-	public void setSkinManagerId(int skinManagerId) {
-		this.skinManagerId = skinManagerId;
-	}
-
 	public int getSkinManagerId() {
 		return skinManagerId;
 	}
 
-	@Override
-	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
-		SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
-		Bitmap bmp = handler.fetchSkinBitmap(skinManagerId);
-
-		if(bmp == null) {
-			throw new FileNotFoundException("Couldn't fetch skin for id=" + getId());
-		}
-
-		return bmp;
+	public void setSkinManagerId(int skinManagerId) {
+		this.skinManagerId = skinManagerId;
 	}
 
 	@Override
@@ -60,8 +48,20 @@ public class SkinLibrarySkin extends Skin {
 		throw new FileNotFoundException();
 	}
 
-	public Skin toSkin() {
-		Skin skin = new Skin(getId(), getName(), getDescription(), getCreationDate());
+	@Override
+	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
+		SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
+		Bitmap bmp = handler.fetchSkinBitmap(skinManagerId);
+
+		if(bmp == null) {
+			throw new FileNotFoundException("Couldn't fetch skin for id=" + getId());
+		}
+
+		return bmp;
+	}
+
+	public BasicSkin toSkin() {
+		BasicSkin skin = new BasicSkin(getId(), getName(), getDescription(), getCreationDate());
 		skin.setSource(getSource());
 		return skin;
 	}

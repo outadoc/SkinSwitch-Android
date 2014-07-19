@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.skinlibrary;
 
 import android.app.SearchManager;
 import android.content.Intent;

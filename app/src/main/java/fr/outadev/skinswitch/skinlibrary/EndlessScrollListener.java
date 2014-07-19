@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.adapters;
+package fr.outadev.skinswitch.skinlibrary;
 
 import android.widget.AbsListView;
 
@@ -35,6 +35,14 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
 		this.currentPage = startPage;
 	}
 
+	// Defines the process for actually loading more data based on page
+	public abstract void onLoadMore(int page, int totalItemsCount);
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// Don't take any action on changed
+	}
+
 	// This happens many times a second during a scroll, so be wary of the code you place here.
 	// We are given a few useful parameters to help us work out if we need to load some more data,
 	// but first we check if we are waiting for the previous load to finish.
@@ -66,13 +74,5 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
 			onLoadMore(currentPage + 1, totalItemCount);
 			loading = true;
 		}
-	}
-
-	// Defines the process for actually loading more data based on page
-	public abstract void onLoadMore(int page, int totalItemsCount);
-
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		// Don't take any action on changed
 	}
 }

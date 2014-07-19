@@ -21,12 +21,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.activities.ILoadingActivity;
-import fr.outadev.skinswitch.activities.MojangLoginActivity;
 import fr.outadev.skinswitch.network.MojangConnectionHandler;
 import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
+import fr.outadev.skinswitch.network.login.MojangLoginActivity;
 import fr.outadev.skinswitch.skin.SkinRenderer.Side;
+import fr.outadev.skinswitch.skinlist.ILoadingActivity;
 import fr.outadev.skinswitch.user.UsersManager;
 
 /**
@@ -34,7 +34,7 @@ import fr.outadev.skinswitch.user.UsersManager;
  *
  * @author outadoc
  */
-public class Skin implements Serializable {
+public class BasicSkin implements Serializable {
 
 	private int id;
 	private String name;
@@ -50,7 +50,7 @@ public class Skin implements Serializable {
 	 * @param description  the description of the skin.
 	 * @param creationDate the date of creation of the skin.
 	 */
-	public Skin(int id, String name, String description, Date creationDate) {
+	public BasicSkin(int id, String name, String description, Date creationDate) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -58,14 +58,14 @@ public class Skin implements Serializable {
 	}
 
 	/**
-	 * Similar to {@link #Skin(int, String, String, Date) Skin(int, String,
+	 * Similar to {@link #BasicSkin(int, String, String, Date) Skin(int, String,
 	 * String, Date)}, except the ID is automatically set to -1.
 	 *
 	 * @param name         the name of the skin.
 	 * @param description  the description of the skin.
 	 * @param creationDate the date of creation of the skin.
 	 */
-	public Skin(String name, String description, Date creationDate) {
+	public BasicSkin(String name, String description, Date creationDate) {
 		this(-1, name, description, creationDate);
 	}
 

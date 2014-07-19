@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.activities;
+package fr.outadev.skinswitch.skinlibrary;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.adapters.EndlessScrollListener;
-import fr.outadev.skinswitch.adapters.SkinLibraryListAdapter;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.EndPoint;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
@@ -23,15 +21,12 @@ public class SkinLibraryPageFragment extends Fragment {
 
 	public static final String ARG_ENDPOINT = "EndPoint";
 	public static final String ARG_SEARCH_QUERY = "SearchQuery";
-
+	private static final int MAX_SKINS_LOAD_COUNT = 15;
 	private EndPoint endPoint;
 	private String searchQuery;
-
 	private List<SkinLibrarySkin> skinsList;
 	private SkinLibraryListAdapter adapter;
 	private SwipeRefreshLayout swipeRefreshLayout;
-
-	private static final int MAX_SKINS_LOAD_COUNT = 15;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

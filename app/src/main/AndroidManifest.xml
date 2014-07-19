@@ -14,7 +14,7 @@
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme">
 		<activity
-			android:name="fr.outadev.skinswitch.activities.MainActivity"
+			android:name=".MainActivity"
 			android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -23,22 +23,22 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="fr.outadev.skinswitch.activities.MojangLoginActivity"
+			android:name=".network.login.MojangLoginActivity"
 			android:label="@string/title_activity_mojang_login"
 			android:theme="@style/DialogActivity"
 			android:windowSoftInputMode="adjustResize|stateVisible">
 		</activity>
 		<activity
-			android:name="fr.outadev.skinswitch.activities.DetailActivity"
+			android:name=".skinlist.DetailActivity"
 			android:label="Skin Details"
 			android:theme="@style/DetailTheme">
 		</activity>
 		<activity
-			android:name="fr.outadev.skinswitch.activities.NewCustomSkinActivity"
+			android:name=".skinlist.NewCustomSkinActivity"
 			android:label="@string/title_activity_new_custom_skin">
 		</activity>
 		<activity
-			android:name="fr.outadev.skinswitch.activities.SkinLibraryActivity"
+			android:name=".skinlibrary.SkinLibraryActivity"
 			android:label="@string/title_activity_skin_library">
 			<meta-data
 				android:name="android.app.default_searchable"
@@ -48,7 +48,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="fr.outadev.skinswitch.activities.LibrarySearchActivity"
+			android:name=".skinlibrary.LibrarySearchActivity"
 			android:label="Search">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
