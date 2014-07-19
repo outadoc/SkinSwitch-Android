@@ -16,7 +16,9 @@ public class LibrarySearchActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if(getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		if(Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
 			String query = getIntent().getStringExtra(SearchManager.QUERY);

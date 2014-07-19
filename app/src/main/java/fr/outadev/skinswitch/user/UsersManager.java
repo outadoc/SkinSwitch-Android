@@ -12,14 +12,12 @@ import simbio.se.sau.Encryption;
  */
 public class UsersManager {
 
-	private final SharedPreferences prefs;
-	private final Encryption encryption;
-
 	public static final String USERNAME_PREFS_ID = "mojang:username";
 	public static final String PASSWORD_PREFS_ID = "mojang:password";
 	public static final String LOGGED_IN_PREFS_ID = "isloggedin";
-
 	private static final String STORAGE_KEY = "thiskeyissofuckinglongIhopenobodywilleverfinditlulz1234";
+	private final SharedPreferences prefs;
+	private final Encryption encryption;
 
 	public UsersManager(Context context) {
 		prefs = context.getSharedPreferences("Users", Context.MODE_PRIVATE);
@@ -73,7 +71,17 @@ public class UsersManager {
 		editor.putString(USERNAME_PREFS_ID, encryption.encrypt(STORAGE_KEY, user.getUsername()));
 		editor.putString(PASSWORD_PREFS_ID, encryption.encrypt(STORAGE_KEY, user.getPassword()));
 
-		editor.commit();
+		editor.apply();
+	}
+
+	/**
+	 * Did the user log in successfully already?
+	 *
+	 * @return true if he/she did, else false.
+	 */
+	public boolean isLoggedInSuccessfully() {
+		return doCredentialsExist() && prefs.getBoolean(LOGGED_IN_PREFS_ID, false);
+
 	}
 
 	/**
@@ -89,20 +97,7 @@ public class UsersManager {
 		}
 
 		editor.putBoolean(LOGGED_IN_PREFS_ID, loggedIn);
-		editor.commit();
-	}
-
-	/**
-	 * Did the user log in successfully already?
-	 *
-	 * @return true if he/she did, else false.
-	 */
-	public boolean isLoggedInSuccessfully() {
-		if(!doCredentialsExist()) {
-			return false;
-		}
-
-		return prefs.getBoolean(LOGGED_IN_PREFS_ID, false);
+		editor.apply();
 	}
 
 }

@@ -7,7 +7,6 @@
 	<string name="prompt_email">Email/Username</string>
 	<string name="prompt_password">Password</string>
 	<string name="action_sign_in_short">Sign in!</string>
-	<string name="login_progress_signing_in">Signing in&#8230;</string>
 	<string name="error_incorrect_password">Incorrect username or password</string>
 	<string name="error_field_required">Woops, this field is required</string>
 	<string name="forgot_passwd">Forgot your <a href="https://help.mojang.com/customer/portal/articles/329527-forgot-minecraft-login">login</a> or <a href="https://help.mojang.com/customer/portal/articles/329524-change-or-forgot-password">password</a>?</string>

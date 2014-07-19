@@ -55,7 +55,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		img_skin_preview_back.setVisibility(View.GONE);
 
 		txt_skin_name.setText(skin.getName());
-		txt_skin_description.setText((skin.getDescription().length() != 0) ? skin.getDescription() :
+		txt_skin_description.setText((!skin.getDescription().isEmpty()) ? skin.getDescription() :
 				getContext().getResources().getString(R.string.no_description_available));
 		txt_skin_author.setText("Author: " + skin.getOwner());
 

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.view.View;
 
 /**
+ * Random useful methods.
  * Created by outadoc on 07/07/14.
  */
 public abstract class Util {

@@ -17,6 +17,7 @@
 			android:id="@+id/lbl_skin_source"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:labelFor="@+id/txt_skin_source"
 			android:text="@string/lbl_add_skin_source"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:textStyle="italic" />
@@ -35,6 +36,7 @@
 			android:id="@+id/lbl_skin_name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:labelFor="@+id/txt_skin_name"
 			android:text="@string/lbl_add_skin_name"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:textStyle="italic" />
@@ -52,6 +54,7 @@
 			android:id="@+id/lbl_skin_description"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:labelFor="@+id/txt_skin_description"
 			android:text="@string/lbl_add_skin_description"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:textStyle="italic" />

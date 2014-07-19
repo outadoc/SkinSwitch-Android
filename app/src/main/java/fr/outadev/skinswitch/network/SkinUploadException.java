@@ -1,6 +1,7 @@
 package fr.outadev.skinswitch.network;
 
 /**
+ * Defines an exception that happened during the upload of a skin.
  * Created by outadoc on 19/07/14.
  */
 public class SkinUploadException extends Exception {

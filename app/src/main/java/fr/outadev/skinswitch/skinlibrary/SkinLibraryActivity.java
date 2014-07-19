@@ -13,17 +13,17 @@ import fr.outadev.skinswitch.R;
 
 public class SkinLibraryActivity extends FragmentActivity {
 
-	private ViewPager viewPager;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_skin_library);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if(getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager());
-		viewPager = (ViewPager) findViewById(R.id.pager);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(adapter);
 	}
 

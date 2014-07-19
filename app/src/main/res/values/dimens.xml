@@ -12,6 +12,6 @@
 	<dimen name="button_press_elevation">4dp</dimen>
 
 	<dimen name="card_elevation">4dp</dimen>
-	<dimen name="card_corner_radius">6dp</dimen>
+	<dimen name="card_corner_radius">2dp</dimen>
 
 </resources>

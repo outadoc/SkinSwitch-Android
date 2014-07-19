@@ -90,7 +90,7 @@ public class SkinManagerConnectionHandler {
 				for(int i = 0; i < resultArray.length(); i++) {
 					JSONObject currSkinObj = resultArray.getJSONObject(i);
 					SkinLibrarySkin skin = new SkinLibrarySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
-							currSkinObj.getString("description"), null, currSkinObj.getString("owner_username"));
+							currSkinObj.getString("description"), currSkinObj.getString("owner_username"));
 					skin.setSource(BASE_URL + "?method=getSkin&id=" + currSkinObj.getInt("id"));
 					skin.setSkinManagerId(currSkinObj.getInt("id"));
 					skinsList.add(skin);

@@ -11,11 +11,12 @@
 		android:elevation="3dp"
 		android:gravity="center">
 
-	<ImageView
+		<ImageView
 			android:id="@+id/img_skin_preview"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_margin="14dp"
+			android:contentDescription="@string/image_skin_front"
 			android:elevation="5dp" />
 	</FrameLayout>
 

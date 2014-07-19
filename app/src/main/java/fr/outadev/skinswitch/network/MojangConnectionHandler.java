@@ -55,10 +55,10 @@ public class MojangConnectionHandler {
 
 		String body = HttpRequest.post(BASE_URL + "/login").followRedirects(true).form(data).body();
 
-		if(body.isEmpty() || body.indexOf("<h1>Login</h1>") != -1) {
+		if(body.isEmpty() || body.contains("<h1>Login</h1>")) {
 			Log.e("SkinSwitch", "could not log in as " + user.getUsername());
 			throw new InvalidMojangCredentialsException();
-		} else if(body.indexOf("<h1>Confirm your identity</h1>") != -1) {
+		} else if(body.contains("<h1>Confirm your identity</h1>")) {
 			Log.e("SkinSwitch", "challenge required for " + user.getUsername());
 			throw new ChallengeRequirementException(new LoginChallenge(body));
 		}

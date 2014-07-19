@@ -6,7 +6,6 @@ import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Date;
 
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
@@ -15,8 +14,8 @@ public class SkinLibrarySkin extends BasicSkin {
 	private String owner;
 	private int skinManagerId;
 
-	public SkinLibrarySkin(int id, String name, String description, Date creationDate, String owner) {
-		super(id, name, description, creationDate);
+	public SkinLibrarySkin(int id, String name, String description, String owner) {
+		super(id, name, description, null);
 		this.owner = owner;
 	}
 

@@ -32,6 +32,7 @@ import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
+ * The skin detail activity.
  * Created by outadoc on 06/07/14.
  */
 public class DetailActivity extends Activity implements ILoadingActivity {
@@ -49,7 +50,9 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if(getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		skin = (BasicSkin) getIntent().getSerializableExtra("skin");
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
@@ -64,7 +67,7 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		setupButtons();
 
 		setOutlines();
-		applySystemWindowsBottomInset(R.id.container);
+		applySystemWindowsBottomInset();
 
 		setLoading(false);
 	}
@@ -246,8 +249,8 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		b_upload_skin_container.setOutline(outline);
 	}
 
-	private void applySystemWindowsBottomInset(int container) {
-		View containerView = findViewById(container);
+	private void applySystemWindowsBottomInset() {
+		View containerView = findViewById(R.id.container);
 		containerView.setFitsSystemWindows(true);
 
 		containerView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {

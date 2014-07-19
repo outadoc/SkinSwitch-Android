@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
@@ -32,14 +33,17 @@ import fr.outadev.skinswitch.user.UsersManager;
 public class MojangLoginActivity extends Activity {
 
 	private static final int BUTTON_STATUS_DELAY = 1000;
+
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
 	private AsyncTask<Void, Void, Exception> mAuthTask = null;
 	private Step step;
+
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
+
 	// UI references.
 	private EditText mEmailView;
 	private EditText mPasswordView;
@@ -49,6 +53,7 @@ public class MojangLoginActivity extends Activity {
 	private TextView mChallengeQuestionView;
 	private ActionProcessButton mLoginButton;
 	private ActionProcessButton mChallengeButton;
+
 	private UsersManager usersManager;
 	private User user;
 	private LoginChallenge challenge;
@@ -139,7 +144,7 @@ public class MojangLoginActivity extends Activity {
 	}
 
 	@Override
-	public void onRestoreInstanceState(Bundle bundle) {
+	public void onRestoreInstanceState(@NonNull Bundle bundle) {
 		super.onRestoreInstanceState(bundle);
 
 		user = new User(bundle.getString("user:username"), bundle.getString("user:password"));
@@ -159,7 +164,7 @@ public class MojangLoginActivity extends Activity {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
+	public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
 
 		if(user != null) {

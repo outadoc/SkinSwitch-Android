@@ -7,7 +7,6 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -17,24 +16,6 @@ import java.util.Map;
  * @author outadoc
  */
 public abstract class SkinRenderer {
-
-	/**
-	 * Represents the front or the back of a skin.
-	 *
-	 * @author outadoc
-	 */
-	public enum Side {
-		FRONT, BACK
-	}
-
-	/**
-	 * Represents the different possible body parts of a skin.
-	 *
-	 * @author outadoc
-	 */
-	private enum BodyPart {
-		HEAD, CHEST, ARM_RIGHT, ARM_LEFT, LEG_RIGHT, LEG_LEFT
-	}
 
 	/**
 	 * Gets a cropped head from the skin.
@@ -291,8 +272,8 @@ public abstract class SkinRenderer {
 	 * @param map the hashmap to recycle.
 	 */
 	private static void freeBitmapMap(HashMap<?, Bitmap> map) {
-		for(Iterator<?> iterator = map.entrySet().iterator(); iterator.hasNext(); ) {
-			Bitmap bmp = (Bitmap) ((Map.Entry.class.cast(iterator.next()))).getValue();
+		for(Map.Entry<?, Bitmap> bitmapEntry : map.entrySet()) {
+			Bitmap bmp = (Bitmap) ((Map.Entry.class.cast(bitmapEntry))).getValue();
 			bmp.recycle();
 		}
 	}
@@ -320,6 +301,24 @@ public abstract class SkinRenderer {
 		Bitmap resized = Bitmap.createScaledBitmap(image, image.getWidth() * zoom, image.getHeight() * zoom, false);
 		image.recycle();
 		return resized;
+	}
+
+	/**
+	 * Represents the front or the back of a skin.
+	 *
+	 * @author outadoc
+	 */
+	public enum Side {
+		FRONT, BACK
+	}
+
+	/**
+	 * Represents the different possible body parts of a skin.
+	 *
+	 * @author outadoc
+	 */
+	private enum BodyPart {
+		HEAD, CHEST, ARM_RIGHT, ARM_LEFT, LEG_RIGHT, LEG_LEFT
 	}
 
 }

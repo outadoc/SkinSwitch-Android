@@ -27,12 +27,14 @@
 				<ImageView
 					android:id="@+id/skin_preview_front"
 					android:layout_width="match_parent"
-					android:layout_height="match_parent" />
+					android:layout_height="match_parent"
+					android:contentDescription="@string/image_skin_front" />
 
 				<ImageView
 					android:id="@+id/skin_preview_back"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
+					android:contentDescription="@string/image_skin_back"
 					android:visibility="gone" />
 			</FrameLayout>
 
@@ -51,6 +53,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:background="@drawable/button_background"
+					android:contentDescription="@string/image_upload_skin"
 					android:src="@drawable/ic_action_done" />
 
 				<FrameLayout
@@ -78,6 +81,7 @@
 				android:layout_marginBottom="16dp"
 				android:layout_marginLeft="16dp"
 				android:background="@drawable/button_background"
+				android:contentDescription="@string/image_delete"
 				android:elevation="@dimen/button_elevation"
 				android:src="@drawable/ic_action_delete" />
 

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +31,9 @@ public class NewCustomSkinActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_custom_skin);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if(getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		txt_name = (EditText) findViewById(R.id.txt_skin_name);
 		txt_description = (EditText) findViewById(R.id.txt_skin_description);
@@ -38,7 +41,7 @@ public class NewCustomSkinActivity extends Activity {
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onMenuItemSelected(int featureId, @NonNull MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.item_next:
 				validateAndParseUserInput();
@@ -103,7 +106,7 @@ public class NewCustomSkinActivity extends Activity {
 	 * Downloads a skin, adds it to the database, and saves it to the
 	 * filesystem.
 	 *
-	 * @param skin
+	 * @param skin the skin to download.
 	 */
 	private void downloadAndAddSkin(final BasicSkin skin) {
 		final ProgressDialog progDial = new ProgressDialog(this);

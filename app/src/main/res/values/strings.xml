@@ -12,4 +12,14 @@
 	<string name="no">No</string>
 	<string name="add_skin_dialog_title">Add a new skin</string>
 
+	<string name="image_skin_front">Skin Front</string>
+	<string name="image_skin_back">Skin Back</string>
+	<string name="image_upload_skin">Wear this skin</string>
+	<string name="image_delete">Delete skin</string>
+
+	<string name="action_next">Next</string>
+	<string name="action_refresh">Refresh</string>
+	<string name="action_share">Share</string>
+	<string name="action_search">Search</string>
+
 </resources>
