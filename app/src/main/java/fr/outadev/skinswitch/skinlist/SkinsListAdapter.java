@@ -121,14 +121,14 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 					Intent intent = new Intent(getContext(), DetailActivity.class);
 					intent.putExtra("skin", skin);
 					getContext().startActivity(intent);
-
-					timer.cancel();
-					touchTimestamp = 0;
 				}
 
 				if((new Date()).getTime() - touchTimestamp < 1000) {
 					view.clearAnimation();
 				}
+
+				timer.cancel();
+				touchTimestamp = 0;
 			}
 
 		});
