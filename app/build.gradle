@@ -6,6 +6,11 @@ android {
 
     defaultConfig {
         applicationId "fr.outadev.skinswitch"
+        minSdkVersion 11
+        targetSdkVersion "L"
+        versionCode 1
+        versionName "1.0"
+
     }
 
     buildTypes {

@@ -11,4 +11,6 @@
 	<string name="library_section_latest">Latest</string>
 	<string name="library_section_all">All</string>
 
+	<string name="search_title">Search in Library</string>
+
 </resources>

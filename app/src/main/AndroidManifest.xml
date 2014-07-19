@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	package="fr.outadev.skinswitch"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:versionCode="1"
-	android:versionName="1.0">
+	xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -49,8 +47,8 @@
 		</activity>
 		<activity
 			android:name=".skinlibrary.LibrarySearchActivity"
-			android:label="Search">
-			<intent-filter>
+			android:label="@string/search_title">
+		<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
 
@@ -58,6 +56,9 @@
 				android:name="android.app.searchable"
 				android:resource="@xml/searchable" />
 		</activity>
+		<activity
+			android:name=".settings.SettingsActivity"
+			android:label="@string/settings_title" />
 	</application>
 
 </manifest>

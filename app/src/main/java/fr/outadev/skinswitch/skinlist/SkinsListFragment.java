@@ -20,6 +20,7 @@ import java.util.List;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.network.login.MojangLoginActivity;
+import fr.outadev.skinswitch.settings.SettingsActivity;
 import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 import fr.outadev.skinswitch.skinlibrary.SkinLibraryActivity;
@@ -132,6 +133,12 @@ public class SkinsListFragment extends Fragment {
 				);
 
 				builder.create().show();
+				return true;
+			}
+			case R.id.action_settings: {
+				//open the settings
+				Intent intent = new Intent(getActivity(), SettingsActivity.class);
+				startActivity(intent);
 				return true;
 			}
 		}

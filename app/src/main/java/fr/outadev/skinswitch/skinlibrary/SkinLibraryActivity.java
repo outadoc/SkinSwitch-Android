@@ -22,7 +22,7 @@ public class SkinLibraryActivity extends FragmentActivity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
-		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager());
+		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager(), this);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(adapter);
 	}
