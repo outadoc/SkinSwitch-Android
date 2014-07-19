@@ -304,7 +304,8 @@ public class MojangLoginActivity extends Activity {
 
 					@Override
 					public void run() {
-						Toast.makeText(MojangLoginActivity.this, "Could not login (connection error)", Toast.LENGTH_LONG).show();
+						Toast.makeText(MojangLoginActivity.this, getResources().getString(R.string.error_connection_login),
+								Toast.LENGTH_LONG).show();
 					}
 
 				});
@@ -366,7 +367,7 @@ public class MojangLoginActivity extends Activity {
 
 					@Override
 					public void run() {
-						Toast.makeText(MojangLoginActivity.this, "Could not send the challenge (connection error)",
+						Toast.makeText(MojangLoginActivity.this, getResources().getString(R.string.error_connection_challenge),
 								Toast.LENGTH_LONG).show();
 					}
 

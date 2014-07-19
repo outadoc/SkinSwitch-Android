@@ -1,10 +1,12 @@
 package fr.outadev.skinswitch.skinlibrary;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.EndPoint;
 
 public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
@@ -13,8 +15,11 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 	public static final int INDEX_LATEST_SKINS = 1;
 	public static final int INDEX_ALL_SKINS = 2;
 
-	public SkinLibraryPageAdapter(FragmentManager fm) {
+	private Context context;
+
+	public SkinLibraryPageAdapter(FragmentManager fm, Context context) {
 		super(fm);
+		this.context = context;
 	}
 
 	@Override
@@ -47,16 +52,23 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public CharSequence getPageTitle(int position) {
+		int resId;
+
 		switch(position) {
 			case INDEX_RANDOM_SKINS:
-				return "RANDOM";
+				resId = R.string.library_section_random;
+				break;
 			case INDEX_LATEST_SKINS:
-				return "LATEST";
+				resId = R.string.library_section_latest;
+				break;
 			case INDEX_ALL_SKINS:
-				return "ALL";
+				resId = R.string.library_section_all;
+				break;
 			default:
 				return null;
 		}
+
+		return context.getResources().getString(resId).toUpperCase();
 	}
 
 }

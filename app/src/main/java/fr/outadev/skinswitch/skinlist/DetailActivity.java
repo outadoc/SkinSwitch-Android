@@ -99,8 +99,8 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 							skin.downloadSkinFromSource(DetailActivity.this);
 						} catch(Exception e) {
 							e.printStackTrace();
-							Toast.makeText(DetailActivity.this, "Could not refresh skin: " + e.getMessage(),
-									Toast.LENGTH_LONG).show();
+							Toast.makeText(DetailActivity.this, getResources().getString(R.string.error_skin_refresh,
+									e.getMessage()), Toast.LENGTH_LONG).show();
 						}
 
 						return null;
@@ -109,7 +109,8 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 					@Override
 					protected void onPostExecute(Void aVoid) {
 						setupSkinPreviews();
-						Toast.makeText(DetailActivity.this, "Successfully refreshed this skin!", Toast.LENGTH_LONG).show();
+						Toast.makeText(DetailActivity.this, getResources().getString(R.string.success_skin_refresh),
+								Toast.LENGTH_LONG).show();
 					}
 
 				}).execute();
@@ -201,7 +202,8 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 			@Override
 			public void onClick(View view) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
-				builder.setTitle("Delete " + skin.getName() + "?").setMessage("Do you really want to delete this skin?");
+				builder.setTitle(getResources().getString(R.string.delete_skin_title, skin.getName())).setMessage(getResources()
+						.getString(R.string.delete_skin_message, skin.getName()));
 
 				builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -303,7 +305,8 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 
 	private Intent getDefaultIntent() {
 		Intent sendIntent = new Intent(Intent.ACTION_SEND);
-		sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out " + skin.getName() + "! " + skin.getSource() + " #SkinSwitch");
+		sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_message, skin.getName(),
+				skin.getSource()));
 		sendIntent.setType("text/plain");
 		return sendIntent;
 	}

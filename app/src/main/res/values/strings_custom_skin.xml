@@ -8,5 +8,6 @@
 	<string name="hint_add_skin_source">Notch <i>or</i> http://website.com/skin.png</string>
 	<string name="hint_add_skin_name">My Awesome Skin</string>
 	<string name="error_incorrect_url">Must be a valid username or URL</string>
+	<string name="downloading_custom_skin">Downloading…</string>
 
 </resources>

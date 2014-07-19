@@ -57,7 +57,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		txt_skin_name.setText(skin.getName());
 		txt_skin_description.setText((!skin.getDescription().isEmpty()) ? skin.getDescription() :
 				getContext().getResources().getString(R.string.no_description_available));
-		txt_skin_author.setText("Author: " + skin.getOwner());
+		txt_skin_author.setText(getContext().getResources().getString(R.string.library_skin_author, skin.getOwner()));
 
 		//loading images
 		img_skin_preview_front.setImageResource(R.drawable.char_front);
@@ -152,8 +152,8 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 							skin.toSkin().downloadSkinFromSource(getContext());
 						} catch(Exception e) {
 							e.printStackTrace();
-							Toast.makeText(getContext(), "Couldn't download the skin: " + e.getMessage(),
-									Toast.LENGTH_LONG).show();
+							Toast.makeText(getContext(), getContext().getResources().getString(R.string.error_skin_download,
+									e.getMessage()), Toast.LENGTH_LONG).show();
 							cancel(true);
 						}
 

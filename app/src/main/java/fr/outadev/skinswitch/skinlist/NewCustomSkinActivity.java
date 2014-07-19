@@ -110,7 +110,7 @@ public class NewCustomSkinActivity extends Activity {
 	 */
 	private void downloadAndAddSkin(final BasicSkin skin) {
 		final ProgressDialog progDial = new ProgressDialog(this);
-		progDial.setMessage("Downloading skin...");
+		progDial.setMessage(getResources().getString(R.string.downloading_custom_skin));
 		progDial.setIndeterminate(true);
 		progDial.setCancelable(false);
 
@@ -152,7 +152,8 @@ public class NewCustomSkinActivity extends Activity {
 							progDial.hide();
 							progDial.dismiss();
 
-							Toast.makeText(NewCustomSkinActivity.this, "Skin added successfully!", Toast.LENGTH_LONG).show();
+							Toast.makeText(NewCustomSkinActivity.this, getResources().getString(R.string.success_skin_added),
+									Toast.LENGTH_LONG).show();
 							NewCustomSkinActivity.this.finish();
 						}
 

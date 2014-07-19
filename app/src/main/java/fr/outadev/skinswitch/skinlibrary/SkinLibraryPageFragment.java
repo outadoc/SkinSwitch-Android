@@ -110,6 +110,7 @@ public class SkinLibraryPageFragment extends Fragment {
 							return handler.fetchAllSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
 					}
 				} catch(HttpRequest.HttpRequestException e) {
+					return null;
 				}
 
 				return null;
@@ -128,7 +129,8 @@ public class SkinLibraryPageFragment extends Fragment {
 					skinsList.addAll(result);
 					adapter.notifyDataSetChanged();
 				} else {
-					Toast.makeText(getActivity(), "Could not load the skins!", Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), getResources().getString(R.string.library_connection_error),
+							Toast.LENGTH_LONG).show();
 				}
 			}
 

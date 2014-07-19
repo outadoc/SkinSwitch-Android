@@ -86,7 +86,8 @@ public class SkinsListFragment extends Fragment {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 						usersManager.setLoggedInSuccessfully(false);
-						Toast.makeText(getActivity(), "Logged out.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.logged_out),
+								Toast.LENGTH_SHORT).show();
 					}
 				});
 

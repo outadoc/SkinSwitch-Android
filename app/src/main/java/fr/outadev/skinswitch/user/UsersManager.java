@@ -15,7 +15,9 @@ public class UsersManager {
 	public static final String USERNAME_PREFS_ID = "mojang:username";
 	public static final String PASSWORD_PREFS_ID = "mojang:password";
 	public static final String LOGGED_IN_PREFS_ID = "isloggedin";
+
 	private static final String STORAGE_KEY = "thiskeyissofuckinglongIhopenobodywilleverfinditlulz1234";
+
 	private final SharedPreferences prefs;
 	private final Encryption encryption;
 

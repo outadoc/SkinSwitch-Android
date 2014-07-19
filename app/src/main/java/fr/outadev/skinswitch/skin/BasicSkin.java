@@ -424,20 +424,20 @@ public class BasicSkin implements Serializable {
 		Log.i("SkinSwitch", "deleted all local res files for " + this);
 	}
 
-	public void initSkinUpload(final Context activity) {
-		UsersManager usersManager = new UsersManager(activity);
+	public void initSkinUpload(final Context context) {
+		UsersManager usersManager = new UsersManager(context);
 
 		//if the user isn't logged in, pop up the login window
 		if(!usersManager.isLoggedInSuccessfully()) {
-			Intent intent = new Intent(activity, MojangLoginActivity.class);
-			activity.startActivity(intent);
+			Intent intent = new Intent(context, MojangLoginActivity.class);
+			context.startActivity(intent);
 			return;
 		}
 
 		//else, ask for a confirmation
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setTitle("Wear " + getName() + "?").setMessage("Do you really want to replace your current " +
-				"Minecraft skin with " + getName() + "?");
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(context.getResources().getString(R.string.replace_skin_title,
+				getName())).setMessage(context.getResources().getString(R.string.replace_skin_message, getName()));
 
 		builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -446,17 +446,17 @@ public class BasicSkin implements Serializable {
 
 					@Override
 					protected void onPreExecute() {
-						((ILoadingActivity) activity).setLoading(true);
+						((ILoadingActivity) context).setLoading(true);
 					}
 
 					@Override
 					protected Exception doInBackground(Void... voids) {
 						MojangConnectionHandler handler = new MojangConnectionHandler();
-						UsersManager um = new UsersManager(activity);
+						UsersManager um = new UsersManager(context);
 
 						try {
 							handler.loginWithCredentials(um.getUser());
-							handler.uploadSkinToMojang(getRawSkinFile(activity));
+							handler.uploadSkinToMojang(getRawSkinFile(context));
 						} catch(Exception e) {
 							return e;
 						}
@@ -469,26 +469,26 @@ public class BasicSkin implements Serializable {
 						if(e != null) {
 							//display the error if any
 							if(e.getMessage() != null && !e.getMessage().isEmpty()) {
-								Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG).show();
+								Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 							}
 
 							//if the user needs to fill in a challenge
 							if(e instanceof ChallengeRequirementException) {
-								Intent intent = new Intent(activity, MojangLoginActivity.class);
+								Intent intent = new Intent(context, MojangLoginActivity.class);
 								intent.putExtra("step", MojangLoginActivity.Step.CHALLENGE);
-								activity.startActivity(intent);
+								context.startActivity(intent);
 							} else if(e instanceof InvalidMojangCredentialsException) {
 								//if the user needs to relog in
-								Intent intent = new Intent(activity, MojangLoginActivity.class);
-								activity.startActivity(intent);
+								Intent intent = new Intent(context, MojangLoginActivity.class);
+								context.startActivity(intent);
 							}
 
 						} else {
-							Toast.makeText(activity, "Skin uploaded successfully!",
+							Toast.makeText(context, context.getResources().getString(R.string.success_skin_upload),
 									Toast.LENGTH_SHORT).show();
 						}
 
-						((ILoadingActivity) activity).setLoading(false);
+						((ILoadingActivity) context).setLoading(false);
 					}
 
 				}).execute();
