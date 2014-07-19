@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class SkinLibraryPageFragment extends Fragment {
 	private SkinLibraryListAdapter adapter;
 	private SwipeRefreshLayout swipeRefreshLayout;
 
+	private ProgressBar progressBar;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -44,6 +47,7 @@ public class SkinLibraryPageFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.fragment_skin_library_list, container, false);
 
+		progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 		swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
 		swipeRefreshLayout.setColorSchemeResources(R.color.loading_bar_one, R.color.loading_bar_two, R.color.loading_bar_one,
 				R.color.loading_bar_two);
@@ -104,6 +108,8 @@ public class SkinLibraryPageFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(List<SkinLibrarySkin> result) {
+				progressBar.setVisibility(View.GONE);
+
 				if(result != null) {
 					if(!append) {
 						skinsList.clear();
