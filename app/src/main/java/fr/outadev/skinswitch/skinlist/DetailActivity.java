@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 
@@ -84,6 +85,31 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		switch(item.getItemId()) {
 			case android.R.id.home:
 				this.finish();
+				return true;
+			case R.id.action_refresh_skin:
+
+				(new AsyncTask<Void, Void, Void>() {
+
+					@Override
+					protected Void doInBackground(Void... voids) {
+						try {
+							skin.downloadSkinFromSource(DetailActivity.this);
+						} catch(Exception e) {
+							e.printStackTrace();
+							Toast.makeText(DetailActivity.this, "Could not refresh skin: " + e.getMessage(),
+									Toast.LENGTH_LONG).show();
+						}
+
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void aVoid) {
+						setupSkinPreviews();
+						Toast.makeText(DetailActivity.this, "Successfully refreshed this skin!", Toast.LENGTH_LONG).show();
+					}
+
+				}).execute();
 				return true;
 		}
 
