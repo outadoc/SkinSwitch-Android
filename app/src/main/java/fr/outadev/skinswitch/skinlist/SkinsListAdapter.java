@@ -116,6 +116,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 				//releasing the skin head
 				if((new Date()).getTime() - touchTimestamp < 300) {
 					System.out.println("open");
+					view.clearAnimation();
 
 					Intent intent = new Intent(getContext(), DetailActivity.class);
 					intent.putExtra("skin", skin);
