@@ -29,7 +29,6 @@ public class SkinsListFragment extends Fragment {
 	private SkinsDatabase db;
 	private UsersManager usersManager;
 
-	private GridView gridView;
 	private SkinsListAdapter skinsAdapter;
 	private List<Skin> skinsList;
 
@@ -41,12 +40,25 @@ public class SkinsListFragment extends Fragment {
 		db = new SkinsDatabase(getActivity());
 		usersManager = new UsersManager(getActivity());
 
-		gridView = (GridView) view.findViewById(R.id.grid_view);
+		GridView gridView = (GridView) view.findViewById(R.id.grid_view);
 		skinsList = new ArrayList<Skin>();
 		skinsAdapter = new SkinsListAdapter(getActivity(), this, android.R.layout.simple_list_item_1, skinsList);
 		gridView.setAdapter(skinsAdapter);
 
 		return view;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		// when the activity is resuming, refresh
+		refreshSkins();
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.main, menu);
 	}
 
 	@Override
@@ -57,19 +69,6 @@ public class SkinsListFragment extends Fragment {
 
 		menu.findItem(R.id.action_login).setVisible(!isLoggedIn);
 		menu.findItem(R.id.action_logout).setVisible(isLoggedIn);
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.main, menu);
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-
-		// when the activity is resuming, refresh
-		refreshSkins();
 	}
 
 	@Override

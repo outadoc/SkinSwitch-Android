@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.activities.DetailActivity;
@@ -65,13 +70,66 @@ public class SkinsListAdapter extends ArrayAdapter<Skin> {
 
 		}).execute();
 
-		convertView.setOnClickListener(new OnClickListener() {
+		skinView.setOnTouchListener(new View.OnTouchListener() {
+
+			private long touchTimestamp;
+			private Timer timer;
+
+			private Animation expandAnim;
 
 			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getContext(), DetailActivity.class);
-				intent.putExtra("skin", skin);
-				getContext().startActivity(intent);
+			public boolean onTouch(View view, MotionEvent motionEvent) {
+				System.out.println(motionEvent);
+				if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+					onTouchStart(view);
+				} else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+					onTouchEnd(view);
+				}
+
+				return true;
+			}
+
+			private void onTouchStart(final View view) {
+				//touching the skin head
+				touchTimestamp = (new Date()).getTime();
+				timer = new Timer();
+
+				timer.schedule(new TimerTask() {
+
+					public void run() {
+						System.out.println("upload skin");
+						frag.getActivity().runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								skin.initSkinUpload(getContext());
+							}
+
+						});
+					}
+
+				}, 1000);
+
+				expandAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_rotation);
+				view.startAnimation(expandAnim);
+			}
+
+			private void onTouchEnd(View view) {
+				//releasing the skin head
+				if((new Date()).getTime() - touchTimestamp < 300) {
+					System.out.println("open");
+
+					Intent intent = new Intent(getContext(), DetailActivity.class);
+					intent.putExtra("skin", skin);
+					getContext().startActivity(intent);
+
+					timer.cancel();
+					touchTimestamp = 0;
+				}
+
+				if((new Date()).getTime() - touchTimestamp < 1000) {
+					view.clearAnimation();
+				}
 			}
 
 		});

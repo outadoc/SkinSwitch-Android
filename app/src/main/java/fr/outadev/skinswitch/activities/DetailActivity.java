@@ -22,23 +22,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Util;
-import fr.outadev.skinswitch.network.MojangConnectionHandler;
-import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
-import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
 import fr.outadev.skinswitch.skin.Skin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
-import fr.outadev.skinswitch.user.UsersManager;
 
 /**
  * Created by outadoc on 06/07/14.
  */
-public class DetailActivity extends Activity {
+public class DetailActivity extends Activity implements ILoadingActivity {
 
 	private Skin skin;
 	private int animTime;
@@ -209,79 +204,7 @@ public class DetailActivity extends Activity {
 
 			@Override
 			public void onClick(View view) {
-				UsersManager usersManager = new UsersManager(DetailActivity.this);
-
-				//if the user isn't logged in, pop up the login window
-				if(!usersManager.isLoggedInSuccessfully()) {
-					Intent intent = new Intent(DetailActivity.this, MojangLoginActivity.class);
-					startActivity(intent);
-					return;
-				}
-
-				//else, ask for a confirmation
-				AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
-				builder.setTitle("Wear " + skin.getName() + "?").setMessage("Do you really want to replace your current " +
-						"Minecraft skin with " + skin.getName() + "?");
-
-				builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int id) {
-						(new AsyncTask<Void, Void, Exception>() {
-
-							@Override
-							protected void onPreExecute() {
-								setLoading(true);
-							}
-
-							@Override
-							protected Exception doInBackground(Void... voids) {
-								MojangConnectionHandler handler = new MojangConnectionHandler();
-								UsersManager um = new UsersManager(DetailActivity.this);
-
-								try {
-									handler.loginWithCredentials(um.getUser());
-									handler.uploadSkinToMojang(skin.getRawSkinFile(DetailActivity.this));
-								} catch(Exception e) {
-									return e;
-								}
-
-								return null;
-							}
-
-							@Override
-							protected void onPostExecute(Exception e) {
-								if(e != null) {
-									//display the error if any
-									if(e.getMessage() != null && !e.getMessage().isEmpty()) {
-										Toast.makeText(DetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-									}
-
-									//if the user needs to fill in a challenge
-									if(e instanceof ChallengeRequirementException) {
-										Intent intent = new Intent(DetailActivity.this, MojangLoginActivity.class);
-										intent.putExtra("step", MojangLoginActivity.Step.CHALLENGE);
-										startActivity(intent);
-									} else if(e instanceof InvalidMojangCredentialsException) {
-										//if the user needs to relog in
-										Intent intent = new Intent(DetailActivity.this, MojangLoginActivity.class);
-										startActivity(intent);
-									}
-
-								} else {
-									Toast.makeText(DetailActivity.this, "Skin uploaded successfully!",
-											Toast.LENGTH_SHORT).show();
-								}
-
-								setLoading(false);
-							}
-
-						}).execute();
-					}
-
-				});
-
-				builder.setNegativeButton(R.string.no, null);
-				builder.create().show();
+				skin.initSkinUpload(DetailActivity.this);
 			}
 
 		});
@@ -356,7 +279,8 @@ public class DetailActivity extends Activity {
 		return sendIntent;
 	}
 
-	private void setLoading(boolean loading) {
+	@Override
+	public void setLoading(boolean loading) {
 		View bLoading = findViewById(R.id.b_loading);
 		View bWear = findViewById(R.id.b_upload_skin);
 

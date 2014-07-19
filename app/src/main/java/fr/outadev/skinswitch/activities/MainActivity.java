@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.user.UsersManager;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ILoadingActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,4 +30,8 @@ public class MainActivity extends FragmentActivity {
 		outState.putBoolean("hasShownWindow", true);
 	}
 
+	@Override
+	public void setLoading(boolean loading) {
+
+	}
 }
