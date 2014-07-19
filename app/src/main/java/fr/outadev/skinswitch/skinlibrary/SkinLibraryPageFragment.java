@@ -101,6 +101,8 @@ public class SkinLibraryPageFragment extends Fragment {
 						return handler.fetchRandomSkins(MAX_SKINS_LOAD_COUNT);
 					case SEARCH_SKINS:
 						return handler.fetchSkinByName(searchQuery, MAX_SKINS_LOAD_COUNT, skinsList.size());
+					case ALL_SKINS:
+						return handler.fetchAllSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
 					default:
 						return null;
 				}

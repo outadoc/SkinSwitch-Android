@@ -25,10 +25,6 @@ public class SkinManagerConnectionHandler {
 
 	public static final String BASE_URL = "https://skin.outadoc.fr/json/";
 
-	public enum EndPoint {
-		LATEST_SKINS, RANDOM_SKINS, SEARCH_SKINS
-	}
-
 	/**
 	 * Gets the latest skins.
 	 *
@@ -95,6 +91,14 @@ public class SkinManagerConnectionHandler {
 		}
 	}
 
+	public List<SkinLibrarySkin> fetchAllSkins() {
+		return fetchAllSkins(15, 0);
+	}
+
+	public List<SkinLibrarySkin> fetchAllSkins(int count, int start) {
+		return fetchSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match=.");
+	}
+
 	public Bitmap fetchSkinBitmap(int id) {
 		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).trustAllHosts().useCaches(true).bytes();
 		return BitmapFactory.decodeByteArray(response, 0, response.length);
@@ -133,6 +137,10 @@ public class SkinManagerConnectionHandler {
 		}
 
 		return null;
+	}
+
+	public enum EndPoint {
+		LATEST_SKINS, RANDOM_SKINS, SEARCH_SKINS, ALL_SKINS
 	}
 
 }

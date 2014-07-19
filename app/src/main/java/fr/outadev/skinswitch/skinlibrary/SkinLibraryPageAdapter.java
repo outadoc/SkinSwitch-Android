@@ -11,6 +11,7 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
 	public static final int INDEX_RANDOM_SKINS = 0;
 	public static final int INDEX_LATEST_SKINS = 1;
+	public static final int INDEX_ALL_SKINS = 2;
 
 	public SkinLibraryPageAdapter(FragmentManager fm) {
 		super(fm);
@@ -28,6 +29,9 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 			case INDEX_LATEST_SKINS:
 				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
 				break;
+			case INDEX_ALL_SKINS:
+				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.ALL_SKINS);
+				break;
 			default:
 				return null;
 		}
@@ -38,7 +42,7 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 2;
+		return 3;
 	}
 
 	@Override
@@ -48,6 +52,8 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 				return "RANDOM";
 			case INDEX_LATEST_SKINS:
 				return "LATEST";
+			case INDEX_ALL_SKINS:
+				return "ALL";
 			default:
 				return null;
 		}
