@@ -44,7 +44,8 @@ public class MojangConnectionHandler {
 	 * @throws ChallengeRequirementException     if the user has to complete a challenge in order to log in
 	 *                                           from this device.
 	 */
-	public void loginWithCredentials(User user) throws InvalidMojangCredentialsException, ChallengeRequirementException {
+	public void loginWithCredentials(User user) throws InvalidMojangCredentialsException, ChallengeRequirementException,
+			HttpRequest.HttpRequestException {
 
 		Map<String, String> data = new HashMap<String, String>();
 
@@ -72,7 +73,8 @@ public class MojangConnectionHandler {
 	 * @param answer    the answer.
 	 * @throws InvalidMojangChallengeAnswerException if the answer wasn't the right one.
 	 */
-	public void validateChallenge(LoginChallenge challenge, String answer) throws InvalidMojangChallengeAnswerException {
+	public void validateChallenge(LoginChallenge challenge, String answer) throws InvalidMojangChallengeAnswerException,
+			HttpRequest.HttpRequestException {
 		Map<String, String> data = new HashMap<String, String>();
 
 		data.put("answer", answer);
@@ -85,7 +87,7 @@ public class MojangConnectionHandler {
 			return;
 		}
 
-		String error = null;
+		String error;
 
 		try {
 			JSONObject errorObject = (JSONObject) new JSONTokener(body).nextValue();
@@ -110,7 +112,7 @@ public class MojangConnectionHandler {
 	 * @param skin the skin to send.
 	 * @throws SkinUploadException if the upload failed.
 	 */
-	public void uploadSkinToMojang(File skin) throws SkinUploadException {
+	public void uploadSkinToMojang(File skin) throws SkinUploadException, HttpRequest.HttpRequestException {
 		// first off, we need an authenticity token to upload the skin ;-;
 		String profileBody = HttpRequest.get(BASE_URL + "/profile").body();
 		String authToken = null;

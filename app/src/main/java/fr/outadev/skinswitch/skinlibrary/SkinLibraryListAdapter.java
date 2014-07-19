@@ -1,6 +1,5 @@
 package fr.outadev.skinswitch.skinlibrary;
 
-import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -151,16 +150,17 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 						try {
 							skin.toSkin().downloadSkinFromSource(getContext());
-						} catch(NetworkErrorException e) {
+						} catch(Exception e) {
 							e.printStackTrace();
-						} catch(IOException e) {
-							e.printStackTrace();
+							Toast.makeText(getContext(), "Couldn't download the skin: " + e.getMessage(),
+									Toast.LENGTH_LONG).show();
+							cancel(true);
 						}
 
 						try {
 							Thread.sleep(300);
 						} catch(InterruptedException e) {
-
+							//well, yup
 						}
 
 						return null;

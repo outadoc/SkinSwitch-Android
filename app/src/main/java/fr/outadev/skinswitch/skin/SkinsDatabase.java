@@ -62,7 +62,6 @@ public class SkinsDatabase {
 			BasicSkin tmp = new BasicSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)));
 			tmp.setSource(cur.getString(4));
 			skins.add(tmp);
-			System.out.println(tmp);
 		}
 
 		cur.close();

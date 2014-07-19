@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.github.kevinsawicki.http.HttpRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class SkinLibraryPageFragment extends Fragment {
 	public static final String ARG_ENDPOINT = "EndPoint";
 	public static final String ARG_SEARCH_QUERY = "SearchQuery";
 	private static final int MAX_SKINS_LOAD_COUNT = 15;
+
 	private EndPoint endPoint;
 	private String searchQuery;
 	private List<SkinLibrarySkin> skinsList;
@@ -94,23 +98,27 @@ public class SkinLibraryPageFragment extends Fragment {
 			protected List<SkinLibrarySkin> doInBackground(Void... params) {
 				SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
 
-				switch(endPoint) {
-					case LATEST_SKINS:
-						return handler.fetchLatestSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
-					case RANDOM_SKINS:
-						return handler.fetchRandomSkins(MAX_SKINS_LOAD_COUNT);
-					case SEARCH_SKINS:
-						return handler.fetchSkinByName(searchQuery, MAX_SKINS_LOAD_COUNT, skinsList.size());
-					case ALL_SKINS:
-						return handler.fetchAllSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
-					default:
-						return null;
+				try {
+					switch(endPoint) {
+						case LATEST_SKINS:
+							return handler.fetchLatestSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
+						case RANDOM_SKINS:
+							return handler.fetchRandomSkins(MAX_SKINS_LOAD_COUNT);
+						case SEARCH_SKINS:
+							return handler.fetchSkinByName(searchQuery, MAX_SKINS_LOAD_COUNT, skinsList.size());
+						case ALL_SKINS:
+							return handler.fetchAllSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
+					}
+				} catch(HttpRequest.HttpRequestException e) {
 				}
+
+				return null;
 			}
 
 			@Override
 			protected void onPostExecute(List<SkinLibrarySkin> result) {
 				progressBar.setVisibility(View.GONE);
+				swipeRefreshLayout.setRefreshing(false);
 
 				if(result != null) {
 					if(!append) {
@@ -119,9 +127,9 @@ public class SkinLibraryPageFragment extends Fragment {
 
 					skinsList.addAll(result);
 					adapter.notifyDataSetChanged();
+				} else {
+					Toast.makeText(getActivity(), "Could not load the skins!", Toast.LENGTH_LONG).show();
 				}
-
-				swipeRefreshLayout.setRefreshing(false);
 			}
 
 		}).execute();

@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -26,32 +27,14 @@ public class SkinManagerConnectionHandler {
 	public static final String BASE_URL = "https://skin.outadoc.fr/json/";
 
 	/**
-	 * Gets the latest skins.
-	 *
-	 * @return an array containing the latest skins.
-	 */
-	public List<SkinLibrarySkin> fetchLatestSkins() {
-		return fetchLatestSkins(15, 0);
-	}
-
-	/**
 	 * Gets the n latest skins.
 	 *
 	 * @param count the max number of skins to fetch.
 	 * @param start the index of the first skin to fetch.
 	 * @return an array containing the latest skins.
 	 */
-	public List<SkinLibrarySkin> fetchLatestSkins(int count, int start) {
+	public List<SkinLibrarySkin> fetchLatestSkins(int count, int start) throws HttpRequest.HttpRequestException {
 		return fetchSkinsFromAPI("method=getLastestSkins&max=" + count + "&start=" + start);
-	}
-
-	/**
-	 * Gets random skins.
-	 *
-	 * @return an array containing random skins.
-	 */
-	public List<SkinLibrarySkin> fetchRandomSkins() {
-		return fetchRandomSkins(15);
 	}
 
 	/**
@@ -60,18 +43,8 @@ public class SkinManagerConnectionHandler {
 	 * @param count the max number of skins to retrieve.
 	 * @return an array containing the random skins.
 	 */
-	public List<SkinLibrarySkin> fetchRandomSkins(int count) {
+	public List<SkinLibrarySkin> fetchRandomSkins(int count) throws HttpRequest.HttpRequestException {
 		return fetchSkinsFromAPI("method=getRandomSkins&max=" + count);
-	}
-
-	/**
-	 * Gets a list of skins that match the criteria.
-	 *
-	 * @param criteria the search criteria.
-	 * @return an array of skins matching the criteria.
-	 */
-	public List<SkinLibrarySkin> fetchSkinByName(String criteria) {
-		return fetchSkinByName(criteria, 15, 0);
 	}
 
 	/**
@@ -82,7 +55,7 @@ public class SkinManagerConnectionHandler {
 	 * @param start    the index of the first skin to fetch.
 	 * @return an array of skins matching the criteria.
 	 */
-	public List<SkinLibrarySkin> fetchSkinByName(String criteria, int count, int start) {
+	public List<SkinLibrarySkin> fetchSkinByName(String criteria, int count, int start) throws HttpRequest.HttpRequestException {
 		try {
 			return fetchSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match="
 					+ URLEncoder.encode(criteria, "UTF-8"));
@@ -91,11 +64,7 @@ public class SkinManagerConnectionHandler {
 		}
 	}
 
-	public List<SkinLibrarySkin> fetchAllSkins() {
-		return fetchAllSkins(15, 0);
-	}
-
-	public List<SkinLibrarySkin> fetchAllSkins(int count, int start) {
+	public List<SkinLibrarySkin> fetchAllSkins(int count, int start) throws HttpRequest.HttpRequestException {
 		return fetchSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match=.");
 	}
 
@@ -110,7 +79,7 @@ public class SkinManagerConnectionHandler {
 	 * @param parameters the GET parameters that will be given to the API.
 	 * @return an array of skins returned by the API.
 	 */
-	private List<SkinLibrarySkin> fetchSkinsFromAPI(String parameters) {
+	private List<SkinLibrarySkin> fetchSkinsFromAPI(String parameters) throws HttpRequest.HttpRequestException {
 		List<SkinLibrarySkin> skinsList = new ArrayList<SkinLibrarySkin>();
 		String response = HttpRequest.get(BASE_URL + "?" + parameters).trustAllHosts().body();
 
@@ -118,25 +87,23 @@ public class SkinManagerConnectionHandler {
 			try {
 				JSONArray resultArray = new JSONArray(response);
 
-				if(resultArray != null) {
-					for(int i = 0; i < resultArray.length(); i++) {
-						JSONObject currSkinObj = resultArray.getJSONObject(i);
-						SkinLibrarySkin skin = new SkinLibrarySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
-								currSkinObj.getString("description"), null, currSkinObj.getString("owner_username"));
-						skin.setSource(BASE_URL + "?method=getSkin&id=" + currSkinObj.getInt("id"));
-						skin.setSkinManagerId(currSkinObj.getInt("id"));
-						skinsList.add(skin);
-					}
-
-					return skinsList;
+				for(int i = 0; i < resultArray.length(); i++) {
+					JSONObject currSkinObj = resultArray.getJSONObject(i);
+					SkinLibrarySkin skin = new SkinLibrarySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
+							currSkinObj.getString("description"), null, currSkinObj.getString("owner_username"));
+					skin.setSource(BASE_URL + "?method=getSkin&id=" + currSkinObj.getInt("id"));
+					skin.setSkinManagerId(currSkinObj.getInt("id"));
+					skinsList.add(skin);
 				}
+
+				return skinsList;
 			} catch(JSONException e) {
-				return null;
+				throw new HttpRequest.HttpRequestException(new IOException());
 			}
 
+		} else {
+			throw new HttpRequest.HttpRequestException(new IOException());
 		}
-
-		return null;
 	}
 
 	public enum EndPoint {
