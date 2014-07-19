@@ -68,7 +68,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 		}).execute();
 
-		skinView.setOnTouchListener(new View.OnTouchListener() {
+		convertView.setOnTouchListener(new View.OnTouchListener() {
 
 			private long touchTimestamp;
 			private Timer timer;
@@ -79,9 +79,9 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			public boolean onTouch(View view, MotionEvent motionEvent) {
 				System.out.println(motionEvent);
 				if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-					onTouchStart(view);
+					onTouchStart(skinView);
 				} else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-					onTouchEnd(view);
+					onTouchEnd(skinView);
 				}
 
 				return true;
