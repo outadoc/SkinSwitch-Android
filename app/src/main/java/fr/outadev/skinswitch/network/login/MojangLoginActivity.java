@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.dd.processbutton.iml.ActionProcessButton.Mode;
+import com.github.kevinsawicki.http.HttpRequest;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.network.MojangConnectionHandler;
@@ -293,6 +294,17 @@ public class MojangLoginActivity extends Activity {
 		protected Exception doInBackground(Void... params) {
 			try {
 				loginManager.loginWithCredentials(user);
+			} catch(HttpRequest.HttpRequestException e) {
+				MojangLoginActivity.this.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(MojangLoginActivity.this, "Could not login (connection error)", Toast.LENGTH_LONG).show();
+					}
+
+				});
+
+				cancel(true);
 			} catch(Exception e) {
 				return e;
 			}
@@ -344,6 +356,18 @@ public class MojangLoginActivity extends Activity {
 				loginManager.validateChallenge(challenge, mChallengeAnswerView.getText().toString());
 			} catch(InvalidMojangChallengeAnswerException e) {
 				return e;
+			} catch(HttpRequest.HttpRequestException e) {
+				MojangLoginActivity.this.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						Toast.makeText(MojangLoginActivity.this, "Could not send the challenge (connection error)",
+								Toast.LENGTH_LONG).show();
+					}
+
+				});
+
+				cancel(true);
 			}
 
 			return null;
