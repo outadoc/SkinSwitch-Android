@@ -16,6 +16,6 @@
 		<item name="android:background">@color/colorPrimary</item>
 	</style>
 
-	<style name="DialogActivity" parent="android:Theme.Holo.Light.Dialog"></style>
+	<style name="DialogActivity" parent="android:Theme.Holo.Light.Dialog" />
 
 </resources>
