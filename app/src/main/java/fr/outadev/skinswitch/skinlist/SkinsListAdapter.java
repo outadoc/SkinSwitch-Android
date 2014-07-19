@@ -77,7 +77,6 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				System.out.println(motionEvent);
 				if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 					onTouchStart(skinView);
 				} else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -95,7 +94,6 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 				timer.schedule(new TimerTask() {
 
 					public void run() {
-						System.out.println("upload skin");
 						frag.getActivity().runOnUiThread(new Runnable() {
 
 							@Override
@@ -115,7 +113,6 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			private void onTouchEnd(View view) {
 				//releasing the skin head
 				if((new Date()).getTime() - touchTimestamp < 300) {
-					System.out.println("open");
 					view.clearAnimation();
 
 					Intent intent = new Intent(getContext(), DetailActivity.class);
