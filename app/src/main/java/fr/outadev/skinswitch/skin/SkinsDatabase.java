@@ -111,6 +111,22 @@ public class SkinsDatabase {
 	}
 
 	/**
+	 * Updates a skin in the database.
+	 *
+	 * @param skin the skin to edit, with its updated information.
+	 */
+	public void updateSkin(BasicSkin skin) {
+		SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
+
+		ContentValues cv = new ContentValues();
+		cv.put("name", skin.getName());
+		cv.put("description", skin.getDescription());
+
+		db.update("skins", cv, "id = ?", new String[]{Integer.valueOf(skin.getId()).toString()});
+		db.close();
+	}
+
+	/**
 	 * Returns the identifier of the last inserted skin.
 	 *
 	 * @return -1 if there are no skins in the database, or the last inserted id.

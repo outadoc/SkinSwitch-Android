@@ -31,6 +31,8 @@ public class NewCustomSkinActivity extends Activity {
 	private EditText txt_description;
 	private EditText txt_source;
 
+	private BasicSkin editSkin;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,9 +42,22 @@ public class NewCustomSkinActivity extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
+		editSkin = (BasicSkin) getIntent().getSerializableExtra("skin");
+
 		txt_name = (EditText) findViewById(R.id.txt_skin_name);
 		txt_description = (EditText) findViewById(R.id.txt_skin_description);
 		txt_source = (EditText) findViewById(R.id.txt_skin_source);
+
+		if(editSkin != null) {
+			setTitle(getResources().getString(R.string.title_activity_edit_skin));
+
+			txt_source.setVisibility(View.GONE);
+			findViewById(R.id.lbl_skin_source).setVisibility(View.GONE);
+
+			txt_name.setText(editSkin.getName());
+			txt_description.setText(editSkin.getDescription());
+			txt_source.setText(editSkin.getSource());
+		}
 	}
 
 	@Override
@@ -103,7 +118,11 @@ public class NewCustomSkinActivity extends Activity {
 		if(errorField != null) {
 			errorField.requestFocus();
 		} else {
-			downloadAndAddSkin(skin);
+			if(editSkin != null) {
+				updateSkin();
+			} else {
+				downloadAndAddSkin(skin);
+			}
 		}
 	}
 
@@ -174,6 +193,17 @@ public class NewCustomSkinActivity extends Activity {
 			}
 
 		}).execute();
+	}
+
+	private void updateSkin() {
+		editSkin.setName(txt_name.getText().toString());
+		editSkin.setDescription(txt_description.getText().toString());
+
+		SkinsDatabase db = new SkinsDatabase(this);
+		db.updateSkin(editSkin);
+		Toast.makeText(NewCustomSkinActivity.this, getResources().getString(R.string.success_skin_updated),
+				Toast.LENGTH_LONG).show();
+		finish();
 	}
 
 }

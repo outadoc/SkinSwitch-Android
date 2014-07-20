@@ -76,6 +76,14 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		SkinsDatabase db = new SkinsDatabase(this);
+		skin = db.getSkin(skin.getId());
+		setupText();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.skin_details, menu);
 
@@ -92,7 +100,7 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 			case android.R.id.home:
 				this.finish();
 				return true;
-			case R.id.action_refresh_skin:
+			case R.id.action_refresh_skin: {
 
 				(new AsyncTask<Void, Void, Void>() {
 
@@ -118,6 +126,13 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 
 				}).execute();
 				return true;
+			}
+			case R.id.action_edit_skin: {
+				Intent intent = new Intent(this, NewCustomSkinActivity.class);
+				intent.putExtra("skin", skin);
+				startActivity(intent);
+				return true;
+			}
 		}
 
 		return super.onOptionsItemSelected(item);

@@ -2,6 +2,8 @@
 <resources>
 
 	<string name="title_activity_new_custom_skin">Add a custom skin</string>
+	<string name="title_activity_edit_skin">Edit a Skin</string>
+
 	<string name="lbl_add_skin_source">Minecraft Username or Skin URL</string>
 	<string name="lbl_add_skin_name">Skin Name</string>
 	<string name="lbl_add_skin_description">Skin Description</string>

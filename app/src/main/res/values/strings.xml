@@ -16,6 +16,7 @@
 
 	<string name="action_next">Next</string>
 	<string name="action_refresh">Refresh</string>
+	<string name="action_edit">Edit</string>
 	<string name="action_share">Share</string>
 	<string name="action_search">Search</string>
 
@@ -23,6 +24,7 @@
 	<string name="error_skin_download">Could not download this skin: %1$s</string>
 
 	<string name="success_skin_added">Skin added successfully!</string>
+	<string name="success_skin_updated">Skin updated successfully!</string>
 
 	<string name="replace_skin_title">Replace with "%1$s"?</string>
 	<string name="replace_skin_message">Do you really want to replace your current Minecraft skin with "%1$s"?</string>
