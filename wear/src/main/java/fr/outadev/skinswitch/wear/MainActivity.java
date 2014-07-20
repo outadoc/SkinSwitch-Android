@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import fr.outadev.skinswitch.R;
+
 public class MainActivity extends Activity {
 
 	private static final int SPEECH_REQUEST_CODE = 0;
