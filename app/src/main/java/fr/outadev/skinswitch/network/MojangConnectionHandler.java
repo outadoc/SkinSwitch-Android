@@ -102,8 +102,11 @@ public class MojangConnectionHandler {
 		}
 
 		if(error != null) {
+			Log.e("SkinSwitch", "challenge error: " + error);
 			throw new InvalidMojangChallengeAnswerException(error);
 		}
+
+		Log.i("SkinSwitch", "challenge validated");
 	}
 
 	/**
@@ -140,9 +143,12 @@ public class MojangConnectionHandler {
 
 			if(matcher.find()) {
 				String error = matcher.group(1);
+				Log.e("SkinSwitch", "skin couldn't be uploaded: " + error);
 				throw new SkinUploadException(error);
 			}
 		}
+
+		Log.i("SkinSwitch", "skin uploaded successfully");
 
 	}
 }

@@ -2,6 +2,7 @@ package fr.outadev.skinswitch.network.skinmanager;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.github.kevinsawicki.http.HttpRequest;
 
@@ -98,10 +99,12 @@ public class SkinManagerConnectionHandler {
 
 				return skinsList;
 			} catch(JSONException e) {
+				Log.e("SkinSwitch", "error parsing " + parameters);
 				throw new HttpRequest.HttpRequestException(new IOException());
 			}
 
 		} else {
+			Log.e("SkinSwitch", "error fetching " + parameters);
 			throw new HttpRequest.HttpRequestException(new IOException());
 		}
 	}
