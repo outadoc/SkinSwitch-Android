@@ -273,7 +273,7 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 	 */
 	@TargetApi(Build.VERSION_CODES.L)
 	private void setOutlines() {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
+		if(Build.VERSION.SDK_INT >= 20) {
 			int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
 
 			Outline outline = new Outline();
@@ -331,7 +331,7 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 
 	@TargetApi(Build.VERSION_CODES.L)
 	private void colorRipple(int id, int tintColor) {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
+		if(Build.VERSION.SDK_INT >= 20) {
 			View buttonView = findViewById(id);
 
 			RippleDrawable ripple = (RippleDrawable) buttonView.getBackground();
