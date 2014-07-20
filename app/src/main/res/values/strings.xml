@@ -33,4 +33,6 @@
 	<string name="share_message">Check out %1$s, a cool Minecraft skin! %2$s (via #SkinSwitch)</string>
 	<string name="logged_out">Logged out.</string>
 
+	<string name="skin_details_title">Skin Details</string>
+
 </resources>

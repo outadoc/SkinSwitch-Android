@@ -28,7 +28,7 @@
 		</activity>
 		<activity
 			android:name=".skinlist.DetailActivity"
-			android:label="Skin Details"
+			android:label="@string/skin_details_title"
 			android:theme="@style/DetailTheme">
 		</activity>
 		<activity
