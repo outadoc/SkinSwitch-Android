@@ -2,5 +2,9 @@
 <resources>
 
 	<string name="settings_title">Settings</string>
+	<string name="legal_title">Legal Stuff</string>
+	<string name="credits_minecraft_sum">Minecraft ®/TM &amp; © 2009–2014 Mojang / Notch</string>
+	<string name="about_skinswitch_title">About</string>
+	<string name="about_skinswitch_sum">%1$s v%2$s © 2014 Baptiste Candellier / outa[dev]</string>
 
 </resources>

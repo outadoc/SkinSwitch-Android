@@ -2,12 +2,12 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<PreferenceCategory
-		android:title="Credits">
+	<Preference
+		android:summary="@string/credits_minecraft_sum"
+		android:title="@string/legal_title" />
 
-		<Preference
-			android:summary="Blah blah blah"
-			android:title="Legal stuff" />
-	</PreferenceCategory>
+	<Preference
+		android:key="pref_about"
+		android:title="@string/about_skinswitch_title" />
 
 </PreferenceScreen>
