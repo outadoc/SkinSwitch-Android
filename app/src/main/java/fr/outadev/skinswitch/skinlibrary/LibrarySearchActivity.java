@@ -10,6 +10,12 @@ import android.view.MenuItem;
 
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
+/**
+ * Activity handling the library search.
+ * Displays the search results for a query.
+ *
+ * @author outadoc
+ */
 public class LibrarySearchActivity extends FragmentActivity {
 
 	@Override

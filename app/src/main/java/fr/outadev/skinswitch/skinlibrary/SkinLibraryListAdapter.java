@@ -22,6 +22,11 @@ import fr.outadev.skinswitch.Util;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
+/**
+ * ArrayAdapter for displaying the skins on a skin library page.
+ *
+ * @author outadoc
+ */
 public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 	private final int animTime;

@@ -21,6 +21,12 @@ import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.EndPoint;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 
+/**
+ * Fragment containing a skin library tab.
+ * Displays a list of skins downloaded from the API, depending on the requested end point.
+ *
+ * @author outadoc
+ */
 public class SkinLibraryPageFragment extends Fragment {
 
 	public static final String ARG_ENDPOINT = "EndPoint";
@@ -86,6 +92,12 @@ public class SkinLibraryPageFragment extends Fragment {
 		loadSkinsFromNetwork(false);
 	}
 
+	/**
+	 * Downloads a list of skins from the API and displays them in the list.
+	 *
+	 * @param append determines whether the downloaded skins should be appended to the list or replace it.
+	 * @author outadoc
+	 */
 	private void loadSkinsFromNetwork(final boolean append) {
 		(new AsyncTask<Void, Void, List<SkinLibrarySkin>>() {
 

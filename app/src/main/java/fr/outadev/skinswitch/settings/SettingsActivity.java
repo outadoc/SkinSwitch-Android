@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 /**
- * Created by outadoc on 19/07/14.
+ * Activity that handles the SkinSwitch settings.
+ *
+ * @author outadoc
  */
 public class SettingsActivity extends Activity {
 

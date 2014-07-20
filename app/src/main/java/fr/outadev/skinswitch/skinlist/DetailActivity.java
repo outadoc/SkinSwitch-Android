@@ -1,5 +1,6 @@
 package fr.outadev.skinswitch.skinlist;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.graphics.Outline;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.util.DisplayMetrics;
@@ -33,7 +35,8 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
  * The skin detail activity.
- * Created by outadoc on 06/07/14.
+ *
+ * @author outadoc
  */
 public class DetailActivity extends Activity implements ILoadingActivity {
 
@@ -120,6 +123,9 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Creates and displays the skin previews in the containers.
+	 */
 	private void setupSkinPreviews() {
 		final ImageView img_skin_preview_front = (ImageView) findViewById(R.id.skin_preview_front);
 		final ImageView img_skin_preview_back = (ImageView) findViewById(R.id.skin_preview_back);
@@ -188,6 +194,9 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		});
 	}
 
+	/**
+	 * Sets up the title and description.
+	 */
 	private void setupText() {
 		TextView titleView = (TextView) findViewById(R.id.title);
 		titleView.setText(skin.getName());
@@ -196,6 +205,9 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		descriptionView.setText(skin.getDescription());
 	}
 
+	/**
+	 * Sets up the buttons (colour and actions).
+	 */
 	private void setupButtons() {
 		b_delete.setOnClickListener(new View.OnClickListener() {
 
@@ -241,36 +253,45 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 		});
 	}
 
+	/**
+	 * Sets the outlines of the buttons.
+	 */
+	@TargetApi(Build.VERSION_CODES.L)
 	private void setOutlines() {
-		int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
+			int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
 
-		Outline outline = new Outline();
-		outline.setOval(0, 0, size, size);
+			Outline outline = new Outline();
+			outline.setOval(0, 0, size, size);
 
-		b_delete.setOutline(outline);
-		b_upload_skin_container.setOutline(outline);
+			b_delete.setOutline(outline);
+			b_upload_skin_container.setOutline(outline);
+		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
 	private void applySystemWindowsBottomInset() {
-		View containerView = findViewById(R.id.container);
-		containerView.setFitsSystemWindows(true);
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+			View containerView = findViewById(R.id.container);
+			containerView.setFitsSystemWindows(true);
 
-		containerView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+			containerView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
 
-			@Override
-			public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
-				DisplayMetrics metrics = getResources().getDisplayMetrics();
+				@Override
+				public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
+					DisplayMetrics metrics = getResources().getDisplayMetrics();
 
-				if(metrics.widthPixels < metrics.heightPixels) {
-					view.setPadding(0, 0, 0, windowInsets.getSystemWindowInsetBottom());
-				} else {
-					view.setPadding(0, 0, windowInsets.getSystemWindowInsetRight(), 0);
+					if(metrics.widthPixels < metrics.heightPixels) {
+						view.setPadding(0, 0, 0, windowInsets.getSystemWindowInsetBottom());
+					} else {
+						view.setPadding(0, 0, windowInsets.getSystemWindowInsetRight(), 0);
+					}
+
+					return windowInsets.consumeSystemWindowInsets();
 				}
 
-				return windowInsets.consumeSystemWindowInsets();
-			}
-
-		});
+			});
+		}
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -293,14 +314,17 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 				().getColor(R.color.loading_bar_one));
 	}
 
+	@TargetApi(Build.VERSION_CODES.L)
 	private void colorRipple(int id, int tintColor) {
-		View buttonView = findViewById(id);
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
+			View buttonView = findViewById(id);
 
-		RippleDrawable ripple = (RippleDrawable) buttonView.getBackground();
-		GradientDrawable rippleBackground = (GradientDrawable) ripple.getDrawable(0);
-		rippleBackground.setColor(getResources().getColor(R.color.colorPrimary));
+			RippleDrawable ripple = (RippleDrawable) buttonView.getBackground();
+			GradientDrawable rippleBackground = (GradientDrawable) ripple.getDrawable(0);
+			rippleBackground.setColor(getResources().getColor(R.color.colorPrimary));
 
-		ripple.setColor(ColorStateList.valueOf(tintColor));
+			ripple.setColor(ColorStateList.valueOf(tintColor));
+		}
 	}
 
 	private Intent getDefaultIntent() {

@@ -11,6 +11,11 @@ import android.widget.SearchView;
 
 import fr.outadev.skinswitch.R;
 
+/**
+ * Activity displaying the skin library.
+ *
+ * @author outadoc
+ */
 public class SkinLibraryActivity extends FragmentActivity {
 
 	@Override

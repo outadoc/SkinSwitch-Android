@@ -9,7 +9,9 @@ import android.preference.PreferenceFragment;
 import fr.outadev.skinswitch.R;
 
 /**
- * Created by outadoc on 19/07/14.
+ * Fragment that inflates the settings.
+ *
+ * @author outadoc
  */
 public class SettingsFragment extends PreferenceFragment {
 

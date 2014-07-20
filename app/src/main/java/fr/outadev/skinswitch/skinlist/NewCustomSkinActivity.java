@@ -20,6 +20,11 @@ import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
+/**
+ * Activity for creating a new custom skin (from an URL or username).
+ *
+ * @author outadoc
+ */
 public class NewCustomSkinActivity extends Activity {
 
 	private EditText txt_name;

@@ -6,7 +6,8 @@ import android.view.View;
 
 /**
  * Random useful methods.
- * Created by outadoc on 07/07/14.
+ *
+ * @author outadoc
  */
 public abstract class Util {
 

@@ -29,6 +29,8 @@ import fr.outadev.skinswitch.user.UsersManager;
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
+ *
+ * @author outadoc
  */
 public class MojangLoginActivity extends Activity {
 

@@ -6,6 +6,11 @@ package fr.outadev.skinswitch.skinlist;
  */
 public interface ILoadingActivity {
 
+	/**
+	 * Displays a loading state.
+	 *
+	 * @param loading true if loading, false if done.
+	 */
 	public void setLoading(boolean loading);
 
 }

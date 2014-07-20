@@ -26,6 +26,11 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
 import fr.outadev.skinswitch.skinlibrary.SkinLibraryActivity;
 import fr.outadev.skinswitch.user.UsersManager;
 
+/**
+ * Fragment that displays all the skins (used in the main screen).
+ *
+ * @author outadoc
+ */
 public class SkinsListFragment extends Fragment {
 
 	private SkinsDatabase db;

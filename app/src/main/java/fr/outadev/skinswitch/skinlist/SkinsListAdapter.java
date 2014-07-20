@@ -23,6 +23,11 @@ import java.util.TimerTask;
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.BasicSkin;
 
+/**
+ * ArrayAdapter for displaying the main skins list.
+ *
+ * @author outadoc
+ */
 public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 	private SkinsListFragment frag;

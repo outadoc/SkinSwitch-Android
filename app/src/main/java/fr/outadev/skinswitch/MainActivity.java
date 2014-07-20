@@ -8,6 +8,11 @@ import fr.outadev.skinswitch.network.login.MojangLoginActivity;
 import fr.outadev.skinswitch.skinlist.ILoadingActivity;
 import fr.outadev.skinswitch.user.UsersManager;
 
+/**
+ * Main SkinSwitch activity. Displays the main skins list in a fragment.
+ *
+ * @author outadoc
+ */
 public class MainActivity extends FragmentActivity implements ILoadingActivity {
 
 	@Override

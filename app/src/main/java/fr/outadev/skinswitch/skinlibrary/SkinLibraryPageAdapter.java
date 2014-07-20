@@ -9,6 +9,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.EndPoint;
 
+/**
+ * Page adapter for displaying the different tabs of the skin library.
+ *
+ * @author outadoc
+ */
 public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
 	public static final int INDEX_RANDOM_SKINS = 0;
