@@ -82,10 +82,16 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-					onTouchStart(skinView);
-				} else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-					onTouchEnd(skinView);
+				switch(motionEvent.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						onTouchStart(skinView);
+						break;
+					case MotionEvent.ACTION_UP:
+						onTouchEnd(skinView);
+						break;
+					case MotionEvent.ACTION_CANCEL:
+						onTouchCancel(skinView);
+						break;
 				}
 
 				return true;
@@ -129,6 +135,12 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 					view.clearAnimation();
 				}
 
+				timer.cancel();
+				touchTimestamp = 0;
+			}
+
+			private void onTouchCancel(View view) {
+				view.clearAnimation();
 				timer.cancel();
 				touchTimestamp = 0;
 			}
