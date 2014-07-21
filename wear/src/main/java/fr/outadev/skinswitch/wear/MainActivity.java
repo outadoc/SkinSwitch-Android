@@ -2,22 +2,30 @@ package fr.outadev.skinswitch.wear;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Asset;
 import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
+import java.io.InputStream;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import fr.outadev.skinswitch.R;
 
@@ -77,6 +85,26 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 	 */
 	@Override
 	public void onDataChanged(DataEventBuffer dataEvents) {
+		Log.d(TAG, "received data");
+
+		for(DataEvent event : dataEvents) {
+			if(event.getType() == DataEvent.TYPE_CHANGED &&
+					event.getDataItem().getUri().getPath().equals("/skinHead")) {
+				DataMapItem dataMapItem = DataMapItem.fromDataItem(event.getDataItem());
+				Asset profileAsset = dataMapItem.getDataMap().getAsset("image");
+				final Bitmap bitmap = loadBitmapFromAsset(profileAsset);
+
+				MainActivity.this.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// Do something with the bitmap
+						((ImageView) findViewById(R.id.img_skin_head)).setImageBitmap(bitmap);
+					}
+
+				});
+			}
+		}
 
 	}
 
@@ -126,7 +154,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 
 					for(Node node : nodes.getNodes()) {
 						MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(),
-								"getSkin", skinName.getBytes()).await();
+								"/getSkin", skinName.getBytes()).await();
 
 						if(!result.getStatus().isSuccess()) {
 							Log.e(TAG, "error");
@@ -141,5 +169,29 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 		} else {
 			Log.e(TAG, "not connected");
 		}
+	}
+
+	public Bitmap loadBitmapFromAsset(Asset asset) {
+		if(asset == null) {
+			throw new IllegalArgumentException("Asset must be non-null");
+		}
+
+		ConnectionResult result = mGoogleApiClient.blockingConnect(10000, TimeUnit.MILLISECONDS);
+
+		if(!result.isSuccess()) {
+			return null;
+		}
+
+		// convert asset into a file descriptor and block until it's ready
+		InputStream assetInputStream = Wearable.DataApi.getFdForAsset(mGoogleApiClient, asset).await().getInputStream();
+		mGoogleApiClient.disconnect();
+
+		if(assetInputStream == null) {
+			Log.w(TAG, "Requested an unknown Asset.");
+			return null;
+		}
+
+		// decode the stream into a bitmap
+		return BitmapFactory.decodeStream(assetInputStream);
 	}
 }
