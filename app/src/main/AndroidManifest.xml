@@ -61,9 +61,8 @@
 			android:label="@string/settings_title" />
 
 		<service
-			android:name=".WearListenerService"
-			android:exported="false">
-			<intent-filter>
+			android:name=".WearListenerService">
+		<intent-filter>
 				<action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
 			</intent-filter>
 		</service>

@@ -6,6 +6,8 @@ import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.WearableListenerService;
 
+import java.util.Arrays;
+
 /**
  * Android Wear listener.
  */
@@ -14,6 +16,8 @@ public class WearListenerService extends WearableListenerService {
 	@Override
 	public void onMessageReceived(MessageEvent messageEvent) {
 		super.onMessageReceived(messageEvent);
+		Log.d("SkinSwitch/Wear", "message received: " + messageEvent.getPath() + " / " + Arrays.toString(messageEvent.getData
+				()));
 	}
 
 	@Override
