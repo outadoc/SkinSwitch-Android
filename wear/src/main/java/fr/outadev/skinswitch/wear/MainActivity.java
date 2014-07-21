@@ -101,12 +101,12 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 
 				@Override
 				public void run() {
-					displayErrorAndFinish("Couldn't find that skin!");
+					displayErrorAndFinish(getResources().getString(R.string.error_skin_not_found));
 				}
 
 			}, IMAGE_RESPONSE_TIMEOUT);
 		} else if(requestCode == SPEECH_REQUEST_CODE) {
-			displayErrorAndFinish("Search entry canceled.");
+			displayErrorAndFinish(getResources().getString(R.string.error_search_cancelled));
 		} else if(requestCode == CONFIRM_REQUEST_CODE) {
 			finish();
 		}
