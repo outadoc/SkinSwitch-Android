@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
@@ -19,7 +21,7 @@ import java.util.List;
 
 import fr.outadev.skinswitch.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements DataApi.DataListener, GoogleApiClient.ConnectionCallbacks {
 
 	private static final int SPEECH_REQUEST_CODE = 0;
 	private static final String TAG = "SkinSwitch/Wear";
@@ -42,20 +44,7 @@ public class MainActivity extends Activity {
 		});
 
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
-				.addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-
-					@Override
-					public void onConnected(Bundle connectionHint) {
-						Log.d(TAG, "onConnected: " + connectionHint);
-						displaySpeechRecognizer();
-					}
-
-					@Override
-					public void onConnectionSuspended(int cause) {
-						Log.d(TAG, "onConnectionSuspended: " + cause);
-					}
-
-				})
+				.addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
 
 					@Override
@@ -79,6 +68,38 @@ public class MainActivity extends Activity {
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	/**
+	 * Called when receiving data (ex: the skin).
+	 *
+	 * @param dataEvents
+	 */
+	@Override
+	public void onDataChanged(DataEventBuffer dataEvents) {
+
+	}
+
+	/**
+	 * Called when we're connected to the phone.
+	 *
+	 * @param connectionHint
+	 */
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		Log.d(TAG, "onConnected: " + connectionHint);
+		Wearable.DataApi.addListener(mGoogleApiClient, this);
+		displaySpeechRecognizer();
+	}
+
+	/**
+	 * Called when the connection gets interrupted.
+	 *
+	 * @param cause
+	 */
+	@Override
+	public void onConnectionSuspended(int cause) {
+		Log.d(TAG, "onConnectionSuspended: " + cause);
 	}
 
 	/**
