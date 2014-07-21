@@ -73,6 +73,7 @@ public class WearListenerService extends WearableListenerService {
 
 						PutDataMapRequest dataMap = PutDataMapRequest.create("/skinHead");
 						dataMap.getDataMap().putAsset("image", skinHeadAsset);
+						dataMap.getDataMap().putString("name", foundSkin.getName());
 						dataMap.getDataMap().putInt("id", (new Random()).nextInt(100));
 						PutDataRequest request = dataMap.asPutDataRequest();
 						Wearable.DataApi.putDataItem(googleApiClient, request);

@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.wearable.view.DelayedConfirmationView;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,9 +33,18 @@ import fr.outadev.skinswitch.R;
 public class MainActivity extends Activity implements DataApi.DataListener, GoogleApiClient.ConnectionCallbacks {
 
 	private static final int SPEECH_REQUEST_CODE = 0;
+	private static final int CONFIRM_REQUEST_CODE = 1;
+
 	private static final String TAG = "SkinSwitch/Wear";
 	GoogleApiClient mGoogleApiClient;
+
+	private View confirmView;
+	private View loadingView;
+
+	private DelayedConfirmationView delayedConfirmationView;
 	private TextView lblSkinName;
+	private TextView lblSkinName2;
+	private ImageView imgSkinHead;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +56,12 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 
 			@Override
 			public void onLayoutInflated(WatchViewStub stub) {
+				confirmView = stub.findViewById(R.id.view_confirmation);
+				loadingView = stub.findViewById(R.id.view_loading);
 				lblSkinName = (TextView) stub.findViewById(R.id.lbl_skin_name);
+				lblSkinName2 = (TextView) stub.findViewById(R.id.lbl_skin_name_2);
+				imgSkinHead = (ImageView) stub.findViewById(R.id.img_skin_head);
+				delayedConfirmationView = (DelayedConfirmationView) stub.findViewById(R.id.view_confirm_delay);
 			}
 
 		});
@@ -72,6 +88,8 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 			List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = results.get(0);
 			sendSkinRequest(spokenText);
+		} else if(requestCode == CONFIRM_REQUEST_CODE) {
+			finish();
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);
@@ -89,7 +107,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 		for(DataEvent event : dataEvents) {
 			if(event.getType() == DataEvent.TYPE_CHANGED &&
 					event.getDataItem().getUri().getPath().equals("/skinHead")) {
-				DataMapItem dataMapItem = DataMapItem.fromDataItem(event.getDataItem());
+				final DataMapItem dataMapItem = DataMapItem.fromDataItem(event.getDataItem());
 				Asset profileAsset = dataMapItem.getDataMap().getAsset("image");
 				final Bitmap bitmap = loadBitmapFromAsset(profileAsset);
 
@@ -98,7 +116,32 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 					@Override
 					public void run() {
 						// Do something with the bitmap
-						((ImageView) findViewById(R.id.img_skin_head)).setImageBitmap(bitmap);
+						confirmView.setVisibility(View.GONE);
+
+						lblSkinName2.setText(dataMapItem.getDataMap().getString("name"));
+						imgSkinHead.setImageBitmap(bitmap);
+
+						Util.crossfade(loadingView, confirmView, getResources().getInteger(android.R.integer
+								.config_mediumAnimTime));
+
+						delayedConfirmationView.setListener(new DelayedConfirmationView.DelayedConfirmationListener() {
+
+							@Override
+							public void onTimerFinished(View view) {
+								startActivityForResult(new Intent(MainActivity.this, SendConfirmationActivity.class),
+										CONFIRM_REQUEST_CODE);
+							}
+
+							@Override
+							public void onTimerSelected(View view) {
+
+							}
+
+						});
+
+						delayedConfirmationView.setTotalTimeMs(1500);
+						delayedConfirmationView.start();
+
 					}
 
 				});
@@ -158,7 +201,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 						if(!result.getStatus().isSuccess()) {
 							Log.e(TAG, "error");
 						} else {
-							Log.i(TAG, "success!! sent to: " + node.getDisplayName());
+							Log.i(TAG, "success! sent to: " + node.getDisplayName());
 						}
 					}
 				}
