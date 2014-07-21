@@ -19,8 +19,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import fr.outadev.skinswitch.network.MojangConnectionHandler;
+import fr.outadev.skinswitch.network.SkinUploadException;
+import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
+import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
 import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
+import fr.outadev.skinswitch.user.UsersManager;
 
 /**
  * Android Wear listener.
@@ -48,7 +53,7 @@ public class WearListenerService extends WearableListenerService {
 			BasicSkin foundSkin = null;
 
 			for(BasicSkin skin : allSkins) {
-				if(skin.getName().contains(skinName)) {
+				if(skin.getName().toLowerCase().contains(skinName.toLowerCase())) {
 					foundSkin = skin;
 					break;
 				}
@@ -84,7 +89,25 @@ public class WearListenerService extends WearableListenerService {
 				}
 			}
 		} else if(messageEvent.getPath().equals("/sendSkin")) {
-			Log.d(TAG, "uploading skin with ID " + messageEvent.getData()[0]);
+			int skinId = messageEvent.getData()[0];
+			Log.d(TAG, "uploading skin with ID " + skinId);
+
+			SkinsDatabase db = new SkinsDatabase(this);
+			MojangConnectionHandler handler = new MojangConnectionHandler();
+			UsersManager usersManager = new UsersManager(this);
+
+			BasicSkin skin = db.getSkin(skinId);
+
+			try {
+				handler.loginWithCredentials(usersManager.getUser());
+				handler.uploadSkinToMojang(skin.getRawSkinFile(this));
+			} catch(SkinUploadException e) {
+				e.printStackTrace();
+			} catch(InvalidMojangCredentialsException e) {
+				e.printStackTrace();
+			} catch(ChallengeRequirementException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
