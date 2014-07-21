@@ -105,7 +105,7 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
 				android:fontFamily="roboto-light"
-				android:text="Sending..."
+				android:text="@string/sending"
 				android:textColor="@color/light_grey" />
 		</LinearLayout>
 

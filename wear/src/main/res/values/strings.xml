@@ -3,5 +3,6 @@
 
 	<string name="app_name">SkinSwitch</string>
 	<string name="loading">Looking for your skin&#8230;</string>
+	<string name="sending">Sending...</string>
 
 </resources>
