@@ -87,7 +87,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 		if(requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
 			List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = results.get(0);
-			sendSkinRequest(spokenText);
+			askForSkinHead(spokenText);
 		} else if(requestCode == CONFIRM_REQUEST_CODE) {
 			finish();
 		}
@@ -128,13 +128,15 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 
 							@Override
 							public void onTimerFinished(View view) {
+								wearSkinWithId(dataMapItem.getDataMap().getByte("skinId"));
 								startActivityForResult(new Intent(MainActivity.this, SendConfirmationActivity.class),
 										CONFIRM_REQUEST_CODE);
 							}
 
 							@Override
 							public void onTimerSelected(View view) {
-
+								delayedConfirmationView.setListener(null);
+								finish();
 							}
 
 						});
@@ -184,9 +186,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 		startActivityForResult(intent, SPEECH_REQUEST_CODE);
 	}
 
-	private void sendSkinRequest(final String skinName) {
-		lblSkinName.setText(skinName);
-
+	private void sendMessageToCompanion(final String path, final byte[] payload) {
 		if(mGoogleApiClient.isConnected()) {
 			new Thread(new Runnable() {
 
@@ -196,7 +196,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 
 					for(Node node : nodes.getNodes()) {
 						MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(),
-								"/getSkin", skinName.getBytes()).await();
+								path, payload).await();
 
 						if(!result.getStatus().isSuccess()) {
 							Log.e(TAG, "error");
@@ -213,6 +213,15 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 		}
 	}
 
+	private void askForSkinHead(final String skinName) {
+		lblSkinName.setText(skinName);
+		sendMessageToCompanion("/getSkin", skinName.getBytes());
+	}
+
+	private void wearSkinWithId(byte id) {
+		sendMessageToCompanion("/sendSkin", new byte[]{id});
+	}
+
 	public Bitmap loadBitmapFromAsset(Asset asset) {
 		if(asset == null) {
 			throw new IllegalArgumentException("Asset must be non-null");
@@ -220,7 +229,6 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 
 		// convert asset into a file descriptor and block until it's ready
 		InputStream assetInputStream = Wearable.DataApi.getFdForAsset(mGoogleApiClient, asset).await().getInputStream();
-		mGoogleApiClient.disconnect();
 
 		if(assetInputStream == null) {
 			Log.w(TAG, "Requested an unknown Asset.");

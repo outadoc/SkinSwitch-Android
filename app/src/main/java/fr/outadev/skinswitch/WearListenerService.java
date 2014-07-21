@@ -74,6 +74,7 @@ public class WearListenerService extends WearableListenerService {
 						PutDataMapRequest dataMap = PutDataMapRequest.create("/skinHead");
 						dataMap.getDataMap().putAsset("image", skinHeadAsset);
 						dataMap.getDataMap().putString("name", foundSkin.getName());
+						dataMap.getDataMap().putByte("skinId", (byte) foundSkin.getId());
 						dataMap.getDataMap().putInt("id", (new Random()).nextInt(100));
 						PutDataRequest request = dataMap.asPutDataRequest();
 						Wearable.DataApi.putDataItem(googleApiClient, request);
@@ -82,6 +83,8 @@ public class WearListenerService extends WearableListenerService {
 					e.printStackTrace();
 				}
 			}
+		} else if(messageEvent.getPath().equals("/sendSkin")) {
+			Log.d(TAG, "uploading skin with ID " + messageEvent.getData()[0]);
 		}
 	}
 

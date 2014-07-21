@@ -14,10 +14,9 @@
 		android:layout_gravity="center"
 		android:gravity="center"
 		android:orientation="vertical"
-		android:padding="10dp"
-		android:visibility="gone">
+		android:padding="10dp">
 
-		<TextView
+	<TextView
 			android:id="@+id/lbl_loading"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
@@ -47,7 +46,7 @@
 		android:layout_height="match_parent"
 		android:layout_margin="20dp"
 		android:orientation="vertical"
-		>
+		android:visibility="gone">
 
 		<LinearLayout
 			android:layout_width="wrap_content"
@@ -76,17 +75,30 @@
 			android:layout_marginTop="20dp"
 			android:orientation="horizontal">
 
-			<android.support.wearable.view.DelayedConfirmationView
-				android:id="@+id/view_confirm_delay"
+			<FrameLayout
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				app:circle_border_color="@color/light_grey"
-				app:circle_border_width="@dimen/circle_border_normal_width"
-				app:circle_color="@color/blue"
-				app:circle_padding="@dimen/circle_padding"
-				app:circle_radius="@dimen/circle_radius"
-				app:circle_radius_pressed="@dimen/circle_radius_pressed" />
+				android:layout_height="wrap_content">
+
+				<android.support.wearable.view.DelayedConfirmationView
+					android:id="@+id/view_confirm_delay"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					app:circle_border_color="@color/light_grey"
+					app:circle_border_width="@dimen/circle_border_normal_width"
+					app:circle_color="@color/blue"
+					app:circle_padding="@dimen/circle_padding"
+					app:circle_radius="@dimen/circle_radius"
+					app:circle_radius_pressed="@dimen/circle_radius_pressed" />
+
+				<ImageView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_gravity="center"
+					android:src="@drawable/ic_action_cancel" />
+
+			</FrameLayout>
+
 
 			<TextView
 				android:layout_width="wrap_content"
