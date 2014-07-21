@@ -18,6 +18,7 @@ import com.google.android.gms.wearable.WearableListenerService;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import fr.outadev.skinswitch.skin.BasicSkin;
@@ -74,6 +75,7 @@ public class WearListenerService extends WearableListenerService {
 
 						PutDataMapRequest dataMap = PutDataMapRequest.create("/skinHead");
 						dataMap.getDataMap().putAsset("image", skinHeadAsset);
+						dataMap.getDataMap().putInt("id", (new Random()).nextInt(100));
 						PutDataRequest request = dataMap.asPutDataRequest();
 						PendingResult<DataApi.DataItemResult> pendingResult = Wearable.DataApi.putDataItem(googleApiClient,
 								request);

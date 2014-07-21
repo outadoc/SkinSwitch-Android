@@ -25,7 +25,6 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import fr.outadev.skinswitch.R;
 
@@ -174,12 +173,6 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 	public Bitmap loadBitmapFromAsset(Asset asset) {
 		if(asset == null) {
 			throw new IllegalArgumentException("Asset must be non-null");
-		}
-
-		ConnectionResult result = mGoogleApiClient.blockingConnect(10000, TimeUnit.MILLISECONDS);
-
-		if(!result.isSuccess()) {
-			return null;
 		}
 
 		// convert asset into a file descriptor and block until it's ready
