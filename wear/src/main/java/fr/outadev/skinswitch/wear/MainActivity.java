@@ -37,7 +37,6 @@ public class MainActivity extends Activity {
 			@Override
 			public void onLayoutInflated(WatchViewStub stub) {
 				lblSkinName = (TextView) stub.findViewById(R.id.lbl_skin_name);
-				//displaySpeechRecognizer();
 			}
 
 		});
@@ -48,7 +47,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void onConnected(Bundle connectionHint) {
 						Log.d(TAG, "onConnected: " + connectionHint);
-						sendSkinRequest("outadoc");
+						displaySpeechRecognizer();
 					}
 
 					@Override
