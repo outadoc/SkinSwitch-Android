@@ -27,6 +27,8 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import fr.outadev.skinswitch.R;
 
@@ -36,15 +38,19 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 	private static final int CONFIRM_REQUEST_CODE = 1;
 
 	private static final String TAG = "SkinSwitch/Wear";
+	private static final long IMAGE_RESPONSE_TIMEOUT = 3000;
 	GoogleApiClient mGoogleApiClient;
 
 	private View confirmView;
 	private View loadingView;
 
+	private TextView lblLoading;
 	private DelayedConfirmationView delayedConfirmationView;
 	private TextView lblSkinName;
 	private TextView lblSkinName2;
 	private ImageView imgSkinHead;
+
+	private Timer imageTimeoutTimer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 				lblSkinName = (TextView) stub.findViewById(R.id.lbl_skin_name);
 				lblSkinName2 = (TextView) stub.findViewById(R.id.lbl_skin_name_2);
 				imgSkinHead = (ImageView) stub.findViewById(R.id.img_skin_head);
+				lblLoading = (TextView) stub.findViewById(R.id.lbl_loading);
 				delayedConfirmationView = (DelayedConfirmationView) stub.findViewById(R.id.view_confirm_delay);
 			}
 
@@ -88,6 +95,18 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 			List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = results.get(0);
 			askForSkinHead(spokenText);
+
+			imageTimeoutTimer = new Timer();
+			imageTimeoutTimer.schedule(new TimerTask() {
+
+				@Override
+				public void run() {
+					displayErrorAndFinish("Couldn't find that skin!");
+				}
+
+			}, IMAGE_RESPONSE_TIMEOUT);
+		} else if(requestCode == SPEECH_REQUEST_CODE) {
+			displayErrorAndFinish("Search entry canceled.");
 		} else if(requestCode == CONFIRM_REQUEST_CODE) {
 			finish();
 		}
@@ -103,6 +122,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 	@Override
 	public void onDataChanged(DataEventBuffer dataEvents) {
 		Log.d(TAG, "received data");
+		imageTimeoutTimer.cancel();
 
 		for(DataEvent event : dataEvents) {
 			if(event.getType() == DataEvent.TYPE_CHANGED &&
@@ -181,7 +201,7 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 				RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-		intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak the name of a skin");
+
 		// Start the activity, the intent will be populated with the speech text
 		startActivityForResult(intent, SPEECH_REQUEST_CODE);
 	}
@@ -238,4 +258,27 @@ public class MainActivity extends Activity implements DataApi.DataListener, Goog
 		// decode the stream into a bitmap
 		return BitmapFactory.decodeStream(assetInputStream);
 	}
+
+	private void displayErrorAndFinish(final String error) {
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				lblLoading.setText(error);
+				loadingView.setVisibility(View.VISIBLE);
+				confirmView.setVisibility(View.GONE);
+			}
+
+		});
+
+		(new Timer()).schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				finish();
+			}
+
+		}, 1500);
+	}
+
 }
