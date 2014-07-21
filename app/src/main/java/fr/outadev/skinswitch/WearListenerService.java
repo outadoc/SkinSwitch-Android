@@ -5,9 +5,7 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.wearable.Asset;
-import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.PutDataMapRequest;
@@ -77,8 +75,7 @@ public class WearListenerService extends WearableListenerService {
 						dataMap.getDataMap().putAsset("image", skinHeadAsset);
 						dataMap.getDataMap().putInt("id", (new Random()).nextInt(100));
 						PutDataRequest request = dataMap.asPutDataRequest();
-						PendingResult<DataApi.DataItemResult> pendingResult = Wearable.DataApi.putDataItem(googleApiClient,
-								request);
+						Wearable.DataApi.putDataItem(googleApiClient, request);
 					}
 				} catch(FileNotFoundException e) {
 					e.printStackTrace();
