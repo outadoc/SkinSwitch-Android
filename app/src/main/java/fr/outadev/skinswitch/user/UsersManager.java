@@ -2,6 +2,7 @@ package fr.outadev.skinswitch.user;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 
 import simbio.se.sau.Encryption;
 
@@ -50,7 +51,7 @@ public class UsersManager {
 	 * @return the username.
 	 */
 	private String getUsername() {
-		return encryption.decrypt(STORAGE_KEY, prefs.getString(USERNAME_PREFS_ID, ""));
+		return encryption.decrypt(getStorageKey(), prefs.getString(USERNAME_PREFS_ID, ""));
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class UsersManager {
 	 * @return the password.
 	 */
 	private String getPassword() {
-		return encryption.decrypt(STORAGE_KEY, prefs.getString(PASSWORD_PREFS_ID, ""));
+		return encryption.decrypt(getStorageKey(), prefs.getString(PASSWORD_PREFS_ID, ""));
 	}
 
 	/**
@@ -70,8 +71,8 @@ public class UsersManager {
 	public void saveUserCredentials(User user) {
 		SharedPreferences.Editor editor = prefs.edit();
 
-		editor.putString(USERNAME_PREFS_ID, encryption.encrypt(STORAGE_KEY, user.getUsername()));
-		editor.putString(PASSWORD_PREFS_ID, encryption.encrypt(STORAGE_KEY, user.getPassword()));
+		editor.putString(USERNAME_PREFS_ID, encryption.encrypt(getStorageKey(), user.getUsername()));
+		editor.putString(PASSWORD_PREFS_ID, encryption.encrypt(getStorageKey(), user.getPassword()));
 
 		editor.apply();
 	}
@@ -100,6 +101,10 @@ public class UsersManager {
 
 		editor.putBoolean(LOGGED_IN_PREFS_ID, loggedIn);
 		editor.apply();
+	}
+
+	public String getStorageKey() {
+		return STORAGE_KEY + Settings.Secure.ANDROID_ID;
 	}
 
 }
