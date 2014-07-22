@@ -3,57 +3,65 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<PreferenceCategory
-		android:title="Help">
+		android:title="@string/help_cat">
 
 		<Preference
-			android:summary="Determine if you should log in with your Minecraft username or your email address"
-			android:title="Username or Email address?">
-			<intent
+			android:summary="@string/help_which_account_sum"
+			android:title="@string/help_which_account_title">
+		<intent
 				android:action="android.intent.action.VIEW"
 				android:data="https://help.mojang.com/customer/portal/articles/428478-minecraft-account-types" />
 		</Preference>
 
 		<Preference
-			android:summary="Get help about migrating your Minecraft account to a Mojang account"
-			android:title="Migrating my Account">
-			<intent
+			android:summary="@string/help_migrate_sum"
+			android:title="@string/help_migrate_title">
+		<intent
 				android:action="android.intent.action.VIEW"
 				android:data="https://help.mojang.com/customer/portal/articles/775905-migrating-from-minecraft-to-mojang" />
 		</Preference>
 
 		<Preference
-			android:summary="Get help about Mojang account security questions"
-			android:title="Security Questions">
-			<intent
+			android:summary="@string/help_security_quest_sum"
+			android:title="@string/help_security_quest_title">
+		<intent
 				android:action="android.intent.action.VIEW"
 				android:data="https://help.mojang.com/customer/portal/articles/797301-account-security-questions" />
 		</Preference>
 	</PreferenceCategory>
 
 	<PreferenceCategory
-		android:title="Contact">
+		android:title="@string/contact_cat">
 
 		<Preference
-			android:summary="Check out some other apps on our website"
-			android:title="Other Cool Stuff">
+			android:summary="@string/contact_skinmanager_sum"
+			android:title="@string/contact_skinmanager_title">
+			<intent
+				android:action="android.intent.action.VIEW"
+				android:data="http://skin.outadoc.fr/" />
+		</Preference>
+
+		<Preference
+			android:summary="@string/contact_other_sum"
+			android:title="@string/contact_other_title">
 			<intent
 				android:action="android.intent.action.VIEW"
 				android:data="http://dev.outadoc.fr/" />
 		</Preference>
 
 		<Preference
-			android:summary="If you need to talk to us, don't be shy and tap here!"
-			android:title="Send us a Message">
-			<intent
+			android:summary="@string/contact_message_sum"
+			android:title="@string/contact_message_title">
+		<intent
 				android:action="android.intent.action.VIEW"
 				android:data="http://dev.outadoc.fr/contact.html" />
 		</Preference>
 	</PreferenceCategory>
 
 	<PreferenceCategory
-		android:title="Credits">
+		android:title="@string/credits_cat">
 
-		<Preference
+	<Preference
 			android:summary="@string/credits_minecraft_sum"
 			android:title="@string/legal_title" />
 
