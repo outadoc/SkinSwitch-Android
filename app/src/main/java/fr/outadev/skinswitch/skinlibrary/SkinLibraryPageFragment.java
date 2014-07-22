@@ -75,7 +75,8 @@ public class SkinLibraryPageFragment extends Fragment {
 		adapter = new SkinLibraryListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
 		listView.setAdapter(adapter);
 
-		listView.setOnScrollListener(new EndlessScrollListener() {
+		listView.setOnScrollListener(new EndlessScrollListener(getResources().getInteger(R.integer
+				.endless_scroll_visible_threshold)) {
 
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<integer name="endless_scroll_visible_threshold">3</integer>
+
+</resources>
