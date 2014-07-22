@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.wear;
+package fr.outadev.skinswitch;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

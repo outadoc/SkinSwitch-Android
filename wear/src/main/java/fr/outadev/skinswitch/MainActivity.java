@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.wear;
+package fr.outadev.skinswitch;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,8 +29,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import fr.outadev.skinswitch.R;
 
 public class MainActivity extends Activity implements DataApi.DataListener, GoogleApiClient.ConnectionCallbacks {
 

@@ -4,7 +4,7 @@
 	<string name="app_name">SkinSwitch</string>
 	<string name="loading">Looking for your skin&#8230;</string>
 	<string name="sending">Sending&#8230;</string>
-	<string name="error_skin_not_found">Couldn't find that skin!</string>
+	<string name="error_skin_not_found">Couldn\'t find that skin!</string>
 	<string name="error_search_cancelled">Search entry canceled.</string>
 
 </resources>

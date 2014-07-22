@@ -1,4 +1,4 @@
-package fr.outadev.skinswitch.wear;
+package fr.outadev.skinswitch;
 
 import android.os.Bundle;
 import android.support.wearable.activity.ConfirmationActivity;
