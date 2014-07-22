@@ -67,9 +67,12 @@
 		<service
 			android:name=".WearListenerService">
 			<intent-filter>
-			<action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+				<action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
 			</intent-filter>
 		</service>
+		<activity
+			android:name="com.google.android.gms.ads.AdActivity"
+			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 	</application>
 
 </manifest>

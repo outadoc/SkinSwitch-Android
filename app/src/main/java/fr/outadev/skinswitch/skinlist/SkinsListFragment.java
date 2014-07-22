@@ -15,6 +15,12 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +44,7 @@ public class SkinsListFragment extends Fragment {
 
 	private SkinsListAdapter skinsAdapter;
 	private List<BasicSkin> skinsList;
+	private AdView adView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,12 +54,20 @@ public class SkinsListFragment extends Fragment {
 		db = new SkinsDatabase(getActivity());
 		usersManager = new UsersManager(getActivity());
 
+		adView = (AdView) view.findViewById(R.id.adView);
+
 		GridView gridView = (GridView) view.findViewById(R.id.grid_view);
 		skinsList = new ArrayList<BasicSkin>();
 		skinsAdapter = new SkinsListAdapter(getActivity(), this, android.R.layout.simple_list_item_1, skinsList);
 		gridView.setAdapter(skinsAdapter);
 
 		return view;
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		setupAds();
 	}
 
 	@Override
@@ -174,5 +189,38 @@ public class SkinsListFragment extends Fragment {
 			}
 
 		}).execute();
+	}
+
+	private void setupAds() {
+		adView.setAdListener(new AdListener() {
+
+			@Override
+			public void onAdFailedToLoad(int errorCode) {
+				adView.setVisibility(View.GONE);
+				super.onAdFailedToLoad(errorCode);
+			}
+
+			@Override
+			public void onAdLoaded() {
+				adView.setVisibility(View.VISIBLE);
+				super.onAdLoaded();
+			}
+
+		});
+
+		if(getActivity().getResources().getBoolean(R.bool.enableAds)) {
+			// if we want ads, check for availability and load them
+			int hasGPS = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+
+			if(hasGPS != ConnectionResult.SUCCESS) {
+				GooglePlayServicesUtil.getErrorDialog(hasGPS, getActivity(), 1).show();
+			} else {
+				AdRequest adRequest = new AdRequest.Builder().addTestDevice("4A75A651AD45105DB97E1E0ECE162D0B").build();
+				adView.loadAd(adRequest);
+			}
+		} else {
+			// if we don't want ads, remove the view from the layout
+			adView.setVisibility(View.GONE);
+		}
 	}
 }
