@@ -1,12 +1,12 @@
 <resources>
 
-	<string name="title_activity_mojang_login">Sign in to Mojang</string>
+	<string name="title_activity_mojang_login">Log in to Mojang</string>
 	<string name="title_activity_mojang_challenge">Security Question</string>
 	<string name="prompt_answer">Answer</string>
 	<string name="submit">Submit</string>
 	<string name="prompt_email">Email/Username</string>
 	<string name="prompt_password">Password</string>
-	<string name="action_sign_in_short">Sign in!</string>
+	<string name="action_sign_in_short">Log in!</string>
 	<string name="error_incorrect_password">Incorrect username or password</string>
 	<string name="error_field_required">Woops, this field is required</string>
 	<string name="forgot_passwd">Forgot your <a href="https://help.mojang.com/customer/portal/articles/329527-forgot-minecraft-login">login</a> or <a href="https://help.mojang.com/customer/portal/articles/329524-change-or-forgot-password">password</a>?</string>
@@ -18,6 +18,6 @@
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 	<string name="error_connection_challenge">Could not send the challenge (network error)</string>
-	<string name="error_connection_login">Could not login (network error)</string>
+	<string name="error_connection_login">Could not log in to Mojang (network error)</string>
 
 </resources>
