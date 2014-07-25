@@ -48,10 +48,7 @@
 			android:label="@string/title_activity_skin_library">
 			<meta-data
 				android:name="android.app.default_searchable"
-				android:value="fr.outadev.skinswitch.activities.LibrarySearchActivity" />
-			<intent-filter>
-				<action android:name="android.intent.action.SEARCH" />
-			</intent-filter>
+				android:value=".skinlibrary.LibrarySearchActivity" />
 		</activity>
 		<activity
 			android:name=".skinlibrary.LibrarySearchActivity"
