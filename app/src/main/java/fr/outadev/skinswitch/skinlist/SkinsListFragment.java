@@ -90,7 +90,11 @@ public class SkinsListFragment extends Fragment {
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
-		boolean isLoggedIn = usersManager.isLoggedInSuccessfully();
+		boolean isLoggedIn = false;
+
+		if(usersManager != null) {
+			isLoggedIn = usersManager.isLoggedInSuccessfully();
+		}
 
 		menu.findItem(R.id.action_login).setVisible(!isLoggedIn);
 		menu.findItem(R.id.action_logout).setVisible(isLoggedIn);
@@ -222,6 +226,8 @@ public class SkinsListFragment extends Fragment {
 			if(hasGPS == ConnectionResult.SUCCESS) {
 				AdRequest adRequest = new AdRequest.Builder().addTestDevice("29EBDB460C20FD273BADF028945C56E2").build();
 				adView.loadAd(adRequest);
+			} else {
+				adView.setVisibility(View.GONE);
 			}
 		} else {
 			// if we don't want ads, remove the view from the layout
