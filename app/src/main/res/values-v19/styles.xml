@@ -3,5 +3,9 @@
 
 	<style name="DetailTheme" parent="AppBaseTheme">
 		<item name="android:windowTranslucentNavigation">true</item>
+		<item name="android:actionBarStyle">@style/DetailActionBar</item>
+		<item name="android:windowActionBarOverlay">false</item>
+		<item name="android:windowContentOverlay">@null</item>
 	</style>
+
 </resources>
