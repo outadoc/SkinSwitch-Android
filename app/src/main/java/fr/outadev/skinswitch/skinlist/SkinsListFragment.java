@@ -45,6 +45,8 @@ public class SkinsListFragment extends Fragment {
 	private SkinsListAdapter skinsAdapter;
 	private List<BasicSkin> skinsList;
 	private AdView adView;
+	private View noContentView;
+	private GridView gridView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,8 +57,9 @@ public class SkinsListFragment extends Fragment {
 		usersManager = new UsersManager(getActivity());
 
 		adView = (AdView) view.findViewById(R.id.adView);
+		noContentView = view.findViewById(R.id.view_no_content);
 
-		GridView gridView = (GridView) view.findViewById(R.id.grid_view);
+		gridView = (GridView) view.findViewById(R.id.grid_view);
 		skinsList = new ArrayList<BasicSkin>();
 		skinsAdapter = new SkinsListAdapter(getActivity(), this, android.R.layout.simple_list_item_1, skinsList);
 		gridView.setAdapter(skinsAdapter);
@@ -184,6 +187,10 @@ public class SkinsListFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(List<BasicSkin> result) {
+				// show the "no skins yet" view if necessary
+				gridView.setVisibility((result.isEmpty()) ? View.GONE : View.VISIBLE);
+				noContentView.setVisibility((result.isEmpty()) ? View.VISIBLE : View.GONE);
+
 				skinsList.addAll(result);
 				skinsAdapter.notifyDataSetChanged();
 			}

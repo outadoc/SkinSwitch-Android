@@ -36,5 +36,7 @@
 	<string name="logged_out">Logged out.</string>
 
 	<string name="skin_details_title">Skin Details</string>
+	<string name="add_skin_instructions">Add a new skin by tapping the <b>+</b> icon.</string>
+	<string name="add_skin_title">Nothing here yet!</string>
 
 </resources>
