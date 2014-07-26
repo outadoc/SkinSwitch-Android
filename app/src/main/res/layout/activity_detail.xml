@@ -11,21 +11,21 @@
 		android:id="@+id/container"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/skin_details_topmargin"
 		android:orientation="vertical">
 
 		<FrameLayout
 			android:layout_width="match_parent"
 			android:layout_height="390dp"
-			android:background="@drawable/bg">
+			android:background="@drawable/bg"
+			android:paddingTop="@dimen/skin_details_topmargin">
 
 			<FrameLayout
 				android:layout_width="175dp"
 				android:layout_height="325dp"
 				android:layout_gravity="center_horizontal"
-				android:layout_marginTop="45dp">
+				android:layout_marginTop="25dp">
 
-				<ImageView
+			<ImageView
 					android:id="@+id/skin_preview_front"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
