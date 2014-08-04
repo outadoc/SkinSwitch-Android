@@ -142,8 +142,10 @@ public class SkinLibraryPageFragment extends Fragment {
 					skinsList.addAll(result);
 					adapter.notifyDataSetChanged();
 				} else {
-					Toast.makeText(getActivity(), getResources().getString(R.string.library_connection_error),
-							Toast.LENGTH_LONG).show();
+					if(isAdded()) {
+						Toast.makeText(getActivity(), getResources().getString(R.string.library_connection_error),
+								Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 
