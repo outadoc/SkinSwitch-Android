@@ -73,7 +73,7 @@ public class MojangLoginActivity extends Activity {
 		usersManager = new UsersManager(this);
 		user = usersManager.getUser();
 		challenge = null;
-		loginManager = new MojangConnectionHandler();
+		loginManager = new MojangConnectionHandler(this);
 
 		step = (Step) getIntent().getSerializableExtra("step");
 

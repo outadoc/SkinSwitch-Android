@@ -451,7 +451,7 @@ public class BasicSkin implements Serializable {
 
 					@Override
 					protected Exception doInBackground(Void... voids) {
-						MojangConnectionHandler handler = new MojangConnectionHandler();
+						MojangConnectionHandler handler = new MojangConnectionHandler(context);
 						UsersManager um = new UsersManager(context);
 
 						try {

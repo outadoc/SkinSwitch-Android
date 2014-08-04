@@ -1,5 +1,6 @@
 package fr.outadev.skinswitch.network.skinmanager;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -16,6 +17,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.outadev.skinswitch.network.ConnectionHandler;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 
 /**
@@ -23,9 +25,13 @@ import fr.outadev.skinswitch.skin.SkinLibrarySkin;
  *
  * @author outadoc
  */
-public class SkinManagerConnectionHandler {
+public class SkinManagerConnectionHandler extends ConnectionHandler {
 
 	public static final String BASE_URL = "https://skin.outadoc.fr/json/";
+
+	public SkinManagerConnectionHandler(Context context) {
+		super(context);
+	}
 
 	/**
 	 * Gets the n latest skins.
@@ -70,7 +76,8 @@ public class SkinManagerConnectionHandler {
 	}
 
 	public Bitmap fetchSkinBitmap(int id) {
-		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).trustAllHosts().useCaches(true).bytes();
+		byte[] response = HttpRequest.get(BASE_URL + "?method=getSkin&id=" + id).userAgent(getUserAgent()).trustAllHosts()
+				.useCaches(true).bytes();
 		return BitmapFactory.decodeByteArray(response, 0, response.length);
 	}
 
@@ -82,7 +89,7 @@ public class SkinManagerConnectionHandler {
 	 */
 	private List<SkinLibrarySkin> fetchSkinsFromAPI(String parameters) throws HttpRequest.HttpRequestException {
 		List<SkinLibrarySkin> skinsList = new ArrayList<SkinLibrarySkin>();
-		String response = HttpRequest.get(BASE_URL + "?" + parameters).trustAllHosts().body();
+		String response = HttpRequest.get(BASE_URL + "?" + parameters).userAgent(getUserAgent()).trustAllHosts().body();
 
 		if(response != null) {
 			try {

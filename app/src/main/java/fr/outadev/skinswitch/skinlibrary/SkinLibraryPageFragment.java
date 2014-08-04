@@ -109,7 +109,7 @@ public class SkinLibraryPageFragment extends Fragment {
 
 			@Override
 			protected List<SkinLibrarySkin> doInBackground(Void... params) {
-				SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
+				SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler(getActivity());
 
 				try {
 					switch(endPoint) {

@@ -49,7 +49,7 @@ public class SkinLibrarySkin extends BasicSkin {
 
 	@Override
 	public Bitmap getRawSkinBitmap(Context context) throws FileNotFoundException {
-		SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler();
+		SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler(context);
 		Bitmap bmp = handler.fetchSkinBitmap(skinManagerId);
 
 		if(bmp == null) {

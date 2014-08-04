@@ -93,7 +93,7 @@ public class WearListenerService extends WearableListenerService {
 			Log.d(TAG, "uploading skin with ID " + skinId);
 
 			SkinsDatabase db = new SkinsDatabase(this);
-			MojangConnectionHandler handler = new MojangConnectionHandler();
+			MojangConnectionHandler handler = new MojangConnectionHandler(this);
 			UsersManager usersManager = new UsersManager(this);
 
 			BasicSkin skin = db.getSkin(skinId);

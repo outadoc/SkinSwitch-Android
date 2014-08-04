@@ -1,5 +1,6 @@
 package fr.outadev.skinswitch.network;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.github.kevinsawicki.http.HttpRequest;
@@ -27,11 +28,12 @@ import fr.outadev.skinswitch.user.User;
  *
  * @author outadoc
  */
-public class MojangConnectionHandler {
+public class MojangConnectionHandler extends ConnectionHandler {
 
 	private static final String BASE_URL = "https://minecraft.net";
 
-	public MojangConnectionHandler() {
+	public MojangConnectionHandler(Context context) {
+		super(context);
 		CookieManager cookieManager = new CookieManager();
 		CookieHandler.setDefault(cookieManager);
 	}
@@ -53,7 +55,7 @@ public class MojangConnectionHandler {
 		data.put("password", user.getPassword());
 		data.put("remember", "false");
 
-		String body = HttpRequest.post(BASE_URL + "/login").followRedirects(true).form(data).body();
+		String body = HttpRequest.post(BASE_URL + "/login").userAgent(getUserAgent()).followRedirects(true).form(data).body();
 
 		if(body.isEmpty() || body.contains("<h1>Login</h1>")) {
 			Log.e("SkinSwitch", "could not log in as " + user.getUsername());
@@ -81,7 +83,8 @@ public class MojangConnectionHandler {
 		data.put("questionId", challenge.getId());
 		data.put("authenticityToken", challenge.getAuthToken());
 
-		String body = HttpRequest.post(BASE_URL + "/challenge").followRedirects(false).form(data).body();
+		String body = HttpRequest.post(BASE_URL + "/challenge").userAgent(getUserAgent()).followRedirects(false).form(data)
+				.body();
 
 		if(body.equals("Security challenge passed.")) {
 			return;
@@ -117,7 +120,7 @@ public class MojangConnectionHandler {
 	 */
 	public void uploadSkinToMojang(File skin) throws SkinUploadException, HttpRequest.HttpRequestException {
 		// first off, we need an authenticity token to upload the skin ;-;
-		String profileBody = HttpRequest.get(BASE_URL + "/profile").body();
+		String profileBody = HttpRequest.get(BASE_URL + "/profile").userAgent(getUserAgent()).body();
 		String authToken = null;
 
 		// parse the request and get the auth token
@@ -130,6 +133,7 @@ public class MojangConnectionHandler {
 
 		// once we have that, send the actual skin
 		HttpRequest skinRequest = HttpRequest.post(BASE_URL + "/profile/skin")
+				.userAgent(getUserAgent())
 				.followRedirects(true)
 				.part("authenticityToken", authToken)
 				.part("skin", skin.getName(), "image/png", skin);
