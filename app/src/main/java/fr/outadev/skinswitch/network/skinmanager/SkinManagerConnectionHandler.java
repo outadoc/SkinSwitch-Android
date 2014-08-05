@@ -95,6 +95,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 		if(response != null) {
 			try {
 				JSONArray resultArray = new JSONArray(response);
+				Log.i(Util.TAG, "successfully got response from skin manager (" + resultArray.length() + " items)");
 
 				for(int i = 0; i < resultArray.length(); i++) {
 					JSONObject currSkinObj = resultArray.getJSONObject(i);
