@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="error_skin_refresh">Impossible de rafraîchir ce skin : %1$s</string>
+	<string name="success_skin_refresh">Skin mis à jour avec succès !</string>
+
+</resources>

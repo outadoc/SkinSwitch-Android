@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="action_settings">Aide</string>
+	<string name="action_add">Ajouter</string>
+	<string name="action_login">Connexion</string>
+	<string name="action_logout">Déconnexion</string>
+	<string name="dialog_logout_title">Se déconnecter ?</string>
+	<string name="add_skin_dialog_title">Ajouter un skin</string>
+
+	<string name="image_skin_front">Devant du skin</string>
+	<string name="image_skin_back">Dos du skin</string>
+	<string name="image_upload_skin">Porter ce skin</string>
+	<string name="image_delete">Supprimer ce skin</string>
+
+	<string name="action_next">Suivant</string>
+	<string name="action_refresh">Rafraîchir</string>
+	<string name="action_edit">Modifier</string>
+	<string name="action_share">Partager</string>
+	<string name="action_search">Recherche</string>
+
+	<string name="success_skin_upload">Skin envoyé avec succès !</string>
+	<string name="error_skin_download">Impossible de télécharger ce skin : %1$s</string>
+
+	<string name="success_skin_added">Skin ajouté avec succès !</string>
+	<string name="success_skin_updated">Skin mis à jour avec succès !</string>
+
+	<string name="replace_skin_title">Replacer par %1$s?</string>
+	<string name="replace_skin_message">Voulez-vous vraiment remplacer votre skin Minecraft par %1$s ?</string>
+
+	<string name="delete_skin_title">Supprimer %1$s?</string>
+	<string name="delete_skin_message">Voulez-vous vraiment supprimer %1$s de votre bibliothèque ?</string>
+
+	<string name="share_message">Regardez %1$s, un skin Minecraft sympa ! %2$s (via #SkinSwitch)</string>
+	<string name="logged_out">Déconnecté.</string>
+
+	<string name="skin_details_title">Détails du skin</string>
+	<string name="add_skin_instructions">Ajoutez un skin en tapant sur <b>+</b>.</string>
+	<string name="add_skin_title">Rien pour l\'instant !</string>
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="new_skin_choices">
+		<item>Choisir dans la bibliothèque</item>
+		<item>Ajouter un skin personnalisé</item>
+	</string-array>
+
+</resources>

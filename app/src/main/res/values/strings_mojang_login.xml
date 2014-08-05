@@ -14,7 +14,7 @@
 	<string name="button_loading">Loading…</string>
 	<string name="button_success">Success!</string>
 	<string name="button_error">Error</string>
-	<string name="dialog_logout_message">Do you really want to log out of your Minecraft account?</string>
+	<string name="dialog_logout_message">Do you really want to log out of your Mojang account?</string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 	<string name="error_connection_challenge">Could not send the challenge (network error)</string>

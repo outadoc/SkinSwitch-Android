@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="settings_title">Aide</string>
+
+	<string name="contact_cat">Contact</string>
+	<string name="credits_cat">Crédits</string>
+	<string name="help_cat">Aide</string>
+
+	<string name="legal_title">Trucs légaux</string>
+	<string name="about_skinswitch_title">À propos</string>
+	<string name="help_which_account_sum">Déterminez si vous devez vous connecter avec votre pseudo Minecraft ou votre adresse email</string>
+	<string name="help_which_account_title">Pseudo ou adresse email ?</string>
+	<string name="help_migrate_sum">Obtenez de l\'aide sur la migration de votre compte Minecraft en un compte Mojang</string>
+	<string name="help_migrate_title">Migrer mon compte</string>
+	<string name="help_security_quest_sum">Obtenez de l\'aide à propos des questions de sécurité de Mojang</string>
+	<string name="help_security_quest_title">Questions de sécurité</string>
+	<string name="contact_other_sum">Découvrez quelques autres projets de outa[dev] sur notre site web</string>
+	<string name="contact_other_title">Autres trucs sympa</string>
+	<string name="contact_message_sum">Si vous devez nous contacter, ne soyez pas timide et tapez ici !</string>
+	<string name="contact_message_title">Nous contacter</string>
+	<string name="contact_skinmanager_title">Envoyez vos skins !</string>
+	<string name="contact_skinmanager_sum">Envoyez vos propres skins sur Skin Manager; ils seront ensuite directement disponibles depuis SkinSwitch !</string>
+
+</resources>

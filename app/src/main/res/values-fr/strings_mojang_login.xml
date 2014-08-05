@@ -1,0 +1,23 @@
+<resources>
+
+	<string name="title_activity_mojang_login">Connexion à Mojang</string>
+	<string name="title_activity_mojang_challenge">Question de sécurité</string>
+	<string name="prompt_answer">Réponse</string>
+	<string name="submit">Envoyer</string>
+	<string name="prompt_email">Email/Pseudo</string>
+	<string name="prompt_password">Mot de passe</string>
+	<string name="action_sign_in_short">Connexion !</string>
+	<string name="error_incorrect_password">Nom d\'utilisateur ou mot de passe incorrect</string>
+	<string name="error_field_required">Oups, ce champ est requis</string>
+	<string name="forgot_passwd">Oublié votre <a href="https://help.mojang.com/customer/portal/articles/329527-forgot-minecraft-login">pseudo</a> ou <a href="https://help.mojang.com/customer/portal/articles/329524-change-or-forgot-password">mot de passe</a>?</string>
+	<string name="challenge_help">Pourquoi dois-je <a href="https://help.mojang.com/customer/portal/articles/797301-account-security-questions">répondre à ça</a> ?</string>
+	<string name="button_loading">Chargement…</string>
+	<string name="button_success">Succès!</string>
+	<string name="button_error">Erreur</string>
+	<string name="dialog_logout_message">Voulez-vous vraiment vous déconnecter de votre compte Mojang ?</string>
+	<string name="yes">Oui</string>
+	<string name="no">Non</string>
+	<string name="error_connection_challenge">Impossible d\'envoyer la réponse (erreur réseau)</string>
+	<string name="error_connection_login">Connexion à Mojang impossible (erreur réseau)</string>
+
+</resources>

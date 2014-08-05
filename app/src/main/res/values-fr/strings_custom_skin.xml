@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="title_activity_new_custom_skin">Skin personnalisé</string>
+	<string name="title_activity_edit_skin">Modifier un skin</string>
+
+	<string name="lbl_add_skin_source">Pseudo Minecraft ou URL</string>
+	<string name="lbl_add_skin_name">Nom du skin</string>
+	<string name="lbl_add_skin_description">Description du skin</string>
+	<string name="hint_add_skin_source">Notch <i>ou</i> http://website.com/skin.png</string>
+	<string name="hint_add_skin_name">Mon super skin</string>
+	<string name="error_incorrect_url">Doit être un pseudo ou une URL valide</string>
+	<string name="downloading_custom_skin">Chargement…</string>
+
+</resources>
