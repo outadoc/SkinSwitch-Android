@@ -1,6 +1,7 @@
 package fr.outadev.skinswitch.network;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 
 import com.github.kevinsawicki.http.HttpRequest;
@@ -88,29 +89,25 @@ public class MojangConnectionHandler extends ConnectionHandler {
 				.body();
 
 		if(body.equals("Security challenge passed.")) {
-			return;
-		}
+			Log.i(Util.TAG, "challenge validated");
+		} else {
+			String error;
 
-		String error;
+			try {
+				JSONObject errorObject = (JSONObject) new JSONTokener(body).nextValue();
 
-		try {
-			JSONObject errorObject = (JSONObject) new JSONTokener(body).nextValue();
-
-			if(errorObject != null && errorObject.getString("error") != null) {
-				error = errorObject.getString("error").replaceAll("\\<.*?>", "");
-			} else {
-				error = body;
+				if(errorObject != null && errorObject.getString("error") != null) {
+					error = Html.fromHtml(errorObject.getString("error")).toString().trim();
+				} else {
+					throw new Exception();
+				}
+			} catch(Exception e) {
+				error = Html.fromHtml(body).toString().trim();
 			}
-		} catch(Exception e) {
-			error = body;
-		}
 
-		if(error != null) {
 			Log.e(Util.TAG, "challenge error: " + error);
 			throw new InvalidMojangChallengeAnswerException(error);
 		}
-
-		Log.i(Util.TAG, "challenge validated");
 	}
 
 	/**
