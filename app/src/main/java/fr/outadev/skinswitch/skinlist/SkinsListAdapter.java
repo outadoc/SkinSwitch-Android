@@ -73,7 +73,6 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 		}).execute();
 
-		final View finalConvertView = convertView;
 		convertView.setOnTouchListener(new View.OnTouchListener() {
 
 			private long touchTimestamp;

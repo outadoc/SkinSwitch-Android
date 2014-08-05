@@ -26,11 +26,11 @@
 	<string name="success_skin_added">Skin added successfully!</string>
 	<string name="success_skin_updated">Skin updated successfully!</string>
 
-	<string name="replace_skin_title">Replace with "%1$s"?</string>
-	<string name="replace_skin_message">Do you really want to replace your current Minecraft skin with "%1$s"?</string>
+	<string name="replace_skin_title">Replace with %1$s?</string>
+	<string name="replace_skin_message">Do you really want to replace your current Minecraft skin with %1$s?</string>
 
-	<string name="delete_skin_title">Delete "%1$s"?</string>
-	<string name="delete_skin_message">Do you really want to delete "%1$s" from your library?</string>
+	<string name="delete_skin_title">Delete %1$s?</string>
+	<string name="delete_skin_message">Do you really want to delete %1$s from your library?</string>
 
 	<string name="share_message">Check out %1$s, a cool Minecraft skin! %2$s (via #SkinSwitch)</string>
 	<string name="logged_out">Logged out.</string>
