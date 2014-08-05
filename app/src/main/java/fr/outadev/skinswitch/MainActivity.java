@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import fr.outadev.skinswitch.network.login.MojangLoginActivity;
-import fr.outadev.skinswitch.skinlist.ILoadingActivity;
 import fr.outadev.skinswitch.user.UsersManager;
 
 /**
@@ -13,7 +12,7 @@ import fr.outadev.skinswitch.user.UsersManager;
  *
  * @author outadoc
  */
-public class MainActivity extends FragmentActivity implements ILoadingActivity {
+public class MainActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +35,4 @@ public class MainActivity extends FragmentActivity implements ILoadingActivity {
 		outState.putBoolean("hasShownWindow", true);
 	}
 
-	@Override
-	public void setLoading(boolean loading) {
-
-	}
 }

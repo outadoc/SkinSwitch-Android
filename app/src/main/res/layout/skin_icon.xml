@@ -11,6 +11,14 @@
 		android:elevation="3dp"
 		android:gravity="center">
 
+		<ProgressBar
+			android:id="@+id/progress_bar_skin_icon"
+			style="@android:style/Widget.Holo.ProgressBar.Large"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:visibility="gone" />
+
 		<ImageView
 			android:id="@+id/img_skin_preview"
 			android:layout_width="match_parent"
@@ -18,6 +26,7 @@
 			android:layout_margin="14dp"
 			android:contentDescription="@string/image_skin_front"
 			android:elevation="5dp" />
+
 	</FrameLayout>
 
 	<TextView

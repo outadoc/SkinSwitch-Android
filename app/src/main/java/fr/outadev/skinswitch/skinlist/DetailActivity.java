@@ -38,7 +38,7 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
  *
  * @author outadoc
  */
-public class DetailActivity extends Activity implements ILoadingActivity {
+public class DetailActivity extends Activity implements ILoadingSkinHandler {
 
 	private BasicSkin skin;
 	private int animTime;
@@ -262,7 +262,7 @@ public class DetailActivity extends Activity implements ILoadingActivity {
 
 			@Override
 			public void onClick(View view) {
-				skin.initSkinUpload(DetailActivity.this);
+				skin.initSkinUpload(DetailActivity.this, DetailActivity.this);
 			}
 
 		});
