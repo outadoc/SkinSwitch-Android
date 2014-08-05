@@ -12,7 +12,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -115,9 +114,12 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 									@Override
 									public void setLoading(boolean loading) {
-										ProgressBar progressBar = (ProgressBar) finalConvertView.findViewById(R.id
-												.progress_bar_skin_icon);
-										progressBar.setVisibility((loading) ? View.VISIBLE : View.GONE);
+										if(loading) {
+											view.startAnimation(AnimationUtils.loadAnimation(getContext(),
+													R.anim.anim_skin_nod));
+										} else {
+											view.clearAnimation();
+										}
 									}
 
 								});
@@ -151,8 +153,11 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			}
 
 			private void onTouchCancel(View view) {
+				if(timer != null) {
+					timer.cancel();
+				}
+
 				view.clearAnimation();
-				timer.cancel();
 				touchTimestamp = 0;
 			}
 
