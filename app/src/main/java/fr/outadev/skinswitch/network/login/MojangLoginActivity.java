@@ -155,7 +155,6 @@ public class MojangLoginActivity extends Activity {
 
 		if(!mEmailView.getText().toString().isEmpty()
 				&& mPasswordView.getText().toString().isEmpty()) {
-			System.out.println("test");
 			mPasswordView.requestFocus();
 		}
 	}
