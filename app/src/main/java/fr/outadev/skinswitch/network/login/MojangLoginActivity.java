@@ -75,17 +75,21 @@ public class MojangLoginActivity extends Activity {
 		challenge = null;
 		loginManager = new MojangConnectionHandler(this);
 
+		//get the initial step
 		step = (Step) getIntent().getSerializableExtra("step");
 
 		if(step == null) {
+			//set it to LOGIN by default
 			step = Step.LOGIN;
 		}
 
 		// Set up the login form.
+		//email field
 		mEmail = user.getUsername();
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
 
+		//password field
 		mPassword = "";
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setText(mPassword);
@@ -106,6 +110,7 @@ public class MojangLoginActivity extends Activity {
 
 		mLoginFormView = findViewById(R.id.login_form);
 
+		//login button
 		mLoginButton = (ActionProcessButton) findViewById(R.id.sign_in_button);
 		mLoginButton.setMode(Mode.ENDLESS);
 		mLoginButton.setProgress(0);
@@ -120,13 +125,16 @@ public class MojangLoginActivity extends Activity {
 
 		});
 
+		//allow the textviews to be clickable
 		((TextView) findViewById(R.id.lbl_forgot_passwd)).setMovementMethod(LinkMovementMethod.getInstance());
 		((TextView) findViewById(R.id.lbl_challenge_help)).setMovementMethod(LinkMovementMethod.getInstance());
 
+		//challenge views
 		mChallengeFormView = findViewById(R.id.challenge_form);
 		mChallengeQuestionView = (TextView) findViewById(R.id.lbl_challenge_question);
 		mChallengeAnswerView = (EditText) findViewById(R.id.txt_challenge_answer);
 
+		//challenge button
 		mChallengeButton = (ActionProcessButton) findViewById(R.id.b_submit_challenge);
 		mChallengeButton.setMode(Mode.ENDLESS);
 		mChallengeButton.setProgress(0);
@@ -138,10 +146,17 @@ public class MojangLoginActivity extends Activity {
 			}
 		});
 
+		//switch to challenge view initially if we need to
 		if(step == Step.CHALLENGE) {
 			mPassword = user.getPassword();
 			mPasswordView.setText(mPassword);
 			attemptLogin();
+		}
+
+		if(!mEmailView.getText().toString().isEmpty()
+				&& mPasswordView.getText().toString().isEmpty()) {
+			System.out.println("test");
+			mPasswordView.requestFocus();
 		}
 	}
 
