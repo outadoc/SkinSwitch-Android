@@ -17,6 +17,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.outadev.skinswitch.Util;
 import fr.outadev.skinswitch.network.ConnectionHandler;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 
@@ -106,12 +107,12 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 
 				return skinsList;
 			} catch(JSONException e) {
-				Log.e("SkinSwitch", "error parsing " + parameters);
+				Log.e(Util.TAG, "error parsing " + parameters);
 				throw new HttpRequest.HttpRequestException(new IOException());
 			}
 
 		} else {
-			Log.e("SkinSwitch", "error fetching " + parameters);
+			Log.e(Util.TAG, "error fetching " + parameters);
 			throw new HttpRequest.HttpRequestException(new IOException());
 		}
 	}

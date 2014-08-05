@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import fr.outadev.skinswitch.Util;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
 public class SkinLibrarySkin extends BasicSkin {
@@ -37,13 +38,13 @@ public class SkinLibrarySkin extends BasicSkin {
 
 	@Override
 	protected Bitmap readBitmapFromFileSystem(String path, Context context) throws FileNotFoundException {
-		Log.d("SkinSwitch", "didn't load cache for " + this + "because it is a " + this.getClass().getName());
+		Log.d(Util.TAG, "didn't load cache for " + this + "because it is a " + this.getClass().getName());
 		throw new FileNotFoundException();
 	}
 
 	@Override
 	protected void writeBitmapToFileSystem(Bitmap bitmap, String path) throws IOException {
-		Log.d("SkinSwitch", "didn't save cache for " + this + "because it is a " + this.getClass().getName());
+		Log.d(Util.TAG, "didn't save cache for " + this + "because it is a " + this.getClass().getName());
 		throw new FileNotFoundException();
 	}
 

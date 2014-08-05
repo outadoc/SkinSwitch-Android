@@ -11,6 +11,8 @@ import android.view.View;
  */
 public abstract class Util {
 
+	public static final String TAG = "SkinSwitch";
+
 	public static void crossfade(final View oldView, final View newView, int animTime) {
 
 		// Set the new view to 0% opacity but visible, so that it is visible
