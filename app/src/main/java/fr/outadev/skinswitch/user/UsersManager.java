@@ -3,7 +3,9 @@ package fr.outadev.skinswitch.user;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Settings;
+import android.util.Log;
 
+import fr.outadev.skinswitch.Util;
 import simbio.se.sau.Encryption;
 
 /**
@@ -17,7 +19,10 @@ public class UsersManager {
 	public static final String PASSWORD_PREFS_ID = "mojang:password";
 	public static final String LOGGED_IN_PREFS_ID = "isloggedin";
 
-	private static final String STORAGE_KEY = "thiskeyissofuckinglongIhopenobodywilleverfinditlulz1234";
+	private static final String STORAGE_KEY =
+			"etG4kM3fBG3WVsoRTWcFNFHnZiHaUO94pNR9MmWHXFUt6nNtrDtpybpH2knEcjgC8QsnzlqVG0qLyx9" +
+					"GnRzWD2buQC3DZV1qIvVvbKae4xOWEtFFwqtp3zV2t3k0XYDWWhSn3EmHgScJjlJiUrPv35poDeNxaN" +
+					"9Z3xJ46hYkPT2QmDfS2qFYcDJ0kH2DjDsyDDcw2w0bSGD1BFPW2y8JsUJCn3gKMiwTM0ksvyevqL2is0pRZkyUuCoVc9gn1wCh";
 
 	private final SharedPreferences prefs;
 	private final Encryption encryption;
@@ -75,6 +80,7 @@ public class UsersManager {
 		editor.putString(PASSWORD_PREFS_ID, encryption.encrypt(getStorageKey(), user.getPassword()));
 
 		editor.apply();
+		Log.i(Util.TAG, "credentials saved successfully");
 	}
 
 	/**
