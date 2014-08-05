@@ -89,6 +89,10 @@ public class UsersManager {
 	 * @return true if he/she did, else false.
 	 */
 	public boolean isLoggedInSuccessfully() {
+		if(!doCredentialsExist() || (doCredentialsExist() && (getUsername() == null || getPassword() == null))) {
+			setLoggedInSuccessfully(false);
+		}
+
 		return doCredentialsExist() && prefs.getBoolean(LOGGED_IN_PREFS_ID, false);
 
 	}
