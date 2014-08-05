@@ -174,17 +174,14 @@ public class SkinsListFragment extends Fragment {
 		(new AsyncTask<Void, Void, List<BasicSkin>>() {
 
 			@Override
-			protected void onPreExecute() {
-				skinsList.clear();
-			}
-
-			@Override
 			protected List<BasicSkin> doInBackground(Void... params) {
 				return db.getAllSkins();
 			}
 
 			@Override
 			protected void onPostExecute(List<BasicSkin> result) {
+				skinsList.clear();
+
 				// show the "no skins yet" view if necessary
 				gridView.setVisibility((result.isEmpty()) ? View.GONE : View.VISIBLE);
 				noContentView.setVisibility((result.isEmpty()) ? View.VISIBLE : View.GONE);
