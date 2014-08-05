@@ -5,8 +5,8 @@
               android:orientation="vertical">
 
 	<FrameLayout
-		android:layout_width="75dp"
-		android:layout_height="75dp"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
 		android:background="@drawable/item_frame"
 		android:elevation="3dp"
 		android:gravity="center">
@@ -15,7 +15,7 @@
 			android:id="@+id/img_skin_preview"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_margin="14dp"
+			android:layout_margin="17dp"
 			android:contentDescription="@string/image_skin_front"
 			android:elevation="5dp" />
 
@@ -25,9 +25,11 @@
 		android:id="@+id/lbl_skin_title"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginTop="5dp"
 		android:gravity="center"
 		android:singleLine="true"
 		android:textAlignment="center"
-		android:textColor="@android:color/white" />
+		android:textColor="@android:color/white"
+		android:textSize="14sp" />
 
 </LinearLayout>

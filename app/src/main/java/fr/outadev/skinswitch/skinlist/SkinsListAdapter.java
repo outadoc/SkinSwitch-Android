@@ -3,6 +3,7 @@ package fr.outadev.skinswitch.skinlist;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,10 +32,12 @@ import fr.outadev.skinswitch.skin.BasicSkin;
 public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 	private SkinsListFragment frag;
+	private Typeface minecraftiaFont;
 
 	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<BasicSkin> array) {
 		super(context, resource, array);
 		this.frag = frag;
+		minecraftiaFont = Typeface.createFromAsset(getContext().getAssets(), "Minecraftia.ttf");
 	}
 
 	@Override
@@ -42,6 +45,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		if(convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.skin_icon, parent, false);
+			((TextView) convertView.findViewById(R.id.lbl_skin_title)).setTypeface(minecraftiaFont);
 		}
 
 		final ImageView skinView = (ImageView) convertView.findViewById(R.id.img_skin_preview);
