@@ -26,7 +26,7 @@ import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
 import fr.outadev.skinswitch.network.login.MojangLoginActivity;
 import fr.outadev.skinswitch.skin.SkinRenderer.Side;
-import fr.outadev.skinswitch.skinlist.ILoadingSkinHandler;
+import fr.outadev.skinswitch.skinlist.OnSkinLoadingListener;
 import fr.outadev.skinswitch.user.UsersManager;
 
 /**
@@ -424,7 +424,7 @@ public class BasicSkin implements Serializable {
 		Log.i("SkinSwitch", "deleted all local res files for " + this);
 	}
 
-	public void initSkinUpload(final Context context, final ILoadingSkinHandler loadingHandler) {
+	public void initSkinUpload(final Context context, final OnSkinLoadingListener loadingHandler) {
 		UsersManager usersManager = new UsersManager(context);
 
 		//if the user isn't logged in, pop up the login window

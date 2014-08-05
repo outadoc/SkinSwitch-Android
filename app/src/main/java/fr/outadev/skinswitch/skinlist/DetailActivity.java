@@ -38,7 +38,7 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
  *
  * @author outadoc
  */
-public class DetailActivity extends Activity implements ILoadingSkinHandler {
+public class DetailActivity extends Activity implements OnSkinLoadingListener {
 
 	private BasicSkin skin;
 	private int animTime;

@@ -109,7 +109,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 							@Override
 							public void run() {
-								skin.initSkinUpload(getContext(), new ILoadingSkinHandler() {
+								skin.initSkinUpload(getContext(), new OnSkinLoadingListener() {
 
 									@Override
 									public void setLoading(boolean loading) {
