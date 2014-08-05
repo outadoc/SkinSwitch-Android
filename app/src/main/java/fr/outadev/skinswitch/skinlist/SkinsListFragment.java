@@ -119,13 +119,7 @@ public class SkinsListFragment extends Fragment {
 					}
 				});
 
-				builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-
-					}
-				});
-
+				builder.setNegativeButton(R.string.no, null);
 				builder.create().show();
 				return true;
 			}
