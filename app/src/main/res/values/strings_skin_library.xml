@@ -12,5 +12,10 @@
 	<string name="library_section_all">All</string>
 
 	<string name="search_title">Search in Library</string>
+	<string name="action_upload">Upload to Skin Manager</string>
+	<string name="upload_to_sm_message">To upload one of your own skins to Skin Manager and make it available in the skin library, go to Skin Manager, create a new account (or login) and upload it from there.</string>
+	<string name="upload_to_sm_title">Go to Skin Manager?</string>
+	<string name="upload_to_sm_positive">Go to Skin Manager</string>
+	<string name="upload_to_sm_negative">Not now</string>
 
 </resources>
