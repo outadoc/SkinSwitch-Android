@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">SkinSwitch</string>
+	<string name="app_name" translatable="false">SkinSwitch</string>
 	<string name="action_settings">Help</string>
 	<string name="action_add">Add</string>
 	<string name="action_login">Log in</string>
