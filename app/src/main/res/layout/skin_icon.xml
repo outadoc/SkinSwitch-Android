@@ -8,7 +8,7 @@
 		android:layout_width="80dp"
 		android:layout_height="80dp"
 		android:background="@drawable/item_frame"
-		android:elevation="3dp"
+		android:elevation="2dp"
 		android:gravity="center">
 
 		<ImageView
@@ -17,7 +17,7 @@
 			android:layout_height="match_parent"
 			android:layout_margin="17dp"
 			android:contentDescription="@string/image_skin_front"
-			android:elevation="5dp" />
+			android:elevation="4dp" />
 
 	</FrameLayout>
 
