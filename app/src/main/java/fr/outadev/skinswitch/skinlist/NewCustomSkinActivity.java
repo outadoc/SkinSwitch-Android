@@ -3,6 +3,7 @@ package fr.outadev.skinswitch.skinlist;
 import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -57,6 +58,21 @@ public class NewCustomSkinActivity extends Activity {
 			txt_name.setText(editSkin.getName());
 			txt_description.setText(editSkin.getDescription());
 			txt_source.setText(editSkin.getSource());
+		}
+
+		// handle URIs like skinswitch://?name=foo&desc=bar&url=foobar
+		Uri queryUri = getIntent().getData();
+
+		if(queryUri != null) {
+			String name = queryUri.getQueryParameter("name");
+			String desc = queryUri.getQueryParameter("desc");
+			String url = queryUri.getQueryParameter("url");
+
+			if(name != null && desc != null && url != null) {
+				txt_name.setText(name);
+				txt_description.setText(desc);
+				txt_source.setText(url);
+			}
 		}
 	}
 
