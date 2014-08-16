@@ -18,8 +18,13 @@ public abstract class ConnectionHandler {
 		String appVersion = "x.x";
 
 		try {
-			PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-			appVersion = info.versionName;
+			if(context != null) {
+				PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+
+				if(info != null) {
+					appVersion = info.versionName;
+				}
+			}
 		} catch(PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
 		}
