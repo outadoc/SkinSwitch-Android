@@ -35,7 +35,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.outadev.skinswitch.Util;
+import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.network.ConnectionHandler;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 
@@ -113,7 +113,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 		if(response != null) {
 			try {
 				JSONArray resultArray = new JSONArray(response);
-				Log.i(Util.TAG, "successfully got response from skin manager (" + resultArray.length() + " items)");
+				Log.i(Utils.TAG, "successfully got response from skin manager (" + resultArray.length() + " items)");
 
 				for(int i = 0; i < resultArray.length(); i++) {
 					JSONObject currSkinObj = resultArray.getJSONObject(i);
@@ -126,12 +126,12 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 
 				return skinsList;
 			} catch(JSONException e) {
-				Log.e(Util.TAG, "error parsing " + parameters);
+				Log.e(Utils.TAG, "error parsing " + parameters);
 				throw new HttpRequest.HttpRequestException(new IOException());
 			}
 
 		} else {
-			Log.e(Util.TAG, "error fetching " + parameters);
+			Log.e(Utils.TAG, "error fetching " + parameters);
 			throw new HttpRequest.HttpRequestException(new IOException());
 		}
 	}

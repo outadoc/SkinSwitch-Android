@@ -23,7 +23,7 @@ import android.util.Log;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fr.outadev.skinswitch.Util;
+import fr.outadev.skinswitch.Utils;
 
 /**
  * Represents a login challenge. When a user tries to log into minecraft.net
@@ -80,7 +80,7 @@ public class LoginChallenge {
 			this.authToken = matcher.group(1);
 		}
 
-		Log.i(Util.TAG, "fetched challenge: " + this);
+		Log.i(Utils.TAG, "fetched challenge: " + this);
 	}
 
 	public String getId() {

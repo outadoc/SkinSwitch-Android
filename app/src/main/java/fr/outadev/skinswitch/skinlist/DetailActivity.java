@@ -47,7 +47,7 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.Util;
+import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
@@ -212,7 +212,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 
 			@Override
 			public void onClick(View view) {
-				Util.crossfade(img_skin_preview_front, img_skin_preview_back, animTime);
+				Utils.crossfade(img_skin_preview_front, img_skin_preview_back, animTime);
 			}
 
 		});
@@ -221,7 +221,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 
 			@Override
 			public void onClick(View view) {
-				Util.crossfade(img_skin_preview_back, img_skin_preview_front, animTime);
+				Utils.crossfade(img_skin_preview_back, img_skin_preview_front, animTime);
 			}
 
 		});

@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - Util
+ * SkinSwitch - Utils
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import android.view.View;
  *
  * @author outadoc
  */
-public abstract class Util {
+public abstract class Utils {
 
 	public static final String TAG = "SkinSwitch";
 

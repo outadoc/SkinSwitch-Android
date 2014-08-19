@@ -38,7 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.Util;
+import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.skin.SkinLibrarySkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
@@ -144,7 +144,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 			@Override
 			public void onClick(View view) {
-				Util.crossfade(img_skin_preview_front, img_skin_preview_back, animTime);
+				Utils.crossfade(img_skin_preview_front, img_skin_preview_back, animTime);
 			}
 
 		});
@@ -153,7 +153,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 			@Override
 			public void onClick(View view) {
-				Util.crossfade(img_skin_preview_back, img_skin_preview_front, animTime);
+				Utils.crossfade(img_skin_preview_back, img_skin_preview_front, animTime);
 			}
 
 		});

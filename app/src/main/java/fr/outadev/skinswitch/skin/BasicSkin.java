@@ -39,7 +39,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.Util;
+import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.network.MojangConnectionHandler;
 import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
@@ -259,7 +259,7 @@ public class BasicSkin implements Serializable {
 		try {
 			return readBitmapFromFileSystem(getSkinHeadPath(context), context);
 		} catch(FileNotFoundException e) {
-			Log.d(Util.TAG, "creating head preview and cache for " + this);
+			Log.d(Utils.TAG, "creating head preview and cache for " + this);
 
 			Bitmap bmpPrev = getFrontSkinPreview(context);
 			Bitmap bmpHead = SkinRenderer.getCroppedHead(bmpPrev);
@@ -286,7 +286,7 @@ public class BasicSkin implements Serializable {
 		try {
 			return readBitmapFromFileSystem(getFrontSkinPreviewPath(context), context);
 		} catch(FileNotFoundException e) {
-			Log.d(Util.TAG, "creating front preview and cache for " + this);
+			Log.d(Utils.TAG, "creating front preview and cache for " + this);
 
 			Bitmap bmpRaw = getRawSkinBitmap(context);
 			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.FRONT, 19);
@@ -313,7 +313,7 @@ public class BasicSkin implements Serializable {
 		try {
 			return readBitmapFromFileSystem(getBackSkinPreviewPath(context), context);
 		} catch(FileNotFoundException e) {
-			Log.d(Util.TAG, "creating back preview and cache for " + this);
+			Log.d(Utils.TAG, "creating back preview and cache for " + this);
 
 			Bitmap bmpRaw = getRawSkinBitmap(context);
 			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.BACK, 19);
@@ -440,7 +440,7 @@ public class BasicSkin implements Serializable {
 		deleteFile(getFrontSkinPreviewPath(context));
 		deleteFile(getRawSkinPath(context));
 
-		Log.i(Util.TAG, "deleted all local res files for " + this);
+		Log.i(Utils.TAG, "deleted all local res files for " + this);
 	}
 
 	public void initSkinUpload(final Context context, final OnSkinLoadingListener loadingHandler) {

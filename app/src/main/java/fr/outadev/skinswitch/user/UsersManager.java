@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.util.Log;
 
-import fr.outadev.skinswitch.Util;
+import fr.outadev.skinswitch.Utils;
 import simbio.se.sau.Encryption;
 
 /**
@@ -98,7 +98,7 @@ public class UsersManager {
 		editor.putString(PASSWORD_PREFS_ID, encryption.encrypt(getStorageKey(), user.getPassword()));
 
 		editor.apply();
-		Log.i(Util.TAG, "credentials saved successfully");
+		Log.i(Utils.TAG, "credentials saved successfully");
 	}
 
 	/**
