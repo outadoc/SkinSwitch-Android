@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch;
+package fr.outadev.skinswitch.background;
 
 import android.graphics.Bitmap;
 import android.util.Log;
