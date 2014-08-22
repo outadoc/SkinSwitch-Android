@@ -22,4 +22,7 @@
 	<string name="error_skin_refresh">Impossible de rafraîchir ce skin : %1$s</string>
 	<string name="success_skin_refresh">Skin mis à jour avec succès !</string>
 
+	<string name="refresh_skin_title">Rafraîchir le skin ?</string>
+	<string name="refresh_skin_message">Voulez-vous vraiment rafraîchir ce skin ? Il sera de nouveau téléchargé depuis cette URL :\n%1$s</string>
+
 </resources>

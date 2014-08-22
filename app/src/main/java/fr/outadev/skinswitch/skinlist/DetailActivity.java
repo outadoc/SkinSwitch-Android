@@ -121,7 +121,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 			case R.id.action_refresh_skin: {
 				new AlertDialog.Builder(this)
 						.setTitle(getString(R.string.refresh_skin_title))
-						.setMessage(getString(R.string.refresh_skin_message))
+						.setMessage(getString(R.string.refresh_skin_message, skin.getSource()))
 						.setNegativeButton(getString(R.string.no), null)
 						.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 

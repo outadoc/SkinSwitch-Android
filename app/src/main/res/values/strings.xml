@@ -56,8 +56,5 @@
 	<string name="skin_details_title">Skin Details</string>
 	<string name="add_skin_instructions">Add a new skin by tapping the <b>+</b> icon.</string>
 	<string name="add_skin_title">Nothing here yet!</string>
-	<string name="refresh_skin_title">Refresh this skin</string><string name="refresh_skin_message">Do you really want to refresh this skin? It will be downloaded again from the same source.
-For example, if you added it from a user, if this user changed his skin, the new one will be downloaded.
-This cannot be undone.</string>
 
 </resources>
