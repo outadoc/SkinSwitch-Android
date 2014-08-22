@@ -45,7 +45,7 @@
 	<string name="success_skin_updated">Skin updated successfully!</string>
 
 	<string name="replace_skin_title">Replace with %1$s?</string>
-	<string name="replace_skin_message">Do you really want to replace your current Minecraft skin with %1$s?</string>
+	<string name="replace_skin_message">Do you really want to replace your current Minecraft skin with %1$s? Your current skin will be overwritten!</string>
 
 	<string name="delete_skin_title">Delete %1$s?</string>
 	<string name="delete_skin_message">Do you really want to delete %1$s from your library?</string>
