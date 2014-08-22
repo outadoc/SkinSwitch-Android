@@ -105,8 +105,17 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 		}).execute();
 
+		//if that's the first skin our user has ever added to the app,
+		// show him the upload animation to hint him
 		if(position == 0 && !wasTutorialPlayed) {
+			skinView.startAnimation(expandAnim);
 
+			//reset the tutorial boolean so it doesn't show anymore after that
+			wasTutorialPlayed = true;
+			PreferenceManager.getDefaultSharedPreferences(getContext())
+					.edit()
+					.putBoolean("wasTutorialPlayed", true)
+					.commit();
 		}
 
 		convertView.setOnTouchListener(new OnSkinHeadTouchListener(skin, skinView));
