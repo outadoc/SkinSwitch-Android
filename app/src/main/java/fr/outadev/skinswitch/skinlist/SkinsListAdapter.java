@@ -113,6 +113,13 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		return convertView;
 	}
 
+	/**
+	 * Listener that listens to touch events on the skin icons.
+	 * Will make them spin when the user touches them, initialize the upload after a certain time.
+	 * If the user releases it quick enough, open the skin details.
+	 *
+	 * @author outadoc
+	 */
 	private class OnSkinHeadTouchListener implements View.OnTouchListener {
 
 		private final BasicSkin skin;
@@ -121,6 +128,12 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		private long touchTimestamp;
 		private Timer timer;
 
+		/**
+		 * Creates a skin head listener.
+		 *
+		 * @param skin     the BasicSkin object associated with the view
+		 * @param skinView the view (usually a skin head bitmap) the user will interact with
+		 */
 		public OnSkinHeadTouchListener(BasicSkin skin, View skinView) {
 			this.skin = skin;
 			this.skinView = skinView;
@@ -130,20 +143,20 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			switch(motionEvent.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					onTouchStart(skinView);
+					onTouchStart();
 					break;
 				case MotionEvent.ACTION_UP:
-					onTouchEnd(skinView);
+					onTouchEnd();
 					break;
 				case MotionEvent.ACTION_CANCEL:
-					onTouchCancel(skinView);
+					onTouchCancel();
 					break;
 			}
 
 			return true;
 		}
 
-		private void onTouchStart(final View view) {
+		private void onTouchStart() {
 			//touching the skin head
 			touchTimestamp = (new Date()).getTime();
 			timer = new Timer();
@@ -160,9 +173,9 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 								@Override
 								public void setLoading(boolean loading) {
 									if(loading) {
-										view.startAnimation(loadingAnim);
+										skinView.startAnimation(loadingAnim);
 									} else {
-										view.clearAnimation();
+										skinView.clearAnimation();
 									}
 								}
 
@@ -174,13 +187,13 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 			}, 1000);
 
-			view.startAnimation(expandAnim);
+			skinView.startAnimation(expandAnim);
 		}
 
-		private void onTouchEnd(View view) {
+		private void onTouchEnd() {
 			//releasing the skin head
 			if((new Date()).getTime() - touchTimestamp < 300) {
-				view.clearAnimation();
+				skinView.clearAnimation();
 
 				Intent intent = new Intent(getContext(), DetailActivity.class);
 				intent.putExtra("skin", skin);
@@ -188,19 +201,19 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			}
 
 			if((new Date()).getTime() - touchTimestamp < 1000) {
-				view.clearAnimation();
+				skinView.clearAnimation();
 			}
 
 			timer.cancel();
 			touchTimestamp = 0;
 		}
 
-		private void onTouchCancel(View view) {
+		private void onTouchCancel() {
 			if(timer != null) {
 				timer.cancel();
 			}
 
-			view.clearAnimation();
+			skinView.clearAnimation();
 			touchTimestamp = 0;
 		}
 
