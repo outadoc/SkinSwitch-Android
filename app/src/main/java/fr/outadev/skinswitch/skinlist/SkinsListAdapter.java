@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,11 +52,20 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 	private SkinsListFragment frag;
 	private Typeface minecraftiaFont;
+	private boolean wasTutorialPlayed;
+
+	private Animation expandAnim;
+	private Animation loadingAnim;
 
 	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<BasicSkin> array) {
 		super(context, resource, array);
 		this.frag = frag;
+
 		minecraftiaFont = Typeface.createFromAsset(getContext().getAssets(), "Minecraftia.ttf");
+		wasTutorialPlayed = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("wasTutorialPlayed", false);
+
+		expandAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_rotation);
+		loadingAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_nod);
 	}
 
 	@Override
@@ -95,96 +105,105 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 		}).execute();
 
-		convertView.setOnTouchListener(new View.OnTouchListener() {
+		if(position == 0 && !wasTutorialPlayed) {
 
-			private long touchTimestamp;
-			private Timer timer;
+		}
 
-			private Animation expandAnim;
-
-			@Override
-			public boolean onTouch(View view, MotionEvent motionEvent) {
-				switch(motionEvent.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						onTouchStart(skinView);
-						break;
-					case MotionEvent.ACTION_UP:
-						onTouchEnd(skinView);
-						break;
-					case MotionEvent.ACTION_CANCEL:
-						onTouchCancel(skinView);
-						break;
-				}
-
-				return true;
-			}
-
-			private void onTouchStart(final View view) {
-				//touching the skin head
-				touchTimestamp = (new Date()).getTime();
-				timer = new Timer();
-
-				timer.schedule(new TimerTask() {
-
-					public void run() {
-						frag.getActivity().runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								skin.initSkinUpload(getContext(), new OnSkinLoadingListener() {
-
-									@Override
-									public void setLoading(boolean loading) {
-										if(loading) {
-											view.startAnimation(AnimationUtils.loadAnimation(getContext(),
-													R.anim.anim_skin_nod));
-										} else {
-											view.clearAnimation();
-										}
-									}
-
-								});
-							}
-
-						});
-					}
-
-				}, 1000);
-
-				expandAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_rotation);
-				view.startAnimation(expandAnim);
-			}
-
-			private void onTouchEnd(View view) {
-				//releasing the skin head
-				if((new Date()).getTime() - touchTimestamp < 300) {
-					view.clearAnimation();
-
-					Intent intent = new Intent(getContext(), DetailActivity.class);
-					intent.putExtra("skin", skin);
-					getContext().startActivity(intent);
-				}
-
-				if((new Date()).getTime() - touchTimestamp < 1000) {
-					view.clearAnimation();
-				}
-
-				timer.cancel();
-				touchTimestamp = 0;
-			}
-
-			private void onTouchCancel(View view) {
-				if(timer != null) {
-					timer.cancel();
-				}
-
-				view.clearAnimation();
-				touchTimestamp = 0;
-			}
-
-		});
-
+		convertView.setOnTouchListener(new OnSkinHeadTouchListener(skin, skinView));
 		return convertView;
+	}
+
+	private class OnSkinHeadTouchListener implements View.OnTouchListener {
+
+		private final BasicSkin skin;
+		private final View skinView;
+
+		private long touchTimestamp;
+		private Timer timer;
+
+		public OnSkinHeadTouchListener(BasicSkin skin, View skinView) {
+			this.skin = skin;
+			this.skinView = skinView;
+		}
+
+		@Override
+		public boolean onTouch(View view, MotionEvent motionEvent) {
+			switch(motionEvent.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					onTouchStart(skinView);
+					break;
+				case MotionEvent.ACTION_UP:
+					onTouchEnd(skinView);
+					break;
+				case MotionEvent.ACTION_CANCEL:
+					onTouchCancel(skinView);
+					break;
+			}
+
+			return true;
+		}
+
+		private void onTouchStart(final View view) {
+			//touching the skin head
+			touchTimestamp = (new Date()).getTime();
+			timer = new Timer();
+
+			timer.schedule(new TimerTask() {
+
+				public void run() {
+					frag.getActivity().runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							skin.initSkinUpload(getContext(), new OnSkinLoadingListener() {
+
+								@Override
+								public void setLoading(boolean loading) {
+									if(loading) {
+										view.startAnimation(loadingAnim);
+									} else {
+										view.clearAnimation();
+									}
+								}
+
+							});
+						}
+
+					});
+				}
+
+			}, 1000);
+
+			view.startAnimation(expandAnim);
+		}
+
+		private void onTouchEnd(View view) {
+			//releasing the skin head
+			if((new Date()).getTime() - touchTimestamp < 300) {
+				view.clearAnimation();
+
+				Intent intent = new Intent(getContext(), DetailActivity.class);
+				intent.putExtra("skin", skin);
+				getContext().startActivity(intent);
+			}
+
+			if((new Date()).getTime() - touchTimestamp < 1000) {
+				view.clearAnimation();
+			}
+
+			timer.cancel();
+			touchTimestamp = 0;
+		}
+
+		private void onTouchCancel(View view) {
+			if(timer != null) {
+				timer.cancel();
+			}
+
+			view.clearAnimation();
+			touchTimestamp = 0;
+		}
+
 	}
 
 }
