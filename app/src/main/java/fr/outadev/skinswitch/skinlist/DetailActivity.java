@@ -119,30 +119,43 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 				this.finish();
 				return true;
 			case R.id.action_refresh_skin: {
+				new AlertDialog.Builder(this)
+						.setTitle(getString(R.string.refresh_skin_title))
+						.setMessage(getString(R.string.refresh_skin_message))
+						.setNegativeButton(getString(R.string.no), null)
+						.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
-				(new AsyncTask<Void, Void, Void>() {
+							@Override
+							public void onClick(DialogInterface dialogInterface, int i) {
+								(new AsyncTask<Void, Void, Void>() {
 
-					@Override
-					protected Void doInBackground(Void... voids) {
-						try {
-							skin.downloadSkinFromSource(DetailActivity.this);
-						} catch(Exception e) {
-							e.printStackTrace();
-							Toast.makeText(DetailActivity.this, getResources().getString(R.string.error_skin_refresh,
-									e.getMessage()), Toast.LENGTH_LONG).show();
-						}
+									@Override
+									protected Void doInBackground(Void... voids) {
+										try {
+											skin.downloadSkinFromSource(DetailActivity.this);
+										} catch(Exception e) {
+											e.printStackTrace();
+											Toast.makeText(DetailActivity.this, getResources().getString(R.string
+															.error_skin_refresh,
+													e.getMessage()), Toast.LENGTH_LONG).show();
+										}
 
-						return null;
-					}
+										return null;
+									}
 
-					@Override
-					protected void onPostExecute(Void aVoid) {
-						setupSkinPreviews();
-						Toast.makeText(DetailActivity.this, getResources().getString(R.string.success_skin_refresh),
-								Toast.LENGTH_LONG).show();
-					}
+									@Override
+									protected void onPostExecute(Void aVoid) {
+										setupSkinPreviews();
+										Toast.makeText(DetailActivity.this, getResources().getString(R.string
+														.success_skin_refresh),
+												Toast.LENGTH_LONG).show();
+									}
 
-				}).execute();
+								}).execute();
+							}
+
+						}).create().show();
+
 				return true;
 			}
 			case R.id.action_edit_skin: {
