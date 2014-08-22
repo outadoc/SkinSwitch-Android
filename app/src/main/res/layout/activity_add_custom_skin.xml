@@ -32,6 +32,24 @@
 		android:paddingTop="@dimen/activity_vertical_margin">
 
 		<TextView
+			android:id="@+id/lbl_skin_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:labelFor="@+id/txt_skin_name"
+			android:text="@string/lbl_add_skin_name"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textStyle="italic" />
+
+		<EditText
+			android:id="@+id/txt_skin_name"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+			android:hint="@string/hint_add_skin_name"
+			android:imeOptions="actionNext"
+			android:singleLine="true" />
+
+		<TextView
 			android:id="@+id/lbl_skin_source"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -48,24 +66,6 @@
 			android:hint="@string/hint_add_skin_source"
 			android:imeOptions="actionNext"
 			android:inputType="textUri"
-			android:singleLine="true" />
-
-		<TextView
-			android:id="@+id/lbl_skin_name"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:labelFor="@+id/txt_skin_name"
-			android:text="@string/lbl_add_skin_name"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:textStyle="italic" />
-
-		<EditText
-			android:id="@+id/txt_skin_name"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="10dp"
-			android:hint="@string/hint_add_skin_name"
-			android:imeOptions="actionNext"
 			android:singleLine="true" />
 
 		<TextView
