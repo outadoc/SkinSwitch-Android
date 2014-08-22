@@ -268,7 +268,7 @@ public class BasicSkin implements Serializable {
 
 			try {
 				saveSkinHeadBitmap(context, bmpHead);
-			} catch(IOException e1) {
+			} catch(IOException ignored) {
 			}
 
 			return bmpHead;
@@ -295,7 +295,7 @@ public class BasicSkin implements Serializable {
 
 			try {
 				saveFrontSkinPreviewBitmap(context, bmpPrev);
-			} catch(IOException e1) {
+			} catch(IOException ignored) {
 			}
 
 			return bmpPrev;
@@ -322,7 +322,7 @@ public class BasicSkin implements Serializable {
 
 			try {
 				saveBackSkinPreviewBitmap(context, bmpPrev);
-			} catch(IOException e1) {
+			} catch(IOException ignored) {
 			}
 
 			return bmpPrev;
