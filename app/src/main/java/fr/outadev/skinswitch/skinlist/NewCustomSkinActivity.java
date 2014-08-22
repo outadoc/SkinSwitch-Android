@@ -37,6 +37,7 @@ import java.util.Date;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.BasicSkin;
+import fr.outadev.skinswitch.skin.InvalidSkinSizeException;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
@@ -181,7 +182,20 @@ public class NewCustomSkinActivity extends Activity {
 
 			@Override
 			protected Boolean doInBackground(Void... params) {
-				return skin.isValidSource();
+				try {
+					return skin.isValidSource();
+				} catch(final InvalidSkinSizeException e) {
+					NewCustomSkinActivity.this.runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							Toast.makeText(NewCustomSkinActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+						}
+
+					});
+
+					return false;
+				}
 			}
 
 			@Override

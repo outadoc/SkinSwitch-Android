@@ -410,7 +410,7 @@ public class BasicSkin implements Serializable {
 	 *
 	 * @return true if it's valid, false if it's not
 	 */
-	public boolean isValidSource() {
+	public boolean isValidSource() throws InvalidSkinSizeException {
 		if(source == null) {
 			return false;
 		}
@@ -421,8 +421,13 @@ public class BasicSkin implements Serializable {
 			Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
 
 			if(bmp != null) {
-				bmp.recycle();
-				return true;
+				if(bmp.getWidth() == 64 && (bmp.getHeight() == 32 || bmp.getHeight() == 64)) {
+					bmp.recycle();
+					return true;
+				} else {
+					//size is not 64x32 or 64x64, abort, abort!
+					throw new InvalidSkinSizeException(bmp.getWidth(), bmp.getHeight());
+				}
 			}
 		}
 
