@@ -18,16 +18,18 @@
 
 
 
+
+
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion "android-L"
+    compileSdkVersion 21
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "fr.outadev.skinswitch"
-        minSdkVersion "android-L"
-        targetSdkVersion "android-L"
+        minSdkVersion 15
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
 
@@ -42,10 +44,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:+'
-    compile 'com.android.support:cardview-v7:+'
-    compile 'com.android.support:palette-v7:+'
-    compile 'com.github.dmytrodanylyk.android-process-button:library:+'
-    compile 'com.github.kevinsawicki:http-request:+'
-    compile 'com.google.android.gms:play-services:+'
+    compile 'com.android.support:support-v4:21.0.0-rc1'
+    compile 'com.android.support:cardview-v7:21.0.0-rc1'
+    compile 'com.google.android.gms:play-services:5.0.89'
+    compile 'com.android.support:palette-v7:21.0.0-rc1'
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.1'
+    compile 'com.github.kevinsawicki:http-request:5.6'
 }
