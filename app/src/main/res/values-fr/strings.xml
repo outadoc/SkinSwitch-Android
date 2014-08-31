@@ -23,7 +23,6 @@
 	<string name="action_add">Ajouter</string>
 	<string name="action_login">Se connecter</string>
 	<string name="action_logout">Se déconnecter</string>
-	<string name="dialog_logout_title">Se déconnecter ?</string>
 	<string name="add_skin_dialog_title">Ajouter un skin</string>
 
 	<string name="image_skin_front">Devant du skin</string>

@@ -126,7 +126,8 @@ public class SkinsListFragment extends Fragment {
 			case R.id.action_logout: {
 				// if we want to log out
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle(R.string.dialog_logout_title).setMessage(R.string.dialog_logout_message);
+				builder.setTitle(R.string.dialog_logout_title).setMessage(getResources().getString(R.string
+						.dialog_logout_message, usersManager.getUser().getUsername()));
 
 				builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 					@Override

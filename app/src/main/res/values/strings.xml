@@ -24,7 +24,6 @@
 	<string name="action_add">Add</string>
 	<string name="action_login">Log in</string>
 	<string name="action_logout">Log out</string>
-	<string name="dialog_logout_title">Log out?</string>
 	<string name="add_skin_dialog_title">Add a new skin</string>
 
 	<string name="image_skin_front">Skin Front</string>

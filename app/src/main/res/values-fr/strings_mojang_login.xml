@@ -32,7 +32,8 @@
 	<string name="button_loading">Chargement…</string>
 	<string name="button_success">Succès!</string>
 	<string name="button_error">Erreur</string>
-	<string name="dialog_logout_message">Voulez-vous vraiment vous déconnecter de votre compte Mojang ?</string>
+	<string name="dialog_logout_title">Se déconnecter ?</string>
+	<string name="dialog_logout_message">Vous êtes actuellement connecté en tant que %1$s.\n\nVoulez-vous vraiment vous déconnecter de votre compte Mojang ?</string>
 	<string name="yes">Oui</string>
 	<string name="no">Non</string>
 	<string name="error_connection_challenge">Impossible d\'envoyer la réponse (erreur réseau)</string>
