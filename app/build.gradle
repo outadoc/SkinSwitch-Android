@@ -18,6 +18,8 @@
 
 
 
+
+
 apply plugin: 'com.android.application'
 
 android {
@@ -30,7 +32,6 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-
     }
 
     buildTypes {
