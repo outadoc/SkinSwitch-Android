@@ -23,13 +23,8 @@
 	<dimen name="activity_vertical_margin">16dp</dimen>
 	<dimen name="corner_radius">2dp</dimen>
 	<dimen name="layer_padding">3dp</dimen>
-
 	<dimen name="floating_button_size">50dp</dimen>
-
 	<dimen name="button_elevation">2dp</dimen>
-	<dimen name="button_press_elevation">4dp</dimen>
-
-	<dimen name="card_elevation">4dp</dimen>
 	<dimen name="card_corner_radius">2dp</dimen>
 	<dimen name="skin_details_topmargin">0dp</dimen>
 
