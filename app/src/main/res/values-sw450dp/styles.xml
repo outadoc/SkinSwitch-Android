@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ SkinSwitch - dimens.xml
+  ~ SkinSwitch - styles.xml
   ~ Copyright (C) 2014-2014  Baptiste Candellier
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -18,9 +19,8 @@
 
 <resources>
 
-	<!--
-		 Customize dimensions originally defined in res/values/dimens.xml (such as
-		 screen margins) for sw600dp devices (e.g. 7" tablets) here.
-	-->
+	<style name="SkinLibraryCard">
+		<item name="android:layout_width">450dp</item>
+	</style>
 
 </resources>
