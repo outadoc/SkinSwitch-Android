@@ -152,6 +152,7 @@ public class MojangConnectionHandler extends ConnectionHandler {
 				.userAgent(getUserAgent())
 				.followRedirects(true)
 				.part("authenticityToken", authToken)
+				.part("model", "steve")
 				.part("skin", skin.getName(), "image/png", skin);
 
 		String body = skinRequest.body();
