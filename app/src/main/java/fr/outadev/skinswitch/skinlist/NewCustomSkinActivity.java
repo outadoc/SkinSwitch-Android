@@ -145,7 +145,7 @@ public class NewCustomSkinActivity extends Activity {
 
 		// parse the source
 		if(!txt_source.getText().toString().matches("https?:\\/\\/.+")) {
-			skin.setSource("http://s3.amazonaws.com/MinecraftSkins/" + txt_source.getText().toString() + ".png");
+			skin.setSource("http://skins.minecraft.net/MinecraftSkins/" + txt_source.getText().toString() + ".png");
 		} else {
 			skin.setSource(txt_source.getText().toString());
 		}
