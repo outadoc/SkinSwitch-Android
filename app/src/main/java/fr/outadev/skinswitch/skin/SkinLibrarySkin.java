@@ -30,6 +30,8 @@ import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
 /**
  * This type of skin is used for skins coming from the skin library.
+ *
+ * @author outadoc
  */
 public class SkinLibrarySkin extends CustomUriSkin {
 

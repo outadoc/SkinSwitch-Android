@@ -30,6 +30,8 @@ import java.util.Date;
 
 /**
  * This type of skin is linked to an URL. When added or refreshed, it will be downloaded from the said URL.
+ *
+ * @author outadoc
  */
 public class CustomUriSkin extends BasicSkin {
 

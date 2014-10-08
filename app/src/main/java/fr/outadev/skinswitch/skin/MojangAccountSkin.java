@@ -35,6 +35,8 @@ import java.util.Date;
 /**
  * This type of skin is linked to a Minecraft player's UUID.
  * It will be downloaded as a copy of the player's skin, and will be refreshed in the same way.
+ *
+ * @author outadoc
  */
 public class MojangAccountSkin extends BasicSkin {
 
