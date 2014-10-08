@@ -18,7 +18,6 @@
 
 package fr.outadev.skinswitch.skinlist;
 
-import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
@@ -31,6 +30,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.github.kevinsawicki.http.HttpRequest;
 
 import java.io.IOException;
 import java.util.Date;
@@ -216,7 +217,7 @@ public class NewCustomSkinActivity extends Activity {
 
 							try {
 								skin.downloadSkinFromSource(NewCustomSkinActivity.this);
-							} catch(NetworkErrorException e) {
+							} catch(HttpRequest.HttpRequestException e) {
 								e.printStackTrace();
 							} catch(IOException e) {
 								e.printStackTrace();

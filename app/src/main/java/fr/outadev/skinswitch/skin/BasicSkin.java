@@ -18,7 +18,6 @@
 
 package fr.outadev.skinswitch.skin;
 
-import android.accounts.NetworkErrorException;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +27,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.github.kevinsawicki.http.HttpRequest;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -374,10 +375,10 @@ public abstract class BasicSkin implements Serializable {
 	 * Source must be specified via {@link #setSource(String).
 	 *
 	 * @param context
-	 * @throws NetworkErrorException if the skin couldn't be downloaded.
-	 * @throws IOException           if the skin couldn't be saved.
+	 * @throws NetworkException if the skin couldn't be downloaded.
+	 * @throws IOException      if the skin couldn't be saved.
 	 */
-	public abstract void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException;
+	public abstract void downloadSkinFromSource(Context context) throws HttpRequest.HttpRequestException, IOException;
 
 	/**
 	 * Checks if the skin's source is a valid skin.

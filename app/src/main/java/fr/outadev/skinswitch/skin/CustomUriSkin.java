@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - CustomSkin
+ * SkinSwitch - CustomUriSkin
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 
 package fr.outadev.skinswitch.skin;
 
-import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -56,14 +55,14 @@ public class CustomUriSkin extends BasicSkin {
 	}
 
 	@Override
-	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
+	public void downloadSkinFromSource(Context context) throws HttpRequest.HttpRequestException, IOException {
 		if(getSource() == null) {
-			throw new NetworkErrorException("No source was set for " + this);
+			throw new HttpRequest.HttpRequestException(new IOException("No source was set for " + this));
 		}
 
 		byte[] response = HttpRequest.get(getSource()).trustAllHosts().useCaches(true).bytes();
 		if(response == null) {
-			throw new NetworkErrorException("Couldn't download " + this);
+			throw new HttpRequest.HttpRequestException(new IOException("Couldn't download " + this));
 		}
 
 		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
