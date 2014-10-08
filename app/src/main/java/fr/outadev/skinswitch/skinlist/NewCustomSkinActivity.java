@@ -38,7 +38,6 @@ import java.util.Date;
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.CustomSkin;
-import fr.outadev.skinswitch.skin.InvalidSkinSizeException;
 import fr.outadev.skinswitch.skin.MojangAccountSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
@@ -191,7 +190,7 @@ public class NewCustomSkinActivity extends Activity {
 			protected Boolean doInBackground(Void... params) {
 				try {
 					return skin.isValidSource(txt_source.getText().toString());
-				} catch(final InvalidSkinSizeException e) {
+				} catch(final Exception e) {
 					NewCustomSkinActivity.this.runOnUiThread(new Runnable() {
 
 						@Override
