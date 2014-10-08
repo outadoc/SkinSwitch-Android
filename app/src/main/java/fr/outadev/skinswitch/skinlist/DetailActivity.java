@@ -49,6 +49,7 @@ import java.io.FileNotFoundException;
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.skin.BasicSkin;
+import fr.outadev.skinswitch.skin.CustomSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
@@ -109,6 +110,12 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 		ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem.getActionProvider();
 		shareActionProvider.setShareIntent(getDefaultIntent());
 
+		if(skin instanceof CustomSkin) {
+			menu.findItem(R.id.action_share).setEnabled(true);
+		} else {
+			menu.findItem(R.id.action_share).setEnabled(true);
+		}
+
 		return true;
 	}
 
@@ -121,7 +128,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 			case R.id.action_refresh_skin: {
 				new AlertDialog.Builder(this)
 						.setTitle(getString(R.string.refresh_skin_title))
-						.setMessage(getString(R.string.refresh_skin_message, skin.getSource()))
+						.setMessage(getString(R.string.refresh_skin_message))
 						.setNegativeButton(getString(R.string.no), null)
 						.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
@@ -376,7 +383,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 	private Intent getDefaultIntent() {
 		Intent sendIntent = new Intent(Intent.ACTION_SEND);
 		sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_message, skin.getName(),
-				skin.getSource()));
+				((CustomSkin) skin).getSource()));
 		sendIntent.setType("text/plain");
 		return sendIntent;
 	}

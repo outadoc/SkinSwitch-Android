@@ -29,8 +29,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.github.kevinsawicki.http.HttpRequest;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -53,13 +51,12 @@ import fr.outadev.skinswitch.user.UsersManager;
  *
  * @author outadoc
  */
-public class BasicSkin implements Serializable {
+public abstract class BasicSkin implements Serializable {
 
 	private int id;
 	private String name;
 	private String description;
 	private Date creationDate;
-	private String source;
 
 	/**
 	 * Creates a new skin.
@@ -120,13 +117,6 @@ public class BasicSkin implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
 
 	/**
 	 *
@@ -387,52 +377,14 @@ public class BasicSkin implements Serializable {
 	 * @throws NetworkErrorException if the skin couldn't be downloaded.
 	 * @throws IOException           if the skin couldn't be saved.
 	 */
-	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
-		if(getSource() == null) {
-			throw new NetworkErrorException("No source was set for " + this);
-		}
-
-		byte[] response = HttpRequest.get(getSource()).trustAllHosts().useCaches(true).bytes();
-		if(response == null) {
-			throw new NetworkErrorException("Couldn't download " + this);
-		}
-
-		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
-
-		if(bmp != null) {
-			saveRawSkinBitmap(context, bmp);
-			bmp.recycle();
-		}
-	}
+	public abstract void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException;
 
 	/**
 	 * Checks if the skin's source is a valid skin.
 	 *
 	 * @return true if it's valid, false if it's not
 	 */
-	public boolean isValidSource() throws InvalidSkinSizeException {
-		if(source == null) {
-			return false;
-		}
-
-		byte[] response = HttpRequest.get(source).trustAllHosts().useCaches(true).bytes();
-
-		if(response != null) {
-			Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
-
-			if(bmp != null) {
-				if(bmp.getWidth() == 64 && (bmp.getHeight() == 32 || bmp.getHeight() == 64)) {
-					bmp.recycle();
-					return true;
-				} else {
-					//size is not 64x32 or 64x64, abort, abort!
-					throw new InvalidSkinSizeException(bmp.getWidth(), bmp.getHeight());
-				}
-			}
-		}
-
-		return false;
-	}
+	public abstract boolean isValidSource() throws InvalidSkinSizeException;
 
 	private boolean deleteFile(String path) {
 		File file = new File(path);
@@ -526,16 +478,7 @@ public class BasicSkin implements Serializable {
 
 	@Override
 	public String toString() {
-		String str = "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate
-				+ "]";
-
-		if(source != null) {
-			str += ", source=" + source + "]";
-		} else {
-			str += "]";
-		}
-
-		return str;
+		return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + "]";
 	}
 
 }

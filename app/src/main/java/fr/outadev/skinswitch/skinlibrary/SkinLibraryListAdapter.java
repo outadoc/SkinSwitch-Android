@@ -18,6 +18,7 @@
 
 package fr.outadev.skinswitch.skinlibrary;
 
+import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -164,22 +166,21 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 			@Override
 			public void onClick(View view) {
 
-				(new AsyncTask<Void, Void, Void>() {
+				(new AsyncTask<Void, Void, Exception>() {
 
 					@Override
-					protected Void doInBackground(Void... voids) {
+					protected Exception doInBackground(Void... voids) {
 						SkinLibrarySkin skin = getItem(position);
 						skin.setCreationDate(new Date());
 						SkinsDatabase db = new SkinsDatabase(getContext());
 						db.addSkin(skin);
 
 						try {
-							skin.toSkin().downloadSkinFromSource(getContext());
-						} catch(Exception e) {
+							skin.toDownloadableSkin().downloadSkinFromSource(getContext());
+						} catch(IOException ignored) {
+						} catch(NetworkErrorException e) {
 							e.printStackTrace();
-							Toast.makeText(getContext(), getContext().getResources().getString(R.string.error_skin_download,
-									e.getMessage()), Toast.LENGTH_LONG).show();
-							cancel(true);
+							return e;
 						}
 
 						try {
@@ -191,7 +192,12 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 					}
 
 					@Override
-					protected void onPostExecute(Void aVoid) {
+					protected void onPostExecute(Exception e) {
+						if(e != null) {
+							Toast.makeText(getContext(), getContext().getResources().getString(R.string.error_skin_download,
+									e.getMessage()), Toast.LENGTH_LONG).show();
+						}
+
 						parentActivity.finish();
 					}
 

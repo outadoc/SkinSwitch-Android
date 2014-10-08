@@ -49,12 +49,19 @@ public class SkinsDatabase {
 	 */
 	public BasicSkin getSkin(int id) {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
-		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp", "source"}, "id = ?", new String[]{Integer
+		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp", "source", "uuid"}, "id = ?",
+				new String[]{Integer
 				.valueOf(id).toString()}, null, null, "name");
 
 		if(cur.moveToFirst()) {
-			BasicSkin skin = new BasicSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)));
-			skin.setSource(cur.getString(3));
+			BasicSkin skin;
+
+			if(cur.getString(3) != null) {
+				skin = new CustomSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)), cur.getString(3));
+			} else {
+				skin = new MojangAccountSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)), cur.getString(4));
+			}
+
 			cur.close();
 			db.close();
 			return skin;
@@ -71,14 +78,23 @@ public class SkinsDatabase {
 	 */
 	public List<BasicSkin> getAllSkins() {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
-		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp", "source"}, null, null, null, null,
+		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp", "source", "uuid"}, null, null,
+				null, null,
 				"UPPER(name)");
 
 		List<BasicSkin> skins = new ArrayList<BasicSkin>();
 
 		while(cur.moveToNext()) {
-			BasicSkin tmp = new BasicSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)));
-			tmp.setSource(cur.getString(4));
+			BasicSkin tmp;
+
+			if(cur.getString(3) != null) {
+				tmp = new CustomSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)),
+						cur.getString(4));
+			} else {
+				tmp = new MojangAccountSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)),
+						cur.getString(5));
+			}
+
 			skins.add(tmp);
 		}
 
@@ -97,10 +113,18 @@ public class SkinsDatabase {
 		SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+
 		values.put("name", skin.getName());
 		values.put("description", skin.getDescription());
 		values.put("timestamp", skin.getCreationDate().getTime());
-		values.put("source", skin.getSource());
+
+		if(skin instanceof CustomSkin) {
+			values.put("source", ((CustomSkin) skin).getSource());
+		}
+
+		if(skin instanceof MojangAccountSkin) {
+			values.put("uuid", ((MojangAccountSkin) skin).getUuid());
+		}
 
 		db.insertOrThrow("skins", null, values);
 		db.close();

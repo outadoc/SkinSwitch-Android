@@ -28,13 +28,13 @@ import java.io.IOException;
 import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
-public class SkinLibrarySkin extends BasicSkin {
+public class SkinLibrarySkin extends CustomSkin {
 
 	private String owner;
 	private int skinManagerId;
 
 	public SkinLibrarySkin(int id, String name, String description, String owner) {
-		super(id, name, description, null);
+		super(id, name, description, null, SkinManagerConnectionHandler.BASE_URL + "?method=getSkin&id=" + id);
 		this.owner = owner;
 	}
 
@@ -78,10 +78,8 @@ public class SkinLibrarySkin extends BasicSkin {
 		return bmp;
 	}
 
-	public BasicSkin toSkin() {
-		BasicSkin skin = new BasicSkin(getId(), getName(), getDescription(), getCreationDate());
-		skin.setSource(getSource());
-		return skin;
+	public CustomSkin toDownloadableSkin() {
+		return new CustomSkin(getId(), getName(), getDescription(), getCreationDate(), getSource());
 	}
 
 }

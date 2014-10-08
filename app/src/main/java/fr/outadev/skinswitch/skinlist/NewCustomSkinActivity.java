@@ -37,7 +37,9 @@ import java.util.Date;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.BasicSkin;
+import fr.outadev.skinswitch.skin.CustomSkin;
 import fr.outadev.skinswitch.skin.InvalidSkinSizeException;
+import fr.outadev.skinswitch.skin.MojangAccountSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
@@ -76,7 +78,6 @@ public class NewCustomSkinActivity extends Activity {
 
 			txt_name.setText(editSkin.getName());
 			txt_description.setText(editSkin.getDescription());
-			txt_source.setText(editSkin.getSource());
 		}
 
 		// handle URIs like skinswitch://?name=foo&desc=bar&url=foobar
@@ -121,8 +122,32 @@ public class NewCustomSkinActivity extends Activity {
 	 */
 	private void validateAndParseUserInput() {
 		View errorField = null;
-		// create a new skin from the data that was entered
-		final BasicSkin skin = new BasicSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date());
+		final BasicSkin skin;
+
+		if(editSkin == null) {
+			// check source
+			if(TextUtils.isEmpty(txt_source.getText().toString())) {
+				txt_source.setError(getString(R.string.error_field_required));
+				errorField = txt_source;
+			} else if(!txt_source.getText().toString().matches("(https?:\\/\\/.+)|([a-zA-Z0-9_\\-]+)")) {
+				txt_source.setError(getString(R.string.error_incorrect_url));
+				errorField = txt_source;
+			} else {
+				txt_source.setError(null);
+			}
+
+			// create a new skin from the data that was entered
+			// and parse the source
+			if(txt_source.getText().toString().matches("^https?:\\/\\/.+$")) {
+				skin = new CustomSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
+						txt_source.getText().toString());
+			} else {
+				skin = new MojangAccountSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
+						txt_source.getText().toString());
+			}
+		} else {
+			skin = editSkin;
+		}
 
 		// check skin name
 		if(TextUtils.isEmpty(skin.getName())) {
@@ -130,24 +155,6 @@ public class NewCustomSkinActivity extends Activity {
 			errorField = txt_name;
 		} else {
 			txt_name.setError(null);
-		}
-
-		// check source
-		if(TextUtils.isEmpty(txt_source.getText().toString())) {
-			txt_source.setError(getString(R.string.error_field_required));
-			errorField = txt_source;
-		} else if(!txt_source.getText().toString().matches("(https?:\\/\\/.+)|([a-zA-Z0-9_\\-]+)")) {
-			txt_source.setError(getString(R.string.error_incorrect_url));
-			errorField = txt_source;
-		} else {
-			txt_source.setError(null);
-		}
-
-		// parse the source
-		if(!txt_source.getText().toString().matches("https?:\\/\\/.+")) {
-			skin.setSource("http://skins.minecraft.net/MinecraftSkins/" + txt_source.getText().toString() + ".png");
-		} else {
-			skin.setSource(txt_source.getText().toString());
 		}
 
 		if(errorField != null) {
