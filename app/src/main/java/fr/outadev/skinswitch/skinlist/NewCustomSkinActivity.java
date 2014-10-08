@@ -143,7 +143,7 @@ public class NewCustomSkinActivity extends Activity {
 						txt_source.getText().toString());
 			} else {
 				skin = new MojangAccountSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
-						txt_source.getText().toString());
+						null);
 			}
 		} else {
 			skin = editSkin;
@@ -190,7 +190,7 @@ public class NewCustomSkinActivity extends Activity {
 			@Override
 			protected Boolean doInBackground(Void... params) {
 				try {
-					return skin.isValidSource();
+					return skin.isValidSource(txt_source.getText().toString());
 				} catch(final InvalidSkinSizeException e) {
 					NewCustomSkinActivity.this.runOnUiThread(new Runnable() {
 

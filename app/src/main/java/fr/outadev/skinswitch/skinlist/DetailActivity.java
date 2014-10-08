@@ -105,15 +105,14 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.skin_details, menu);
-
 		MenuItem shareItem = menu.findItem(R.id.action_share);
-		ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem.getActionProvider();
-		shareActionProvider.setShareIntent(getDefaultIntent());
 
 		if(skin instanceof CustomSkin) {
-			menu.findItem(R.id.action_share).setEnabled(true);
+			ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem.getActionProvider();
+			shareActionProvider.setShareIntent(getDefaultIntent());
+			shareItem.setEnabled(true);
 		} else {
-			menu.findItem(R.id.action_share).setEnabled(true);
+			shareItem.setEnabled(true);
 		}
 
 		return true;

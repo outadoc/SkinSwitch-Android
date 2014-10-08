@@ -384,7 +384,16 @@ public abstract class BasicSkin implements Serializable {
 	 *
 	 * @return true if it's valid, false if it's not
 	 */
-	public abstract boolean isValidSource() throws InvalidSkinSizeException;
+	public abstract boolean isValidSource(String param) throws InvalidSkinSizeException;
+
+	/**
+	 * Checks if the skin's source is a valid skin.
+	 *
+	 * @return true if it's valid, false if it's not
+	 */
+	public boolean isValidSource() throws InvalidSkinSizeException {
+		return isValidSource(null);
+	}
 
 	private boolean deleteFile(String path) {
 		File file = new File(path);

@@ -54,7 +54,26 @@ public class CustomSkin extends BasicSkin {
 	}
 
 	@Override
-	public boolean isValidSource() throws InvalidSkinSizeException {
+	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
+		if(getSource() == null) {
+			throw new NetworkErrorException("No source was set for " + this);
+		}
+
+		byte[] response = HttpRequest.get(getSource()).trustAllHosts().useCaches(true).bytes();
+		if(response == null) {
+			throw new NetworkErrorException("Couldn't download " + this);
+		}
+
+		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
+
+		if(bmp != null) {
+			saveRawSkinBitmap(context, bmp);
+			bmp.recycle();
+		}
+	}
+
+	@Override
+	public boolean isValidSource(String param) throws InvalidSkinSizeException {
 
 		if(source == null) {
 			return false;
@@ -77,24 +96,5 @@ public class CustomSkin extends BasicSkin {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void downloadSkinFromSource(Context context) throws NetworkErrorException, IOException {
-		if(getSource() == null) {
-			throw new NetworkErrorException("No source was set for " + this);
-		}
-
-		byte[] response = HttpRequest.get(getSource()).trustAllHosts().useCaches(true).bytes();
-		if(response == null) {
-			throw new NetworkErrorException("Couldn't download " + this);
-		}
-
-		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
-
-		if(bmp != null) {
-			saveRawSkinBitmap(context, bmp);
-			bmp.recycle();
-		}
 	}
 }

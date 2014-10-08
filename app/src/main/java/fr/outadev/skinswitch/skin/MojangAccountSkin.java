@@ -21,6 +21,8 @@ package fr.outadev.skinswitch.skin;
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 
+import com.github.kevinsawicki.http.HttpRequest;
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -55,7 +57,18 @@ public class MojangAccountSkin extends BasicSkin {
 	}
 
 	@Override
-	public boolean isValidSource() throws InvalidSkinSizeException {
+	public boolean isValidSource(String username) {
+		if(username != null && !username.isEmpty()) {
+			int status = HttpRequest.get("https://api.mojang.com/users/profiles/minecraft/" + username)
+					.trustAllHosts()
+					.useCaches(true)
+					.code();
+
+			if(status == 200) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
