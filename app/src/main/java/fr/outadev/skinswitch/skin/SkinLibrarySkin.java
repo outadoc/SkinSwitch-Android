@@ -28,6 +28,9 @@ import java.io.IOException;
 import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
+/**
+ * This type of skin is used for skins coming from the skin library.
+ */
 public class SkinLibrarySkin extends CustomUriSkin {
 
 	private String owner;

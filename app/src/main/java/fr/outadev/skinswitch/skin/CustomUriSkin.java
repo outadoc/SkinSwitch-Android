@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
- * Created by outadoc on 08/10/14.
+ * This type of skin is linked to an URL. When added or refreshed, it will be downloaded from the said URL.
  */
 public class CustomUriSkin extends BasicSkin {
 
