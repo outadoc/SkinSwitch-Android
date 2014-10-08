@@ -49,7 +49,7 @@ import java.io.FileNotFoundException;
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.skin.BasicSkin;
-import fr.outadev.skinswitch.skin.CustomSkin;
+import fr.outadev.skinswitch.skin.CustomUriSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
@@ -107,7 +107,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 		getMenuInflater().inflate(R.menu.skin_details, menu);
 		MenuItem shareItem = menu.findItem(R.id.action_share);
 
-		if(skin instanceof CustomSkin) {
+		if(skin instanceof CustomUriSkin) {
 			ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem.getActionProvider();
 			shareActionProvider.setShareIntent(getDefaultIntent());
 			shareItem.setEnabled(true);
@@ -382,7 +382,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 	private Intent getDefaultIntent() {
 		Intent sendIntent = new Intent(Intent.ACTION_SEND);
 		sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_message, skin.getName(),
-				((CustomSkin) skin).getSource()));
+				((CustomUriSkin) skin).getSource()));
 		sendIntent.setType("text/plain");
 		return sendIntent;
 	}

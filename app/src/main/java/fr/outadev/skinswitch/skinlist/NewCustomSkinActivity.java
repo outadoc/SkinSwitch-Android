@@ -37,7 +37,7 @@ import java.util.Date;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.skin.BasicSkin;
-import fr.outadev.skinswitch.skin.CustomSkin;
+import fr.outadev.skinswitch.skin.CustomUriSkin;
 import fr.outadev.skinswitch.skin.MojangAccountSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
@@ -138,7 +138,7 @@ public class NewCustomSkinActivity extends Activity {
 			// create a new skin from the data that was entered
 			// and parse the source
 			if(txt_source.getText().toString().matches("^https?:\\/\\/.+$")) {
-				skin = new CustomSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
+				skin = new CustomUriSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
 						txt_source.getText().toString());
 			} else {
 				skin = new MojangAccountSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
@@ -189,7 +189,7 @@ public class NewCustomSkinActivity extends Activity {
 			@Override
 			protected Boolean doInBackground(Void... params) {
 				try {
-					return skin.isValidSource(txt_source.getText().toString());
+					return skin.validateSource(txt_source.getText().toString());
 				} catch(final Exception e) {
 					NewCustomSkinActivity.this.runOnUiThread(new Runnable() {
 

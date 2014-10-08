@@ -62,7 +62,7 @@ public class MojangAccountSkin extends BasicSkin {
 	}
 
 	@Override
-	public boolean isValidSource(String username) {
+	public boolean validateSource(String username) {
 		if(username != null && !username.isEmpty()) {
 			String body = HttpRequest.get(BASE_API_URL + username)
 					.trustAllHosts()

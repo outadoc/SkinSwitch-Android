@@ -31,16 +31,16 @@ import java.util.Date;
 /**
  * Created by outadoc on 08/10/14.
  */
-public class CustomSkin extends BasicSkin {
+public class CustomUriSkin extends BasicSkin {
 
 	private String source;
 
-	public CustomSkin(int id, String name, String description, Date creationDate, String source) {
+	public CustomUriSkin(int id, String name, String description, Date creationDate, String source) {
 		super(id, name, description, creationDate);
 		setSource(source);
 	}
 
-	public CustomSkin(String name, String description, Date creationDate, String source) {
+	public CustomUriSkin(String name, String description, Date creationDate, String source) {
 		super(name, description, creationDate);
 		setSource(source);
 	}
@@ -73,7 +73,7 @@ public class CustomSkin extends BasicSkin {
 	}
 
 	@Override
-	public boolean isValidSource(String param) throws InvalidSkinSizeException {
+	public boolean validateSource(String param) throws InvalidSkinSizeException {
 
 		if(source == null) {
 			return false;

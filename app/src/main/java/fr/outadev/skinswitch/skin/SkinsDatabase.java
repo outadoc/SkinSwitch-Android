@@ -51,13 +51,13 @@ public class SkinsDatabase {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
 		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp", "source", "uuid"}, "id = ?",
 				new String[]{Integer
-				.valueOf(id).toString()}, null, null, "name");
+						.valueOf(id).toString()}, null, null, "name");
 
 		if(cur.moveToFirst()) {
 			BasicSkin skin;
 
 			if(cur.getString(3) != null) {
-				skin = new CustomSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)), cur.getString(3));
+				skin = new CustomUriSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)), cur.getString(3));
 			} else {
 				skin = new MojangAccountSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)), cur.getString(4));
 			}
@@ -88,7 +88,7 @@ public class SkinsDatabase {
 			BasicSkin tmp;
 
 			if(cur.getString(3) != null) {
-				tmp = new CustomSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)),
+				tmp = new CustomUriSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)),
 						cur.getString(4));
 			} else {
 				tmp = new MojangAccountSkin(cur.getInt(0), cur.getString(1), cur.getString(2), new Date(cur.getLong(3)),
@@ -118,8 +118,8 @@ public class SkinsDatabase {
 		values.put("description", skin.getDescription());
 		values.put("timestamp", skin.getCreationDate().getTime());
 
-		if(skin instanceof CustomSkin) {
-			values.put("source", ((CustomSkin) skin).getSource());
+		if(skin instanceof CustomUriSkin) {
+			values.put("source", ((CustomUriSkin) skin).getSource());
 		}
 
 		if(skin instanceof MojangAccountSkin) {

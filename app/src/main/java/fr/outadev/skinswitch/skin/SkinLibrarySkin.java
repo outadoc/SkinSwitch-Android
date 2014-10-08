@@ -28,7 +28,7 @@ import java.io.IOException;
 import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
-public class SkinLibrarySkin extends CustomSkin {
+public class SkinLibrarySkin extends CustomUriSkin {
 
 	private String owner;
 	private int skinManagerId;
@@ -78,8 +78,8 @@ public class SkinLibrarySkin extends CustomSkin {
 		return bmp;
 	}
 
-	public CustomSkin toDownloadableSkin() {
-		return new CustomSkin(getId(), getName(), getDescription(), getCreationDate(), getSource());
+	public CustomUriSkin toDownloadableSkin() {
+		return new CustomUriSkin(getId(), getName(), getDescription(), getCreationDate(), getSource());
 	}
 
 }
