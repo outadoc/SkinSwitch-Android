@@ -61,6 +61,13 @@ public class MojangAccountSkin extends BasicSkin {
 
 	}
 
+	/**
+	 * Checks if the skin's source is a valid skin.
+	 * Also sets the skin's linked player UUID if it's valid.
+	 *
+	 * @param username the username to check the validity of
+	 * @return true if it's valid, false if it's not
+	 */
 	@Override
 	public boolean validateSource(String username) {
 		if(username != null && !username.isEmpty()) {

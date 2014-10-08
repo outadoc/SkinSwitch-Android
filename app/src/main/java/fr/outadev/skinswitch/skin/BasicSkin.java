@@ -381,13 +381,16 @@ public abstract class BasicSkin implements Serializable {
 
 	/**
 	 * Checks if the skin's source is a valid skin.
+	 * May also download additional info if needed and available.
 	 *
+	 * @param param may be used as additional info to validate the source
 	 * @return true if it's valid, false if it's not
 	 */
 	public abstract boolean validateSource(String param) throws InvalidSkinSizeException;
 
 	/**
 	 * Checks if the skin's source is a valid skin.
+	 * May also download additional info if needed and available.
 	 *
 	 * @return true if it's valid, false if it's not
 	 */
