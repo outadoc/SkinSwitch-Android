@@ -115,7 +115,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 			shareActionProvider.setShareIntent(getDefaultIntent());
 			shareItem.setEnabled(true);
 		} else {
-			shareItem.setEnabled(true);
+			shareItem.setEnabled(false);
 		}
 
 		return true;
