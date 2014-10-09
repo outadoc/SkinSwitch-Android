@@ -234,7 +234,9 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 
 			@Override
 			public void onClick(View view) {
-				Utils.crossfade(img_skin_preview_front, img_skin_preview_back, animTime);
+				if(view.getAlpha() == 1.0) {
+					Utils.crossfade(img_skin_preview_front, img_skin_preview_back, animTime);
+				}
 			}
 
 		});
@@ -243,7 +245,9 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 
 			@Override
 			public void onClick(View view) {
-				Utils.crossfade(img_skin_preview_back, img_skin_preview_front, animTime);
+				if(view.getAlpha() == 1.0) {
+					Utils.crossfade(img_skin_preview_back, img_skin_preview_front, animTime);
+				}
 			}
 
 		});
