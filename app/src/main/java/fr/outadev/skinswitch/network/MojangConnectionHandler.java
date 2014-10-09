@@ -40,6 +40,7 @@ import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
 import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
 import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
 import fr.outadev.skinswitch.network.login.LoginChallenge;
+import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.user.User;
 
 /**
@@ -134,7 +135,8 @@ public class MojangConnectionHandler extends ConnectionHandler {
 	 * @param skin the skin to send.
 	 * @throws SkinUploadException if the upload failed.
 	 */
-	public void uploadSkinToMojang(File skin) throws SkinUploadException, HttpRequest.HttpRequestException {
+	public void uploadSkinToMojang(BasicSkin skin, Context context) throws SkinUploadException,
+			HttpRequest.HttpRequestException {
 		// first off, we need an authenticity token to upload the skin ;-;
 		String profileBody = HttpRequest.get(BASE_URL + "/profile").userAgent(getUserAgent()).body();
 		String authToken = null;
@@ -147,13 +149,15 @@ public class MojangConnectionHandler extends ConnectionHandler {
 			authToken = matcher.group(1);
 		}
 
+		File skinFile = skin.getRawSkinFile(context);
+
 		// once we have that, send the actual skin
 		HttpRequest skinRequest = HttpRequest.post(BASE_URL + "/profile/skin")
 				.userAgent(getUserAgent())
 				.followRedirects(true)
 				.part("authenticityToken", authToken)
-				.part("model", "steve")
-				.part("skin", skin.getName(), "image/png", skin);
+				.part("model", skin.getModelString())
+				.part("skin", skinFile.getName(), "image/png", skinFile);
 
 		String body = skinRequest.body();
 

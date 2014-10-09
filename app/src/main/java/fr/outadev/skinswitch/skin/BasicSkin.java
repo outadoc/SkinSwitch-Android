@@ -477,7 +477,7 @@ public abstract class BasicSkin implements Serializable {
 
 						try {
 							handler.loginWithCredentials(um.getUser());
-							handler.uploadSkinToMojang(getRawSkinFile(context));
+							handler.uploadSkinToMojang(BasicSkin.this, context);
 						} catch(Exception e) {
 							return e;
 						}
@@ -523,7 +523,8 @@ public abstract class BasicSkin implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + "]";
+		return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + ", " +
+				"model=" + model + "]";
 	}
 
 }
