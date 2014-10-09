@@ -80,6 +80,9 @@ public abstract class SkinRenderer {
 		HashMap<BodyPart, Bitmap> skinBits = new HashMap<BodyPart, Bitmap>();
 		HashMap<BodyPart, Bitmap> armorPieces = new HashMap<BodyPart, Bitmap>();
 
+		//final int armWidth = (model == BasicSkin.Model.ALEX) ? 3 : 4;
+		final boolean isNewFormat = isNewSkinFormat(skin);
+
 		if(side == null || side == Side.FRONT) {
 			// if we want a preview of the front of the skin or if nothing is
 			// specified
@@ -89,28 +92,29 @@ public abstract class SkinRenderer {
 
 			// if there's a specific skin for left arm, use it. else, flip the
 			// right arm's skin and use it instead.
-			skinBits.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 44, 20, 4, 12));
-
-			skinBits.put(BodyPart.ARM_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 36, 52,
-					4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_LEFT)) : Bitmap.createBitmap(skin, 36, 52, 4, 12));
+			skinBits.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 44, 20, 4, 12));
+			skinBits.put(BodyPart.ARM_LEFT,
+					(!isNewFormat || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 36, 52, 4, 12)))
+							? flipImage(skinBits.get(BodyPart.ARM_RIGHT)) : Bitmap.createBitmap(skin, 36, 52, 4, 12));
 
 			// if there's a specific skin for left leg, use it. else, flip the
 			// right leg's skin and use it instead.
-			skinBits.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 4, 20, 4, 12));
-			skinBits.put(BodyPart.LEG_RIGHT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 20, 52,
-					4, 12))) ? flipImage(skinBits.get(BodyPart.LEG_LEFT)) : Bitmap.createBitmap(skin, 20, 52, 4, 12));
+			skinBits.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 4, 20, 4, 12));
+			skinBits.put(BodyPart.LEG_LEFT,
+					(!isNewFormat || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 20, 52, 4, 12)))
+							? flipImage(skinBits.get(BodyPart.LEG_RIGHT)) : Bitmap.createBitmap(skin, 20, 52, 4, 12));
 
 			// it's armor time!
 			armorPieces.put(BodyPart.HEAD, Bitmap.createBitmap(skin, 40, 8, 8, 8));
 
-			if(isNewSkinFormat(skin)) {
+			if(isNewFormat) {
 				armorPieces.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 20, 36, 8, 12));
 
-				armorPieces.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 44, 36, 4, 12));
-				armorPieces.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 52, 52, 4, 12));
+				armorPieces.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 44, 36, 4, 12));
+				armorPieces.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 52, 52, 4, 12));
 
-				armorPieces.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 4, 36, 4, 12));
-				armorPieces.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 4, 52, 4, 12));
+				armorPieces.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 4, 36, 4, 12));
+				armorPieces.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 4, 52, 4, 12));
 			} else {
 				setEmptyArmor(armorPieces);
 			}
@@ -120,25 +124,27 @@ public abstract class SkinRenderer {
 
 			skinBits.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 32, 20, 8, 12));
 
-			skinBits.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 52, 20, 4, 12));
-			skinBits.put(BodyPart.ARM_LEFT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52,
-					4, 12))) ? flipImage(skinBits.get(BodyPart.ARM_RIGHT)) : Bitmap.createBitmap(skin, 44, 52, 4, 12));
+			skinBits.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 52, 20, 4, 12));
+			skinBits.put(BodyPart.ARM_RIGHT,
+					(!isNewFormat || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 44, 52, 4, 12)))
+							? flipImage(skinBits.get(BodyPart.ARM_LEFT)) : Bitmap.createBitmap(skin, 44, 52, 4, 12));
 
-			skinBits.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 12, 20, 4, 12));
-			skinBits.put(BodyPart.LEG_LEFT, (!isNewSkinFormat(skin) || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52,
-					4, 12))) ? flipImage(skinBits.get(BodyPart.LEG_RIGHT)) : Bitmap.createBitmap(skin, 28, 52, 4, 12));
+			skinBits.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 12, 20, 4, 12));
+			skinBits.put(BodyPart.LEG_RIGHT,
+					(!isNewFormat || areAllPixelsOfSameColor(Bitmap.createBitmap(skin, 28, 52, 4, 12)))
+							? flipImage(skinBits.get(BodyPart.LEG_LEFT)) : Bitmap.createBitmap(skin, 28, 52, 4, 12));
 
 			// it's armor time!
 			armorPieces.put(BodyPart.HEAD, Bitmap.createBitmap(skin, 56, 8, 8, 8));
 
-			if(isNewSkinFormat(skin)) {
+			if(isNewFormat) {
 				armorPieces.put(BodyPart.CHEST, Bitmap.createBitmap(skin, 32, 36, 8, 12));
 
-				armorPieces.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 52, 36, 4, 12));
-				armorPieces.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 60, 52, 4, 12));
+				armorPieces.put(BodyPart.ARM_LEFT, Bitmap.createBitmap(skin, 52, 36, 4, 12));
+				armorPieces.put(BodyPart.ARM_RIGHT, Bitmap.createBitmap(skin, 60, 52, 4, 12));
 
-				armorPieces.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 12, 36, 4, 12));
-				armorPieces.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 12, 52, 4, 12));
+				armorPieces.put(BodyPart.LEG_LEFT, Bitmap.createBitmap(skin, 12, 36, 4, 12));
+				armorPieces.put(BodyPart.LEG_RIGHT, Bitmap.createBitmap(skin, 12, 52, 4, 12));
 			} else {
 				setEmptyArmor(armorPieces);
 			}
@@ -153,10 +159,10 @@ public abstract class SkinRenderer {
 		// MOAR. BITMAPS.
 		finalParts.put(BodyPart.HEAD, overlayArmor(BodyPart.HEAD, skinBits, armorPieces));
 		finalParts.put(BodyPart.CHEST, overlayArmor(BodyPart.CHEST, skinBits, armorPieces));
-		finalParts.put(BodyPart.ARM_LEFT, overlayArmor(BodyPart.ARM_LEFT, skinBits, armorPieces));
 		finalParts.put(BodyPart.ARM_RIGHT, overlayArmor(BodyPart.ARM_RIGHT, skinBits, armorPieces));
-		finalParts.put(BodyPart.LEG_LEFT, overlayArmor(BodyPart.LEG_LEFT, skinBits, armorPieces));
+		finalParts.put(BodyPart.ARM_LEFT, overlayArmor(BodyPart.ARM_LEFT, skinBits, armorPieces));
 		finalParts.put(BodyPart.LEG_RIGHT, overlayArmor(BodyPart.LEG_RIGHT, skinBits, armorPieces));
+		finalParts.put(BodyPart.LEG_LEFT, overlayArmor(BodyPart.LEG_LEFT, skinBits, armorPieces));
 
 		// free all the bitmaps we can
 		freeBitmapMap(skinBits);
@@ -168,14 +174,14 @@ public abstract class SkinRenderer {
 				getDestRect(BodyPart.HEAD, finalParts, 4, 0), null);
 		canvas.drawBitmap(finalParts.get(BodyPart.CHEST), getSrcRect(BodyPart.CHEST, finalParts),
 				getDestRect(BodyPart.CHEST, finalParts, 4, 8), null);
-		canvas.drawBitmap(finalParts.get(BodyPart.ARM_LEFT), getSrcRect(BodyPart.ARM_LEFT, finalParts),
-				getDestRect(BodyPart.ARM_LEFT, finalParts, 0, 8), null);
 		canvas.drawBitmap(finalParts.get(BodyPart.ARM_RIGHT), getSrcRect(BodyPart.ARM_RIGHT, finalParts),
-				getDestRect(BodyPart.ARM_RIGHT, finalParts, 12, 8), null);
-		canvas.drawBitmap(finalParts.get(BodyPart.LEG_LEFT), getSrcRect(BodyPart.LEG_LEFT, finalParts),
-				getDestRect(BodyPart.LEG_LEFT, finalParts, 4, 20), null);
+				getDestRect(BodyPart.ARM_RIGHT, finalParts, 0, 8), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.ARM_LEFT), getSrcRect(BodyPart.ARM_LEFT, finalParts),
+				getDestRect(BodyPart.ARM_LEFT, finalParts, 12, 8), null);
 		canvas.drawBitmap(finalParts.get(BodyPart.LEG_RIGHT), getSrcRect(BodyPart.LEG_RIGHT, finalParts),
-				getDestRect(BodyPart.LEG_RIGHT, finalParts, 8, 20), null);
+				getDestRect(BodyPart.LEG_RIGHT, finalParts, 4, 20), null);
+		canvas.drawBitmap(finalParts.get(BodyPart.LEG_LEFT), getSrcRect(BodyPart.LEG_LEFT, finalParts),
+				getDestRect(BodyPart.LEG_LEFT, finalParts, 8, 20), null);
 
 		// free the last bitmaps
 		freeBitmapMap(finalParts);
@@ -192,11 +198,11 @@ public abstract class SkinRenderer {
 
 		armorPieces.put(BodyPart.CHEST, empty);
 
-		armorPieces.put(BodyPart.ARM_RIGHT, empty);
 		armorPieces.put(BodyPart.ARM_LEFT, empty);
+		armorPieces.put(BodyPart.ARM_RIGHT, empty);
 
-		armorPieces.put(BodyPart.LEG_RIGHT, empty);
 		armorPieces.put(BodyPart.LEG_LEFT, empty);
+		armorPieces.put(BodyPart.LEG_RIGHT, empty);
 	}
 
 	/**
@@ -336,7 +342,7 @@ public abstract class SkinRenderer {
 	 * @author outadoc
 	 */
 	private enum BodyPart {
-		HEAD, CHEST, ARM_RIGHT, ARM_LEFT, LEG_RIGHT, LEG_LEFT
+		HEAD, CHEST, ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT
 	}
 
 }
