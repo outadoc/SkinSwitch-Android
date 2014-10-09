@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.github.kevinsawicki.http.HttpRequest;
@@ -53,6 +54,9 @@ public class NewCustomSkinActivity extends Activity {
 	private EditText txt_description;
 	private EditText txt_source;
 
+	private RadioButton chk_model_alex;
+	private RadioButton chk_model_steve;
+
 	private BasicSkin editSkin;
 
 	@Override
@@ -70,6 +74,9 @@ public class NewCustomSkinActivity extends Activity {
 		txt_description = (EditText) findViewById(R.id.txt_skin_description);
 		txt_source = (EditText) findViewById(R.id.txt_skin_source);
 
+		chk_model_alex = (RadioButton) findViewById(R.id.chk_skin_model_alex);
+		chk_model_steve = (RadioButton) findViewById(R.id.chk_skin_model_steve);
+
 		if(editSkin != null) {
 			setTitle(getResources().getString(R.string.title_activity_edit_skin));
 
@@ -78,6 +85,12 @@ public class NewCustomSkinActivity extends Activity {
 
 			txt_name.setText(editSkin.getName());
 			txt_description.setText(editSkin.getDescription());
+
+			if(editSkin.getModel() == BasicSkin.Model.ALEX) {
+				chk_model_alex.setChecked(true);
+			} else {
+				chk_model_steve.setChecked(true);
+			}
 		}
 
 		// handle URIs like skinswitch://?name=foo&desc=bar&url=foobar
@@ -145,6 +158,13 @@ public class NewCustomSkinActivity extends Activity {
 				skin = new MojangAccountSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
 						null);
 			}
+
+			if(chk_model_alex.isChecked()) {
+				skin.setModel(BasicSkin.Model.ALEX);
+			} else {
+				skin.setModel(BasicSkin.Model.STEVE);
+			}
+
 		} else {
 			skin = editSkin;
 		}
@@ -254,11 +274,19 @@ public class NewCustomSkinActivity extends Activity {
 		editSkin.setName(txt_name.getText().toString());
 		editSkin.setDescription(txt_description.getText().toString());
 
+		if(chk_model_alex.isChecked()) {
+			editSkin.setModel(BasicSkin.Model.ALEX);
+		} else {
+			editSkin.setModel(BasicSkin.Model.STEVE);
+		}
+
 		SkinsDatabase db = new SkinsDatabase(this);
 		db.updateSkin(editSkin);
+		editSkin.deleteAllCacheFilesFromFilesystem(this);
+
 		Toast.makeText(NewCustomSkinActivity.this, getResources().getString(R.string.success_skin_updated),
 				Toast.LENGTH_LONG).show();
-		finish();
+		this.finish();
 	}
 
 }

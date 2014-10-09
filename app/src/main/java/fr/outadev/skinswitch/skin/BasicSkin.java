@@ -436,10 +436,16 @@ public abstract class BasicSkin implements Serializable {
 		return file.delete();
 	}
 
-	public void deleteAllSkinResFromFilesystem(Context context) {
+	public void deleteAllCacheFilesFromFilesystem(Context context) {
 		deleteFile(getSkinHeadPath(context));
 		deleteFile(getBackSkinPreviewPath(context));
 		deleteFile(getFrontSkinPreviewPath(context));
+
+		Log.i(Utils.TAG, "deleted all cache files for " + this);
+	}
+
+	public void deleteAllSkinResFromFilesystem(Context context) {
+		deleteAllCacheFilesFromFilesystem(context);
 		deleteFile(getRawSkinPath(context));
 
 		Log.i(Utils.TAG, "deleted all local res files for " + this);

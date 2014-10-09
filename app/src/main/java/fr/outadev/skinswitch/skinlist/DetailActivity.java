@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,6 +84,8 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 		b_wear = (ImageButton) findViewById(R.id.b_upload_skin);
 
 		b_upload_skin_container = (FrameLayout) findViewById(R.id.b_upload_skin_container);
+
+		Log.d(Utils.TAG, skin.toString());
 
 		setupSkinPreviews();
 		setupText();

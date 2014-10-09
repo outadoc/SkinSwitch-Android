@@ -84,11 +84,14 @@
 			android:orientation="horizontal">
 
 			<RadioButton
+				android:id="@+id/chk_skin_model_steve"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:checked="true"
 				android:text="@string/chk_skin_model_steve" />
 
 			<RadioButton
+				android:id="@+id/chk_skin_model_alex"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/chk_skin_model_alex" />
