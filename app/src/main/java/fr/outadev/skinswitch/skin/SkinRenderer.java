@@ -64,7 +64,7 @@ public abstract class SkinRenderer {
 	 * @see Side
 	 */
 	public static Bitmap getSkinPreview(Bitmap skin, Side side) {
-		return getSkinPreview(skin, side, 6);
+		return getSkinPreview(skin, side, 6, BasicSkin.Model.STEVE);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public abstract class SkinRenderer {
 	 * @return the preview.
 	 * @see Side
 	 */
-	public static Bitmap getSkinPreview(Bitmap skin, Side side, int zoom) {
+	public static Bitmap getSkinPreview(Bitmap skin, Side side, int zoom, BasicSkin.Model model) {
 		HashMap<BodyPart, Bitmap> skinBits = new HashMap<BodyPart, Bitmap>();
 		HashMap<BodyPart, Bitmap> armorPieces = new HashMap<BodyPart, Bitmap>();
 

@@ -49,7 +49,7 @@ public class SkinsDatabase {
 	 */
 	public BasicSkin getSkin(int id) {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
-		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp", "source", "uuid"}, "id = ?",
+		Cursor cur = db.query("skins", new String[]{"name", "description", "timestamp", "source", "uuid", "model"}, "id = ?",
 				new String[]{Integer
 						.valueOf(id).toString()}, null, null, "name");
 
@@ -61,6 +61,8 @@ public class SkinsDatabase {
 			} else {
 				skin = new MojangAccountSkin(id, cur.getString(0), cur.getString(1), new Date(cur.getLong(2)), cur.getString(4));
 			}
+
+			skin.setModelString(cur.getString(5));
 
 			cur.close();
 			db.close();
@@ -78,9 +80,8 @@ public class SkinsDatabase {
 	 */
 	public List<BasicSkin> getAllSkins() {
 		SQLiteDatabase db = databaseOpenHelper.getReadableDatabase();
-		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp", "source", "uuid"}, null, null,
-				null, null,
-				"UPPER(name)");
+		Cursor cur = db.query("skins", new String[]{"id", "name", "description", "timestamp", "source", "uuid", "model"}, null,
+				null, null, null, "UPPER(name)");
 
 		List<BasicSkin> skins = new ArrayList<BasicSkin>();
 
@@ -95,6 +96,7 @@ public class SkinsDatabase {
 						cur.getString(5));
 			}
 
+			tmp.setModelString(cur.getString(6));
 			skins.add(tmp);
 		}
 
@@ -117,6 +119,7 @@ public class SkinsDatabase {
 		values.put("name", skin.getName());
 		values.put("description", skin.getDescription());
 		values.put("timestamp", skin.getCreationDate().getTime());
+		values.put("model", skin.getModelString());
 
 		if(skin instanceof CustomUriSkin) {
 			values.put("source", ((CustomUriSkin) skin).getSource());
@@ -161,8 +164,10 @@ public class SkinsDatabase {
 		SQLiteDatabase db = databaseOpenHelper.getWritableDatabase();
 
 		ContentValues cv = new ContentValues();
+
 		cv.put("name", skin.getName());
 		cv.put("description", skin.getDescription());
+		cv.put("model", skin.getModelString());
 
 		db.update("skins", cv, "id = ?", new String[]{Integer.valueOf(skin.getId()).toString()});
 		db.close();

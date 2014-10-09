@@ -58,6 +58,11 @@ public abstract class BasicSkin implements Serializable {
 	private String name;
 	private String description;
 	private Date creationDate;
+	private Model model;
+
+	public static enum Model {
+		STEVE, ALEX
+	}
 
 	/**
 	 * Creates a new skin.
@@ -72,6 +77,7 @@ public abstract class BasicSkin implements Serializable {
 		this.name = name;
 		this.description = description;
 		this.creationDate = creationDate;
+		this.model = Model.STEVE;
 	}
 
 	/**
@@ -116,6 +122,32 @@ public abstract class BasicSkin implements Serializable {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public String getModelString() {
+		switch(model) {
+			case ALEX:
+				return "alex";
+			case STEVE:
+			default:
+				return "steve";
+		}
+	}
+
+	public void setModelString(String model) {
+		if(model.equals("alex")) {
+			this.model = Model.ALEX;
+		} else {
+			this.model = Model.STEVE;
+		}
 	}
 
 
@@ -280,7 +312,7 @@ public abstract class BasicSkin implements Serializable {
 			Log.d(Utils.TAG, "creating front preview and cache for " + this);
 
 			Bitmap bmpRaw = getRawSkinBitmap(context);
-			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.FRONT, 19);
+			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.FRONT, 19, model);
 
 			bmpRaw.recycle();
 
@@ -307,7 +339,7 @@ public abstract class BasicSkin implements Serializable {
 			Log.d(Utils.TAG, "creating back preview and cache for " + this);
 
 			Bitmap bmpRaw = getRawSkinBitmap(context);
-			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.BACK, 19);
+			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.BACK, 19, model);
 
 			bmpRaw.recycle();
 
