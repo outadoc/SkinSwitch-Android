@@ -139,10 +139,10 @@ public class NewCustomSkinActivity extends Activity {
 
 		if(editSkin == null) {
 			// check source
-			if(TextUtils.isEmpty(txt_source.getText().toString())) {
+			if(TextUtils.isEmpty(txt_source.getText().toString().trim())) {
 				txt_source.setError(getString(R.string.error_field_required));
 				errorField = txt_source;
-			} else if(!txt_source.getText().toString().matches("(https?:\\/\\/.+)|([a-zA-Z0-9_\\-]+)")) {
+			} else if(!txt_source.getText().toString().trim().matches("(https?:\\/\\/.+)|([a-zA-Z0-9_\\-]+)")) {
 				txt_source.setError(getString(R.string.error_incorrect_url));
 				errorField = txt_source;
 			} else {
@@ -151,11 +151,13 @@ public class NewCustomSkinActivity extends Activity {
 
 			// create a new skin from the data that was entered
 			// and parse the source
-			if(txt_source.getText().toString().matches("^https?:\\/\\/.+$")) {
-				skin = new CustomUriSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
-						txt_source.getText().toString());
+			if(txt_source.getText().toString().trim().matches("^https?:\\/\\/.+$")) {
+				skin = new CustomUriSkin(txt_name.getText().toString().trim(), txt_description.getText().toString().trim(),
+						new Date(),
+						txt_source.getText().toString().trim());
 			} else {
-				skin = new MojangAccountSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
+				skin = new MojangAccountSkin(txt_name.getText().toString().trim(), txt_description.getText().toString().trim(),
+						new Date(),
 						null);
 			}
 
@@ -210,7 +212,7 @@ public class NewCustomSkinActivity extends Activity {
 			@Override
 			protected Boolean doInBackground(Void... params) {
 				try {
-					return skin.validateSource(txt_source.getText().toString());
+					return skin.validateSource(txt_source.getText().toString().trim());
 				} catch(final Exception e) {
 					NewCustomSkinActivity.this.runOnUiThread(new Runnable() {
 
@@ -271,8 +273,8 @@ public class NewCustomSkinActivity extends Activity {
 	}
 
 	private void updateSkin() {
-		editSkin.setName(txt_name.getText().toString());
-		editSkin.setDescription(txt_description.getText().toString());
+		editSkin.setName(txt_name.getText().toString().trim());
+		editSkin.setDescription(txt_description.getText().toString().trim());
 
 		if(chk_model_alex.isChecked()) {
 			editSkin.setModel(BasicSkin.Model.ALEX);
