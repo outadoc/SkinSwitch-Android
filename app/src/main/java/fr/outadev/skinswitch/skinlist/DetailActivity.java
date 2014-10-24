@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
@@ -37,6 +38,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -318,13 +320,18 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 	@TargetApi(Build.VERSION_CODES.L)
 	private void setOutlines() {
 		if(Build.VERSION.SDK_INT >= 20) {
-			int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
+			ViewOutlineProvider outlineProvider = new ViewOutlineProvider() {
 
-			Outline outline = new Outline();
-			outline.setOval(0, 0, size, size);
+				@Override
+				public void getOutline(View view, Outline outline) {
+					int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
+					outline.setOval(0, 0, size, size);
+				}
 
-			b_delete.setOutline(outline);
-			b_upload_skin_container.setOutline(outline);
+			};
+
+			b_delete.setOutlineProvider(outlineProvider);
+			b_upload_skin_container.setOutlineProvider(outlineProvider);
 		}
 	}
 
@@ -357,20 +364,16 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 	private void colorizeInterface(Bitmap skin) {
 		Palette palette = Palette.generate(skin);
 
-		if(palette.getVibrantColor() != null) {
-			TextView titleView = (TextView) findViewById(R.id.title);
-			titleView.setTextColor(palette.getVibrantColor().getRgb());
-		}
+		TextView titleView = (TextView) findViewById(R.id.title);
+		titleView.setTextColor(palette.getVibrantColor(Color.BLACK));
 
-		if(palette.getLightVibrantColor() != null) {
-			TextView descriptionView = (TextView) findViewById(R.id.description);
-			descriptionView.setTextColor(palette.getLightVibrantColor().getRgb());
-		}
+		TextView descriptionView = (TextView) findViewById(R.id.description);
+		descriptionView.setTextColor(palette.getLightVibrantColor(Color.BLACK));
 
-		colorRipple(R.id.b_delete, (palette.getVibrantColor() != null) ? palette.getVibrantColor().getRgb() : getResources()
-				.getColor(R.color.loading_bar_one));
-		colorRipple(R.id.b_upload_skin, (palette.getVibrantColor() != null) ? palette.getVibrantColor().getRgb() : getResources
-				().getColor(R.color.loading_bar_one));
+		int rippleColor = palette.getVibrantColor(getResources().getColor(R.color.loading_bar_one));
+
+		colorRipple(R.id.b_delete, rippleColor);
+		colorRipple(R.id.b_upload_skin, rippleColor);
 	}
 
 	@TargetApi(Build.VERSION_CODES.L)
