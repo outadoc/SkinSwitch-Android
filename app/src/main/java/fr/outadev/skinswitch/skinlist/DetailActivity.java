@@ -19,7 +19,6 @@
 package fr.outadev.skinswitch.skinlist;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,7 +31,10 @@ import android.graphics.drawable.RippleDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -43,7 +45,6 @@ import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,7 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
  *
  * @author outadoc
  */
-public class DetailActivity extends Activity implements OnSkinLoadingListener {
+public class DetailActivity extends ActionBarActivity implements OnSkinLoadingListener {
 
 	private BasicSkin skin;
 	private int animTime;
@@ -74,10 +75,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
-
-		if(getActionBar() != null) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		skin = (BasicSkin) getIntent().getSerializableExtra("skin");
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
@@ -113,7 +111,7 @@ public class DetailActivity extends Activity implements OnSkinLoadingListener {
 		MenuItem shareItem = menu.findItem(R.id.action_share);
 
 		if(skin instanceof CustomUriSkin) {
-			ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem.getActionProvider();
+			ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
 			shareActionProvider.setShareIntent(getDefaultIntent());
 			shareItem.setEnabled(true);
 		} else {
