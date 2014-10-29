@@ -317,7 +317,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	 */
 	@TargetApi(Build.VERSION_CODES.L)
 	private void setOutlines() {
-		if(Build.VERSION.SDK_INT >= 20) {
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
 			ViewOutlineProvider outlineProvider = new ViewOutlineProvider() {
 
 				@Override
@@ -376,7 +376,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 	@TargetApi(Build.VERSION_CODES.L)
 	private void colorRipple(int id, int tintColor) {
-		if(Build.VERSION.SDK_INT >= 20) {
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
 			View buttonView = findViewById(id);
 
 			RippleDrawable ripple = (RippleDrawable) buttonView.getBackground();
