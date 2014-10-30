@@ -29,8 +29,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,16 +54,12 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 	private Typeface minecraftiaFont;
 	private boolean wasTutorialPlayed;
 
-	private Animation loadingAnim;
-
 	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<BasicSkin> array) {
 		super(context, resource, array);
 		this.frag = frag;
 
 		minecraftiaFont = Typeface.createFromAsset(getContext().getAssets(), "Minecraftia.ttf");
 		wasTutorialPlayed = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("wasTutorialPlayed", false);
-
-		loadingAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_nod);
 	}
 
 	@Override
@@ -206,7 +201,10 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 								@Override
 								public void setLoading(boolean loading) {
 									if(loading) {
-										skinView.startAnimation(loadingAnim);
+										skinView.animate()
+												.setInterpolator(new AccelerateInterpolator(0.6F))
+												.setDuration(60000)
+												.rotationBy(360 * 71);
 									} else {
 										cancelAnimationAndGoBackToWork();
 									}
@@ -254,6 +252,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		}
 
 		private void cancelAnimationAndGoBackToWork() {
+			skinView.animate().cancel();
 			skinView.animate()
 					.setDuration(600)
 					.rotation(0.0F)
