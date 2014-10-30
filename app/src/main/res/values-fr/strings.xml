@@ -42,7 +42,7 @@
 	<string name="success_skin_added">Skin ajouté avec succès !</string>
 	<string name="success_skin_updated">Skin mis à jour avec succès !</string>
 
-	<string name="replace_skin_title">Replacer par %1$s?</string>
+	<string name="replace_skin_title">Replacer par %1$s ?</string>
 	<string name="replace_skin_message">Voulez-vous vraiment remplacer votre skin Minecraft par %1$s ? Votre skin courant sera perdu !</string>
 
 	<string name="delete_skin_title">Supprimer %1$s?</string>
