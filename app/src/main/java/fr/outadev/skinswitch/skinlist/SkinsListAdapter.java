@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -50,6 +51,8 @@ import fr.outadev.skinswitch.skin.BasicSkin;
  */
 public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
+	private static final long PRESS_ANIMATION_DURATION = 1000;
+	private static final long RESET_ANIMATION_DURATION = 500;
 	private SkinsListFragment frag;
 	private Typeface minecraftiaFont;
 	private boolean wasTutorialPlayed;
@@ -103,7 +106,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		// show him the upload animation to hint him
 		if(position == 0 && !wasTutorialPlayed) {
 			skinView.animate()
-					.setDuration(1000)
+					.setDuration(PRESS_ANIMATION_DURATION)
 					.rotation(-180.0F)
 					.scaleX(1.5F).scaleY(1.5F)
 					.setListener(new Animator.AnimatorListener() {
@@ -111,7 +114,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 						@Override
 						public void onAnimationEnd(Animator animation) {
 							skinView.animate()
-									.setDuration(600)
+									.setDuration(RESET_ANIMATION_DURATION)
 									.rotation(0.0F)
 									.scaleX(1.0F).scaleY(1.0F);
 						}
@@ -226,13 +229,18 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 					});
 				}
 
-			}, 1000);
+			}, PRESS_ANIMATION_DURATION);
 
 			skinView.animate()
-					.setDuration(1000)
+					.setDuration(PRESS_ANIMATION_DURATION)
 					.rotation(-180.0F)
-					.translationZ(5.0F)
 					.scaleX(1.5F).scaleY(1.5F);
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				skinView.animate()
+						.setDuration(PRESS_ANIMATION_DURATION)
+						.translationZ(5.0F);
+			}
 		}
 
 		private void onTouchEnd() {
@@ -245,7 +253,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 				getContext().startActivity(intent);
 			}
 
-			if((new Date()).getTime() - touchTimestamp < 1000) {
+			if((new Date()).getTime() - touchTimestamp < PRESS_ANIMATION_DURATION) {
 				if(!isLoading) {
 					cancelAnimationAndGoBackToWork();
 				}
@@ -269,10 +277,15 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		private void cancelAnimationAndGoBackToWork() {
 			skinView.animate().cancel();
 			skinView.animate()
-					.setDuration(600)
+					.setDuration(RESET_ANIMATION_DURATION)
 					.rotation(0.0F)
-					.translationZ(2.0F)
 					.scaleX(1.0F).scaleY(1.0F);
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				skinView.animate()
+						.setDuration(RESET_ANIMATION_DURATION)
+						.translationZ(2.0F);
+			}
 		}
 
 	}
