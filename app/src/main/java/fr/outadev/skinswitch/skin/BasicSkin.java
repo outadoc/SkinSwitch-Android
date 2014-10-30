@@ -526,7 +526,8 @@ public abstract class BasicSkin implements Serializable {
 				if(e != null) {
 					//display the error if any
 					if(e.getMessage() != null && !e.getMessage().isEmpty()) {
-						Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+						Toast.makeText(context, context.getResources().getString(R.string.error_skin_upload, e.getMessage()),
+								Toast.LENGTH_LONG).show();
 					}
 
 					//if the user needs to fill in a challenge
