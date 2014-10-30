@@ -154,6 +154,8 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		private long touchTimestamp;
 		private Timer timer;
 
+		private boolean isLoading;
+
 		/**
 		 * Creates a skin head listener.
 		 *
@@ -163,6 +165,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		public OnSkinHeadTouchListener(BasicSkin skin, View skinView) {
 			this.skin = skin;
 			this.skinView = skinView;
+			this.isLoading = false;
 		}
 
 		@Override
@@ -187,6 +190,10 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			touchTimestamp = (new Date()).getTime();
 			timer = new Timer();
 
+			if(isLoading) {
+				return;
+			}
+
 			timer.schedule(new TimerTask() {
 
 				public void run() {
@@ -201,11 +208,14 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 								@Override
 								public void setLoading(boolean loading) {
 									if(loading) {
+										isLoading = true;
+
 										skinView.animate()
 												.setInterpolator(new AccelerateInterpolator(0.6F))
 												.setDuration(60000)
 												.rotationBy(360 * 71);
 									} else {
+										isLoading = false;
 										cancelAnimationAndGoBackToWork();
 									}
 								}
@@ -235,7 +245,9 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			}
 
 			if((new Date()).getTime() - touchTimestamp < 1000) {
-				cancelAnimationAndGoBackToWork();
+				if(!isLoading) {
+					cancelAnimationAndGoBackToWork();
+				}
 			}
 
 			timer.cancel();
@@ -247,7 +259,9 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 				timer.cancel();
 			}
 
-			cancelAnimationAndGoBackToWork();
+			if(!isLoading) {
+				cancelAnimationAndGoBackToWork();
+			}
 			touchTimestamp = 0;
 		}
 
