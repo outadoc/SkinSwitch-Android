@@ -20,7 +20,7 @@
 <resources>
 
 	<string name="app_name" translatable="false">SkinSwitch</string>
-	<string name="action_settings">Help</string>
+	<string name="action_settings">Help &amp; Options</string>
 	<string name="action_add">Add</string>
 	<string name="action_login">Log in</string>
 	<string name="action_logout">Log out</string>

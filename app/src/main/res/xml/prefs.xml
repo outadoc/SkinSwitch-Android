@@ -21,6 +21,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<PreferenceCategory
+		android:title="@string/options_cat">
+
+		<CheckBoxPreference
+			android:defaultValue="false"
+			android:key="pref_no_confirmation"
+			android:summaryOff="@string/options_no_confirmation_sum_off"
+			android:summaryOn="@string/options_no_confirmation_sum_on"
+			android:title="@string/options_no_confirmation_title" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
 		android:title="@string/help_cat">
 
 		<Preference

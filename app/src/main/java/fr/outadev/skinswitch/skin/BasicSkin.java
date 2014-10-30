@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -59,10 +60,6 @@ public abstract class BasicSkin implements Serializable {
 	private String description;
 	private Date creationDate;
 	private Model model;
-
-	public static enum Model {
-		STEVE, ALEX
-	}
 
 	/**
 	 * Creates a new skin.
@@ -150,13 +147,6 @@ public abstract class BasicSkin implements Serializable {
 		}
 	}
 
-
-	/**
-	 *
-	 * Path getters
-	 *
-	 */
-
 	/**
 	 * Gets the path on the filesystem of the raw skin image (which is sent to
 	 * minecraft.net).
@@ -168,6 +158,13 @@ public abstract class BasicSkin implements Serializable {
 	protected String getRawSkinPath(Context context) {
 		return context.getFilesDir() + "/" + "raw_" + id + ".png";
 	}
+
+
+	/**
+	 *
+	 * Path getters
+	 *
+	 */
 
 	/**
 	 * Gets the path on the filesystem of the head preview image.
@@ -203,12 +200,6 @@ public abstract class BasicSkin implements Serializable {
 	}
 
 	/**
-	 *
-	 * Filesystem read/write methods
-	 *
-	 */
-
-	/**
 	 * Reads a bitmap from the filesystem at the specified path.
 	 *
 	 * @param path    the path of the bitmap to decode.
@@ -231,6 +222,12 @@ public abstract class BasicSkin implements Serializable {
 	}
 
 	/**
+	 *
+	 * Filesystem read/write methods
+	 *
+	 */
+
+	/**
 	 * Writes a bitmap to the filesystem at the specified path.
 	 *
 	 * @param bitmap the bitmap to write.
@@ -244,12 +241,6 @@ public abstract class BasicSkin implements Serializable {
 	}
 
 	/**
-	 *
-	 * Bitmap getters
-	 *
-	 */
-
-	/**
 	 * Gets the raw skin File object for this skin (can be sent to
 	 * minecraft.net).
 	 *
@@ -259,6 +250,12 @@ public abstract class BasicSkin implements Serializable {
 	public File getRawSkinFile(Context context) {
 		return new File(getRawSkinPath(context));
 	}
+
+	/**
+	 *
+	 * Bitmap getters
+	 *
+	 */
 
 	/**
 	 * Gets a bitmap of the raw skin image.
@@ -353,12 +350,6 @@ public abstract class BasicSkin implements Serializable {
 	}
 
 	/**
-	 *
-	 * Bitmap setters
-	 *
-	 */
-
-	/**
 	 * Writes a raw skin bitmap to the filesystem.
 	 *
 	 * @param context
@@ -368,6 +359,12 @@ public abstract class BasicSkin implements Serializable {
 	public void saveRawSkinBitmap(Context context, Bitmap bitmap) throws IOException {
 		writeBitmapToFileSystem(bitmap, getRawSkinPath(context));
 	}
+
+	/**
+	 *
+	 * Bitmap setters
+	 *
+	 */
 
 	/**
 	 * Writes a skin head bitmap to the filesystem.
@@ -451,6 +448,14 @@ public abstract class BasicSkin implements Serializable {
 		Log.i(Utils.TAG, "deleted all local res files for " + this);
 	}
 
+	/**
+	 * Initiates the upload of this skin.
+	 * Asks a confirmation to the user, if this option is enabled, before starting the network operation
+	 * and notifying the listener of the imminent transfer.
+	 *
+	 * @param context        a context
+	 * @param loadingHandler the listener that will be notified of the upload
+	 */
 	public void initSkinUpload(final Context context, final OnSkinLoadingListener loadingHandler) {
 		UsersManager usersManager = new UsersManager(context);
 
@@ -461,76 +466,99 @@ public abstract class BasicSkin implements Serializable {
 			return;
 		}
 
-		//else, ask for a confirmation
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle(context.getResources().getString(R.string.replace_skin_title,
-				getName())).setMessage(context.getResources().getString(R.string.replace_skin_message, getName()));
+		boolean noConfirmation = PreferenceManager.getDefaultSharedPreferences(context)
+				.getBoolean("pref_no_confirmation", false);
 
-		builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+		//else, ask for a confirmation, but only if we want to
+		if(noConfirmation) {
+			uploadSkinAsync(context, loadingHandler);
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setTitle(context.getResources().getString(R.string.replace_skin_title,
+					getName())).setMessage(context.getResources().getString(R.string.replace_skin_message, getName()));
 
-			public void onClick(DialogInterface dialog, int id) {
-				(new AsyncTask<Void, Void, Exception>() {
+			builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
-					@Override
-					protected void onPreExecute() {
-						loadingHandler.setLoading(true);
-					}
+				public void onClick(DialogInterface dialog, int id) {
+					uploadSkinAsync(context, loadingHandler);
+				}
 
-					@Override
-					protected Exception doInBackground(Void... voids) {
-						MojangConnectionHandler handler = new MojangConnectionHandler(context);
-						UsersManager um = new UsersManager(context);
+			});
 
-						try {
-							handler.loginWithCredentials(um.getUser());
-							handler.uploadSkinToMojang(BasicSkin.this, context);
-						} catch(Exception e) {
-							return e;
-						}
+			builder.setNegativeButton(R.string.no, null);
+			builder.create().show();
+		}
 
-						return null;
-					}
+	}
 
-					@Override
-					protected void onPostExecute(Exception e) {
-						if(e != null) {
-							//display the error if any
-							if(e.getMessage() != null && !e.getMessage().isEmpty()) {
-								Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-							}
+	/**
+	 * Actually uploads the skin, without asking for confirmation.
+	 * Notifies the listener of the transfer status.
+	 *
+	 * @param context        a context
+	 * @param loadingHandler the listener that will be notified of the upload
+	 */
+	private void uploadSkinAsync(final Context context, final OnSkinLoadingListener loadingHandler) {
+		(new AsyncTask<Void, Void, Exception>() {
 
-							//if the user needs to fill in a challenge
-							if(e instanceof ChallengeRequirementException) {
-								Intent intent = new Intent(context, MojangLoginActivity.class);
-								intent.putExtra("step", MojangLoginActivity.Step.CHALLENGE);
-								context.startActivity(intent);
-							} else if(e instanceof InvalidMojangCredentialsException) {
-								//if the user needs to relog in
-								Intent intent = new Intent(context, MojangLoginActivity.class);
-								context.startActivity(intent);
-							}
-
-						} else {
-							Toast.makeText(context, context.getResources().getString(R.string.success_skin_upload),
-									Toast.LENGTH_SHORT).show();
-						}
-
-						loadingHandler.setLoading(false);
-					}
-
-				}).execute();
+			@Override
+			protected void onPreExecute() {
+				loadingHandler.setLoading(true);
 			}
 
-		});
+			@Override
+			protected Exception doInBackground(Void... voids) {
+				MojangConnectionHandler handler = new MojangConnectionHandler(context);
+				UsersManager um = new UsersManager(context);
 
-		builder.setNegativeButton(R.string.no, null);
-		builder.create().show();
+				try {
+					handler.loginWithCredentials(um.getUser());
+					handler.uploadSkinToMojang(BasicSkin.this, context);
+				} catch(Exception e) {
+					return e;
+				}
+
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Exception e) {
+				if(e != null) {
+					//display the error if any
+					if(e.getMessage() != null && !e.getMessage().isEmpty()) {
+						Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+					}
+
+					//if the user needs to fill in a challenge
+					if(e instanceof ChallengeRequirementException) {
+						Intent intent = new Intent(context, MojangLoginActivity.class);
+						intent.putExtra("step", MojangLoginActivity.Step.CHALLENGE);
+						context.startActivity(intent);
+					} else if(e instanceof InvalidMojangCredentialsException) {
+						//if the user needs to relog in
+						Intent intent = new Intent(context, MojangLoginActivity.class);
+						context.startActivity(intent);
+					}
+
+				} else {
+					Toast.makeText(context, context.getResources().getString(R.string.success_skin_upload),
+							Toast.LENGTH_SHORT).show();
+				}
+
+				loadingHandler.setLoading(false);
+			}
+
+		}).execute();
 	}
 
 	@Override
 	public String toString() {
 		return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + ", " +
 				"model=" + model + "]";
+	}
+
+	public static enum Model {
+		STEVE, ALEX
 	}
 
 }

@@ -19,7 +19,7 @@
 
 <resources>
 
-	<string name="action_settings">Aide</string>
+	<string name="action_settings">Aide &amp; Options</string>
 	<string name="action_add">Ajouter</string>
 	<string name="action_login">Se connecter</string>
 	<string name="action_logout">Se déconnecter</string>

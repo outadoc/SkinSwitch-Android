@@ -24,6 +24,7 @@
 	<string name="contact_cat">Contact</string>
 	<string name="credits_cat">Crédits</string>
 	<string name="help_cat">Aide</string>
+	<string name="options_cat">Options</string>
 
 	<string name="legal_title">Trucs légaux</string>
 	<string name="about_skinswitch_title">À propos</string>
@@ -39,5 +40,8 @@
 	<string name="contact_message_title">Nous contacter</string>
 	<string name="contact_skinmanager_title">Envoyez vos skins !</string>
 	<string name="contact_skinmanager_sum">Envoyez vos propres skins sur Skin Manager; ils seront ensuite directement disponibles depuis SkinSwitch !</string>
+	<string name="options_no_confirmation_title">Envoi sans confirmation</string>
+	<string name="options_no_confirmation_sum_off">Demandera une confirmation avant de changer de skin</string>
+	<string name="options_no_confirmation_sum_on">Ne demandera pas de confirmation avant de changer de skin</string>
 
 </resources>
