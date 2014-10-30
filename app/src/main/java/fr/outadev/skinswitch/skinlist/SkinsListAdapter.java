@@ -231,6 +231,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			skinView.animate()
 					.setDuration(1000)
 					.rotation(-180.0F)
+					.translationZ(5.0F)
 					.scaleX(1.5F).scaleY(1.5F);
 		}
 
@@ -270,6 +271,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			skinView.animate()
 					.setDuration(600)
 					.rotation(0.0F)
+					.translationZ(2.0F)
 					.scaleX(1.0F).scaleY(1.0F);
 		}
 
