@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.outadev.skinswitch.R;
+import fr.outadev.skinswitch.Utils;
 import fr.outadev.skinswitch.network.login.MojangLoginActivity;
 import fr.outadev.skinswitch.settings.SettingsActivity;
 import fr.outadev.skinswitch.skin.BasicSkin;
@@ -207,6 +209,8 @@ public class SkinsListFragment extends Fragment {
 
 				skinsList.addAll(result);
 				skinsAdapter.notifyDataSetChanged();
+
+				Log.d(Utils.TAG, skinsList.size() + " skins loaded from database");
 			}
 
 		}).execute();
