@@ -23,7 +23,7 @@
 	<string name="no_description_available">Pas de description disponible.</string>
 	<string name="hint_search_library">Chercher dans la bibliothèque…</string>
 	<string name="library_connection_error">Chargement des skins impossible ! (erreur réseau)</string>
-	<string name="library_skin_author">... par %1$s</string>
+	<string name="library_skin_author">… par %1$s</string>
 
 	<string name="library_section_random">Aléatoire</string>
 	<string name="library_section_latest">Plus récents</string>
