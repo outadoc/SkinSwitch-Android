@@ -23,7 +23,7 @@
 	<string name="no_description_available">No description available.</string>
 	<string name="hint_search_library">Search in Library…</string>
 	<string name="library_connection_error">Could not load the skins! (network error)</string>
-	<string name="library_skin_author">Author: %1$s</string>
+	<string name="library_skin_author">... by %1$s</string>
 
 	<string name="library_section_random">Random</string>
 	<string name="library_section_latest">Latest</string>
