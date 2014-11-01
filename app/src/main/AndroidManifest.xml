@@ -80,6 +80,7 @@
 			android:name=".skinlibrary.LibrarySearchActivity"
 			android:label="@string/search_title">
 			<intent-filter>
+				<action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
 				<action android:name="android.intent.action.SEARCH" />
 			</intent-filter>
 
