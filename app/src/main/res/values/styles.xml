@@ -19,8 +19,8 @@
 
 <resources>
 
-	<style name="SkinSwitchActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-		<item name="android:background">@color/colorPrimary</item>
+	<style name="SkinSwitchActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+	<item name="android:background">@color/colorPrimary</item>
 	</style>
 
 	<style name="AppTheme" parent="AppBaseTheme" />
