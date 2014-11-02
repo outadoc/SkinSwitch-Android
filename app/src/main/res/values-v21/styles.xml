@@ -30,12 +30,17 @@
 	</style>
 
 	<style name="DetailTheme" parent="AppBaseTheme">
-		<item name="android:actionBarStyle">@style/DetailActionBar</item>
-		<item name="android:windowActionBarOverlay">false</item>
+		<item name="actionBarStyle">@style/DetailActionBar</item>
+		<item name="windowActionBarOverlay">false</item>
 		<item name="android:windowContentTransitions">true</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:windowTranslucentStatus">true</item>
 		<item name="android:windowTranslucentNavigation">true</item>
+	</style>
+
+	<style name="DetailActionBar" parent="Widget.AppCompat.Light.ActionBar">
+		<item name="background">@null</item>
+		<item name="displayOptions">homeAsUp</item>
 	</style>
 
 </resources>
