@@ -19,14 +19,10 @@
 
 <manifest
 	package="fr.outadev.skinswitch"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools">
+	xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-
-	<uses-sdk
-		tools:node="replace" />
 
 	<application
 		android:allowBackup="true"
