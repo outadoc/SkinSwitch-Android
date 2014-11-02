@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.github.kevinsawicki.http.HttpRequest;
@@ -53,6 +54,9 @@ public class NewCustomSkinActivity extends Activity {
 	private EditText txt_description;
 	private EditText txt_source;
 
+	private RadioButton chk_model_alex;
+	private RadioButton chk_model_steve;
+
 	private BasicSkin editSkin;
 
 	@Override
@@ -70,6 +74,9 @@ public class NewCustomSkinActivity extends Activity {
 		txt_description = (EditText) findViewById(R.id.txt_skin_description);
 		txt_source = (EditText) findViewById(R.id.txt_skin_source);
 
+		chk_model_alex = (RadioButton) findViewById(R.id.chk_skin_model_alex);
+		chk_model_steve = (RadioButton) findViewById(R.id.chk_skin_model_steve);
+
 		if(editSkin != null) {
 			setTitle(getResources().getString(R.string.title_activity_edit_skin));
 
@@ -78,6 +85,12 @@ public class NewCustomSkinActivity extends Activity {
 
 			txt_name.setText(editSkin.getName());
 			txt_description.setText(editSkin.getDescription());
+
+			if(editSkin.getModel() == BasicSkin.Model.ALEX) {
+				chk_model_alex.setChecked(true);
+			} else {
+				chk_model_steve.setChecked(true);
+			}
 		}
 
 		// handle URIs like skinswitch://?name=foo&desc=bar&url=foobar
@@ -126,10 +139,10 @@ public class NewCustomSkinActivity extends Activity {
 
 		if(editSkin == null) {
 			// check source
-			if(TextUtils.isEmpty(txt_source.getText().toString())) {
+			if(TextUtils.isEmpty(txt_source.getText().toString().trim())) {
 				txt_source.setError(getString(R.string.error_field_required));
 				errorField = txt_source;
-			} else if(!txt_source.getText().toString().matches("(https?:\\/\\/.+)|([a-zA-Z0-9_\\-]+)")) {
+			} else if(!txt_source.getText().toString().trim().matches("(https?:\\/\\/.+)|([a-zA-Z0-9_\\-]+)")) {
 				txt_source.setError(getString(R.string.error_incorrect_url));
 				errorField = txt_source;
 			} else {
@@ -138,13 +151,22 @@ public class NewCustomSkinActivity extends Activity {
 
 			// create a new skin from the data that was entered
 			// and parse the source
-			if(txt_source.getText().toString().matches("^https?:\\/\\/.+$")) {
-				skin = new CustomUriSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
-						txt_source.getText().toString());
+			if(txt_source.getText().toString().trim().matches("^https?:\\/\\/.+$")) {
+				skin = new CustomUriSkin(txt_name.getText().toString().trim(), txt_description.getText().toString().trim(),
+						new Date(),
+						txt_source.getText().toString().trim());
 			} else {
-				skin = new MojangAccountSkin(txt_name.getText().toString(), txt_description.getText().toString(), new Date(),
+				skin = new MojangAccountSkin(txt_name.getText().toString().trim(), txt_description.getText().toString().trim(),
+						new Date(),
 						null);
 			}
+
+			if(chk_model_alex.isChecked()) {
+				skin.setModel(BasicSkin.Model.ALEX);
+			} else {
+				skin.setModel(BasicSkin.Model.STEVE);
+			}
+
 		} else {
 			skin = editSkin;
 		}
@@ -190,7 +212,7 @@ public class NewCustomSkinActivity extends Activity {
 			@Override
 			protected Boolean doInBackground(Void... params) {
 				try {
-					return skin.validateSource(txt_source.getText().toString());
+					return skin.validateSource(txt_source.getText().toString().trim());
 				} catch(final Exception e) {
 					NewCustomSkinActivity.this.runOnUiThread(new Runnable() {
 
@@ -251,14 +273,22 @@ public class NewCustomSkinActivity extends Activity {
 	}
 
 	private void updateSkin() {
-		editSkin.setName(txt_name.getText().toString());
-		editSkin.setDescription(txt_description.getText().toString());
+		editSkin.setName(txt_name.getText().toString().trim());
+		editSkin.setDescription(txt_description.getText().toString().trim());
+
+		if(chk_model_alex.isChecked()) {
+			editSkin.setModel(BasicSkin.Model.ALEX);
+		} else {
+			editSkin.setModel(BasicSkin.Model.STEVE);
+		}
 
 		SkinsDatabase db = new SkinsDatabase(this);
 		db.updateSkin(editSkin);
+		editSkin.deleteAllCacheFilesFromFilesystem(this);
+
 		Toast.makeText(NewCustomSkinActivity.this, getResources().getString(R.string.success_skin_updated),
 				Toast.LENGTH_LONG).show();
-		finish();
+		this.finish();
 	}
 
 }

@@ -58,6 +58,11 @@ public abstract class BasicSkin implements Serializable {
 	private String name;
 	private String description;
 	private Date creationDate;
+	private Model model;
+
+	public static enum Model {
+		STEVE, ALEX
+	}
 
 	/**
 	 * Creates a new skin.
@@ -72,6 +77,7 @@ public abstract class BasicSkin implements Serializable {
 		this.name = name;
 		this.description = description;
 		this.creationDate = creationDate;
+		this.model = Model.STEVE;
 	}
 
 	/**
@@ -116,6 +122,32 @@ public abstract class BasicSkin implements Serializable {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public String getModelString() {
+		switch(model) {
+			case ALEX:
+				return "alex";
+			case STEVE:
+			default:
+				return "steve";
+		}
+	}
+
+	public void setModelString(String model) {
+		if(model.equals("alex")) {
+			this.model = Model.ALEX;
+		} else {
+			this.model = Model.STEVE;
+		}
 	}
 
 
@@ -280,7 +312,7 @@ public abstract class BasicSkin implements Serializable {
 			Log.d(Utils.TAG, "creating front preview and cache for " + this);
 
 			Bitmap bmpRaw = getRawSkinBitmap(context);
-			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.FRONT, 19);
+			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.FRONT, 19, model);
 
 			bmpRaw.recycle();
 
@@ -307,7 +339,7 @@ public abstract class BasicSkin implements Serializable {
 			Log.d(Utils.TAG, "creating back preview and cache for " + this);
 
 			Bitmap bmpRaw = getRawSkinBitmap(context);
-			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.BACK, 19);
+			Bitmap bmpPrev = SkinRenderer.getSkinPreview(bmpRaw, Side.BACK, 19, model);
 
 			bmpRaw.recycle();
 
@@ -404,10 +436,16 @@ public abstract class BasicSkin implements Serializable {
 		return file.delete();
 	}
 
-	public void deleteAllSkinResFromFilesystem(Context context) {
+	public void deleteAllCacheFilesFromFilesystem(Context context) {
 		deleteFile(getSkinHeadPath(context));
 		deleteFile(getBackSkinPreviewPath(context));
 		deleteFile(getFrontSkinPreviewPath(context));
+
+		Log.i(Utils.TAG, "deleted all cache files for " + this);
+	}
+
+	public void deleteAllSkinResFromFilesystem(Context context) {
+		deleteAllCacheFilesFromFilesystem(context);
 		deleteFile(getRawSkinPath(context));
 
 		Log.i(Utils.TAG, "deleted all local res files for " + this);
@@ -445,7 +483,7 @@ public abstract class BasicSkin implements Serializable {
 
 						try {
 							handler.loginWithCredentials(um.getUser());
-							handler.uploadSkinToMojang(getRawSkinFile(context));
+							handler.uploadSkinToMojang(BasicSkin.this, context);
 						} catch(Exception e) {
 							return e;
 						}
@@ -491,7 +529,8 @@ public abstract class BasicSkin implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + "]";
+		return "Skin [id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + ", " +
+				"model=" + model + "]";
 	}
 
 }

@@ -32,9 +32,14 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "skinswitch.db";
 
-	private static final String SKINS_TABLE_CREATE = "CREATE TABLE skins (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			"name VARCHAR(16) NOT NULL, description TEXT NOT NULL, timestamp VARCHAR(16) NOT NULL, " +
-			"source VARCHAR(256) DEFAULT NULL, uuid VARCHAR(128) DEFAULT NULL)";
+	private static final String SKINS_TABLE_CREATE = "CREATE TABLE skins (" +
+			"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			"name VARCHAR(16) NOT NULL, " +
+			"description TEXT NOT NULL, " +
+			"timestamp VARCHAR(16) NOT NULL, " +
+			"source VARCHAR(256) DEFAULT NULL, " +
+			"uuid VARCHAR(128) DEFAULT NULL, " +
+			"model VARCHAR(10) DEFAULT 'steve')";
 
 	DatabaseOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

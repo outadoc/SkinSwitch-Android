@@ -61,6 +61,7 @@ public class CustomUriSkin extends BasicSkin {
 		}
 
 		byte[] response = HttpRequest.get(getSource()).trustAllHosts().useCaches(true).bytes();
+
 		if(response == null) {
 			throw new HttpRequest.HttpRequestException(new IOException("Couldn't download " + this));
 		}
@@ -68,6 +69,7 @@ public class CustomUriSkin extends BasicSkin {
 		Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
 
 		if(bmp != null) {
+			deleteAllCacheFilesFromFilesystem(context);
 			saveRawSkinBitmap(context, bmp);
 			bmp.recycle();
 		}

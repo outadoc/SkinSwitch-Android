@@ -25,9 +25,12 @@
 	<string name="lbl_add_skin_source">Pseudo Minecraft ou URL</string>
 	<string name="lbl_add_skin_name">Nom du skin</string>
 	<string name="lbl_add_skin_description">Description du skin</string>
+	<string name="lbl_add_skin_model">Modèle du skin</string>
 	<string name="hint_add_skin_source">Notch <i>ou</i> http://website.com/skin.png</string>
 	<string name="hint_add_skin_name">Mon super skin</string>
 	<string name="error_incorrect_url">Doit être un pseudo ou une URL valide</string>
 	<string name="downloading_custom_skin">Chargement…</string>
+	<string name="chk_skin_model_alex">Alex</string>
+	<string name="chk_skin_model_steve">Steve</string>
 
 </resources>

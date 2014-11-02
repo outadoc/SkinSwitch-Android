@@ -118,7 +118,7 @@ public class WearListenerService extends WearableListenerService {
 
 			try {
 				handler.loginWithCredentials(usersManager.getUser());
-				handler.uploadSkinToMojang(skin.getRawSkinFile(this));
+				handler.uploadSkinToMojang(skin, this);
 			} catch(SkinUploadException e) {
 				e.printStackTrace();
 			} catch(InvalidMojangCredentialsException e) {

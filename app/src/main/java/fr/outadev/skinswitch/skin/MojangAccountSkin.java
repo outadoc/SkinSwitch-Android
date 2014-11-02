@@ -40,10 +40,9 @@ import java.util.Date;
  */
 public class MojangAccountSkin extends BasicSkin {
 
-	private String uuid;
-
 	public static final String MOJANG_API_URL = "https://api.mojang.com/users/profiles/minecraft/";
 	public static final String SESSION_API_URL = "https://sessionserver.mojang.com/session/minecraft/profile/";
+	private String uuid;
 
 	public MojangAccountSkin(int id, String name, String description, Date creationDate, String uuid) {
 		super(id, name, description, creationDate);
@@ -129,6 +128,7 @@ public class MojangAccountSkin extends BasicSkin {
 							Bitmap bmp = BitmapFactory.decodeByteArray(response, 0, response.length);
 
 							if(bmp != null) {
+								deleteAllCacheFilesFromFilesystem(context);
 								saveRawSkinBitmap(context, bmp);
 								bmp.recycle();
 							}

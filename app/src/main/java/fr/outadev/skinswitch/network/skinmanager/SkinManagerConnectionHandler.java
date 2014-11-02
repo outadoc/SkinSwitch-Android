@@ -119,6 +119,11 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 					JSONObject currSkinObj = resultArray.getJSONObject(i);
 					SkinLibrarySkin skin = new SkinLibrarySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
 							currSkinObj.getString("description"), currSkinObj.getString("owner_username"));
+
+					if(currSkinObj.has("model")) {
+						skin.setModelString(currSkinObj.getString("model"));
+					}
+
 					skin.setSkinManagerId(currSkinObj.getInt("id"));
 					skinsList.add(skin);
 				}
