@@ -127,6 +127,10 @@ public class UsersManager {
 			loggedIn = false;
 		}
 
+		if(!loggedIn) {
+			saveUserCredentials(new User(getUsername(), ""));
+		}
+
 		editor.putBoolean(LOGGED_IN_PREFS_ID, loggedIn);
 		editor.apply();
 	}
