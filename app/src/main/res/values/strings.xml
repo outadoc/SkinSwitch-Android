@@ -20,7 +20,7 @@
 <resources>
 
 	<string name="app_name" translatable="false">SkinSwitch</string>
-	<string name="action_settings">Help</string>
+	<string name="action_settings">Help &amp; Options</string>
 	<string name="action_add">Add</string>
 	<string name="action_login">Log in</string>
 	<string name="action_logout">Log out</string>
@@ -39,6 +39,7 @@
 
 	<string name="success_skin_upload">Skin uploaded successfully!</string>
 	<string name="error_skin_download">Could not download this skin: %1$s</string>
+	<string name="error_skin_upload">Could not change your skin: %1$s</string>
 
 	<string name="success_skin_added">Skin added successfully!</string>
 	<string name="success_skin_updated">Skin updated successfully!</string>

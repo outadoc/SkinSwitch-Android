@@ -24,11 +24,12 @@
 	<string name="contact_cat">Contact</string>
 	<string name="credits_cat">Credits</string>
 	<string name="help_cat">Help</string>
+	<string name="options_cat">Options</string>
 
 	<string name="legal_title">Legal Stuff</string>
 	<string name="credits_minecraft_sum" translatable="false">Minecraft ®/TM &amp; © 2009–2014 Mojang / Notch. SkinSwitch is not related with Minecraft or Mojang in any way.</string>
 	<string name="about_skinswitch_title">About</string>
-	<string name="about_skinswitch_sum" translatable="false">%1$s v%2$s © 2014 Baptiste Candellier / outa[dev]</string>
+	<string name="about_skinswitch_sum" translatable="false">%1$s v%2$s\n© 2014 Baptiste Candellier / outa[dev]</string>
 	<string name="help_which_account_sum">Determine if you should log in with your Minecraft username or your email address</string>
 	<string name="help_which_account_title">Username or Email address?</string>
 	<string name="help_migrate_sum">Get help about migrating your Minecraft account to a Mojang account</string>
@@ -41,5 +42,8 @@
 	<string name="contact_message_title">Send us a Message</string>
 	<string name="contact_skinmanager_title">Upload your skins!</string>
 	<string name="contact_skinmanager_sum">Upload your own skins on Skin Manager; they will then be available directly from SkinSwitch!</string>
+	<string name="options_no_confirmation_title">Switch without confirmation</string>
+	<string name="options_no_confirmation_sum_off">Will ask for confirmation before uploading a skin</string>
+	<string name="options_no_confirmation_sum_on">Won\'t ask for confirmation before uploading a skin</string>
 
 </resources>

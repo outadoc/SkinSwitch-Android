@@ -18,18 +18,19 @@
 
 package fr.outadev.skinswitch.skinlist;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,12 +51,11 @@ import fr.outadev.skinswitch.skin.BasicSkin;
  */
 public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
+	private static final long PRESS_ANIMATION_DURATION = 1000;
+	private static final long RESET_ANIMATION_DURATION = 500;
 	private SkinsListFragment frag;
 	private Typeface minecraftiaFont;
 	private boolean wasTutorialPlayed;
-
-	private Animation expandAnim;
-	private Animation loadingAnim;
 
 	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<BasicSkin> array) {
 		super(context, resource, array);
@@ -63,9 +63,6 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 		minecraftiaFont = Typeface.createFromAsset(getContext().getAssets(), "Minecraftia.ttf");
 		wasTutorialPlayed = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("wasTutorialPlayed", false);
-
-		expandAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_rotation);
-		loadingAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_nod);
 	}
 
 	@Override
@@ -108,7 +105,30 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		//if that's the first skin our user has ever added to the app,
 		// show him the upload animation to hint him
 		if(position == 0 && !wasTutorialPlayed) {
-			skinView.startAnimation(expandAnim);
+			skinView.animate()
+					.setDuration(PRESS_ANIMATION_DURATION)
+					.rotation(-180.0F)
+					.scaleX(1.5F).scaleY(1.5F)
+					.setListener(new Animator.AnimatorListener() {
+
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							skinView.animate()
+									.setDuration(RESET_ANIMATION_DURATION)
+									.rotation(0.0F)
+									.scaleX(1.0F).scaleY(1.0F);
+						}
+
+						public void onAnimationStart(Animator animation) {
+						}
+
+						public void onAnimationCancel(Animator animation) {
+						}
+
+						public void onAnimationRepeat(Animator animation) {
+						}
+
+					});
 
 			//reset the tutorial boolean so it doesn't show anymore after that
 			wasTutorialPlayed = true;
@@ -137,6 +157,8 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		private long touchTimestamp;
 		private Timer timer;
 
+		private boolean isLoading;
+
 		/**
 		 * Creates a skin head listener.
 		 *
@@ -146,6 +168,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 		public OnSkinHeadTouchListener(BasicSkin skin, View skinView) {
 			this.skin = skin;
 			this.skinView = skinView;
+			this.isLoading = false;
 		}
 
 		@Override
@@ -170,6 +193,10 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			touchTimestamp = (new Date()).getTime();
 			timer = new Timer();
 
+			if(isLoading) {
+				return;
+			}
+
 			timer.schedule(new TimerTask() {
 
 				public void run() {
@@ -177,14 +204,22 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 						@Override
 						public void run() {
+							cancelAnimationAndGoBackToWork();
+
 							skin.initSkinUpload(getContext(), new OnSkinLoadingListener() {
 
 								@Override
 								public void setLoading(boolean loading) {
 									if(loading) {
-										skinView.startAnimation(loadingAnim);
+										isLoading = true;
+
+										skinView.animate()
+												.setInterpolator(new AccelerateInterpolator(0.6F))
+												.setDuration(60000)
+												.rotationBy(360 * 71);
 									} else {
-										skinView.clearAnimation();
+										isLoading = false;
+										cancelAnimationAndGoBackToWork();
 									}
 								}
 
@@ -194,23 +229,34 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 					});
 				}
 
-			}, 1000);
+			}, PRESS_ANIMATION_DURATION);
 
-			skinView.startAnimation(expandAnim);
+			skinView.animate()
+					.setDuration(PRESS_ANIMATION_DURATION)
+					.rotation(-180.0F)
+					.scaleX(1.5F).scaleY(1.5F);
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				skinView.animate()
+						.setDuration(PRESS_ANIMATION_DURATION)
+						.translationZ(5.0F);
+			}
 		}
 
 		private void onTouchEnd() {
 			//releasing the skin head
 			if((new Date()).getTime() - touchTimestamp < 300) {
-				skinView.clearAnimation();
+				cancelAnimationAndGoBackToWork();
 
 				Intent intent = new Intent(getContext(), DetailActivity.class);
 				intent.putExtra("skin", skin);
 				getContext().startActivity(intent);
 			}
 
-			if((new Date()).getTime() - touchTimestamp < 1000) {
-				skinView.clearAnimation();
+			if((new Date()).getTime() - touchTimestamp < PRESS_ANIMATION_DURATION) {
+				if(!isLoading) {
+					cancelAnimationAndGoBackToWork();
+				}
 			}
 
 			timer.cancel();
@@ -222,8 +268,24 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 				timer.cancel();
 			}
 
-			skinView.clearAnimation();
+			if(!isLoading) {
+				cancelAnimationAndGoBackToWork();
+			}
 			touchTimestamp = 0;
+		}
+
+		private void cancelAnimationAndGoBackToWork() {
+			skinView.animate().cancel();
+			skinView.animate()
+					.setDuration(RESET_ANIMATION_DURATION)
+					.rotation(0.0F)
+					.scaleX(1.0F).scaleY(1.0F);
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				skinView.animate()
+						.setDuration(RESET_ANIMATION_DURATION)
+						.translationZ(2.0F);
+			}
 		}
 
 	}

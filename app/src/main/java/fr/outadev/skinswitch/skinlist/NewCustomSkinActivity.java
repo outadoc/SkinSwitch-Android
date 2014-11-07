@@ -18,12 +18,11 @@
 
 package fr.outadev.skinswitch.skinlist;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,7 +47,7 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
  *
  * @author outadoc
  */
-public class NewCustomSkinActivity extends Activity {
+public class NewCustomSkinActivity extends ActionBarActivity {
 
 	private EditText txt_name;
 	private EditText txt_description;
@@ -63,10 +62,7 @@ public class NewCustomSkinActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_custom_skin);
-
-		if(getActionBar() != null) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		editSkin = (BasicSkin) getIntent().getSerializableExtra("skin");
 
@@ -110,7 +106,13 @@ public class NewCustomSkinActivity extends Activity {
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, @NonNull MenuItem item) {
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.add_custom_skin, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.item_next:
 				validateAndParseUserInput();
@@ -120,13 +122,7 @@ public class NewCustomSkinActivity extends Activity {
 				return true;
 		}
 
-		return super.onMenuItemSelected(featureId, item);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.add_custom_skin, menu);
-		return super.onCreateOptionsMenu(menu);
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**

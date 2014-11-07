@@ -17,19 +17,20 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<item
+		android:id="@+id/action_search"
+		android:icon="@drawable/ic_action_search"
+		android:title="@string/action_search"
+		app:actionViewClass="android.support.v7.widget.SearchView"
+		app:showAsAction="ifRoom" />
 
 	<item
 		android:id="@+id/action_upload_skinmanager"
 		android:icon="@drawable/ic_action_upload"
-		android:showAsAction="ifRoom"
-		android:title="@string/action_upload" />
-
-	<item
-		android:id="@+id/action_search"
-		android:actionViewClass="android.widget.SearchView"
-		android:icon="@drawable/ic_action_search"
-		android:showAsAction="ifRoom"
-		android:title="@string/action_search" />
+		android:title="@string/action_upload"
+		app:showAsAction="ifRoom" />
 
 </menu>

@@ -19,7 +19,7 @@
 
 <resources>
 
-	<string name="action_settings">Aide</string>
+	<string name="action_settings">Aide &amp; Options</string>
 	<string name="action_add">Ajouter</string>
 	<string name="action_login">Se connecter</string>
 	<string name="action_logout">Se déconnecter</string>
@@ -38,11 +38,12 @@
 
 	<string name="success_skin_upload">Skin envoyé avec succès !</string>
 	<string name="error_skin_download">Impossible de télécharger ce skin : %1$s</string>
+	<string name="error_skin_upload">Impossible de changer votre skin : %1$s</string>
 
 	<string name="success_skin_added">Skin ajouté avec succès !</string>
 	<string name="success_skin_updated">Skin mis à jour avec succès !</string>
 
-	<string name="replace_skin_title">Replacer par %1$s?</string>
+	<string name="replace_skin_title">Replacer par %1$s ?</string>
 	<string name="replace_skin_message">Voulez-vous vraiment remplacer votre skin Minecraft par %1$s ? Votre skin courant sera perdu !</string>
 
 	<string name="delete_skin_title">Supprimer %1$s?</string>

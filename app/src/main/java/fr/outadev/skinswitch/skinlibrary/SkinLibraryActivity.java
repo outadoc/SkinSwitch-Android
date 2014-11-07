@@ -25,11 +25,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
 
 import fr.outadev.skinswitch.R;
 
@@ -38,16 +39,13 @@ import fr.outadev.skinswitch.R;
  *
  * @author outadoc
  */
-public class SkinLibraryActivity extends FragmentActivity {
+public class SkinLibraryActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_skin_library);
-
-		if(getActionBar() != null) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager(), this);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -60,7 +58,7 @@ public class SkinLibraryActivity extends FragmentActivity {
 
 		//set up search view
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		searchView.setIconifiedByDefault(true);
 
