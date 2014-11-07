@@ -17,20 +17,29 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<android.support.v4.view.ViewPager
-	android:id="@+id/pager"
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:orientation="vertical">
 
-	<android.support.v4.view.PagerTitleStrip
-		android:id="@+id/pager_title_strip"
+	<include layout="@layout/toolbar" />
+
+	<android.support.v4.view.ViewPager
+		android:id="@+id/pager"
+		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="top"
-		android:background="#ff5f3a2b"
-		android:paddingBottom="4dp"
-		android:paddingTop="4dp"
-		android:textColor="#fff" />
+		android:layout_height="match_parent">
 
-</android.support.v4.view.ViewPager>
+		<android.support.v4.view.PagerTitleStrip
+			android:id="@+id/pager_title_strip"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="top"
+			android:background="#ff5f3a2b"
+			android:paddingBottom="4dp"
+			android:paddingTop="4dp"
+			android:textColor="#fff" />
+
+	</android.support.v4.view.ViewPager>
+</LinearLayout>
