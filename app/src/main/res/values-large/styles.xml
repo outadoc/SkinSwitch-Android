@@ -18,7 +18,7 @@
 
 <resources>
 
-	<style name="LoginFormContainer">
+	<style name="Theme.SkinSwitch.Widget.LoginFormContainer">
 		<item name="android:layout_width">400dp</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_gravity">center</item>

@@ -19,18 +19,16 @@
 
 <resources>
 
-	<style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-	<item name="colorPrimary">@color/colorPrimary</item>
-		<!-- darker variant of colorPrimary (for status bar, contextual app bars) -->
+	<style name="Theme.SkinSwitch" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<!-- theme UI controls like checkboxes and text fields -->
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="android:navigationBarColor">@color/colorPrimaryDark</item>
 		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
 	</style>
 
-	<style name="DetailTheme" parent="AppBaseTheme">
-		<item name="actionBarStyle">@style/DetailActionBar</item>
+	<style name="Theme.SkinSwitch.Detail" parent="Theme.SkinSwitch">
+		<item name="actionBarStyle">@style/Theme.SkinSwitch.ActionBar.Detail</item>
 		<item name="windowActionBarOverlay">false</item>
 		<item name="android:windowContentTransitions">true</item>
 		<item name="android:windowContentOverlay">@null</item>
@@ -38,13 +36,13 @@
 		<item name="android:windowTranslucentNavigation">true</item>
 	</style>
 
-	<style name="DetailActionBar" parent="Widget.AppCompat.Light.ActionBar">
-		<item name="background">@null</item>
+	<style name="Theme.SkinSwitch.ActionBar.Detail" parent="Widget.AppCompat.Light.ActionBar">
+	<item name="background">@null</item>
 		<item name="displayOptions">homeAsUp</item>
 	</style>
 
-	<style name="DialogActivity" parent="android:Theme.Material.Light.Dialog">
-		<item name="colorPrimary">@color/colorPrimary</item>
+	<style name="Theme.SkinSwitch.Dialog" parent="android:Theme.Material.Light.Dialog">
+	<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>

@@ -29,7 +29,7 @@
 		android:layout_height="match_parent">
 
 		<LinearLayout
-			style="@style/LoginFormContainer"
+			style="@style/Theme.SkinSwitch.Widget.LoginFormContainer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
@@ -94,7 +94,7 @@
 		android:visibility="gone">
 
 		<LinearLayout
-			style="@style/LoginFormContainer"
+			style="@style/Theme.SkinSwitch.Widget.LoginFormContainer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">

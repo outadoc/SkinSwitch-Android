@@ -19,7 +19,7 @@
 
 <resources>
 
-	<style name="SkinLibraryCard">
+	<style name="Theme.SkinSwitch.Widget.LibraryCard">
 		<item name="android:layout_width">450dp</item>
 	</style>
 
