@@ -20,6 +20,7 @@ package fr.outadev.skinswitch.settings;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 /**
  * Activity that handles the SkinSwitch settings.
@@ -39,4 +40,13 @@ public class SettingsActivity extends ActionBarActivity {
 				.commit();
 	}
 
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case android.R.id.home:
+				this.finish();
+				return true;
+		}
+
+		return false;
+	}
 }

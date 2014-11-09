@@ -117,6 +117,9 @@ public class NewCustomSkinActivity extends ActionBarActivity {
 			case R.id.item_next:
 				validateAndParseUserInput();
 				return true;
+			case android.R.id.home:
+				this.finish();
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);

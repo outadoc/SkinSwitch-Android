@@ -77,9 +77,9 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_detail);
 
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		ViewCompat.setTransitionName(findViewById(R.id.skin_preview_front), SHARED_SKIN_IMAGE);
 
 		skin = (BasicSkin) getIntent().getSerializableExtra("skin");

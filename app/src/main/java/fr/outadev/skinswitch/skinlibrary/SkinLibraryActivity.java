@@ -46,10 +46,9 @@ public class SkinLibraryActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_skin_library);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setElevation(0.0F);
-
-		setContentView(R.layout.activity_skin_library);
 
 		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager(), this);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -75,6 +74,9 @@ public class SkinLibraryActivity extends ActionBarActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
+			case android.R.id.home:
+				this.finish();
+				return true;
 			case R.id.action_upload_skinmanager: {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle(getString(R.string.upload_to_sm_title));
