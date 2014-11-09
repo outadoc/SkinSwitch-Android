@@ -34,7 +34,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.SlidingTabLayout;
 
 /**
  * Activity displaying the skin library.
@@ -53,10 +52,6 @@ public class SkinLibraryActivity extends ActionBarActivity {
 		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager(), this);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(adapter);
-
-		SlidingTabLayout tabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tab_layout);
-		tabLayout.setViewPager(viewPager);
-		tabLayout.setSelectedIndicatorColors(getResources().getColor(android.R.color.white));
 	}
 
 	@Override
