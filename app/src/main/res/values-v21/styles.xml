@@ -36,6 +36,8 @@
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:windowTranslucentStatus">true</item>
 		<item name="android:windowTranslucentNavigation">true</item>
+		<item name="android:windowAllowEnterTransitionOverlap">true</item>
+		<item name="android:windowAllowReturnTransitionOverlap">true</item>
 	</style>
 
 	<style name="DetailActionBar" parent="Widget.AppCompat.Light.ActionBar">

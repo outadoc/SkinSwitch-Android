@@ -32,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.ShareActionProvider;
@@ -63,6 +64,8 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
  */
 public class DetailActivity extends ActionBarActivity implements OnSkinLoadingListener {
 
+	public static final String SHARED_SKIN_IMAGE = "skin_preview";
+
 	private BasicSkin skin;
 	private int animTime;
 
@@ -75,7 +78,9 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
+
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		ViewCompat.setTransitionName(findViewById(R.id.skin_preview_front), SHARED_SKIN_IMAGE);
 
 		skin = (BasicSkin) getIntent().getSerializableExtra("skin");
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
@@ -124,9 +129,6 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
-			case android.R.id.home:
-				this.finish();
-				return true;
 			case R.id.action_refresh_skin: {
 				new AlertDialog.Builder(this)
 						.setTitle(getString(R.string.refresh_skin_title))

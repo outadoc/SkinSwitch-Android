@@ -51,7 +51,11 @@
 		<activity
 			android:name=".skinlist.DetailActivity"
 			android:label="@string/skin_details_title"
+			android:parentActivityName=".skinlist.MainActivity"
 			android:theme="@style/DetailTheme">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".skinlist.MainActivity" />
 		</activity>
 		<activity
 			android:name=".skinlist.NewCustomSkinActivity"
@@ -69,7 +73,7 @@
 			android:name=".skinlibrary.SkinLibraryActivity"
 			android:label="@string/title_activity_skin_library"
 			android:theme="@style/LibraryTheme">
-		<meta-data
+			<meta-data
 				android:name="android.app.default_searchable"
 				android:value=".skinlibrary.LibrarySearchActivity" />
 		</activity>

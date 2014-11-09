@@ -19,6 +19,7 @@
 package fr.outadev.skinswitch.skinlist;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,13 +56,16 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 	private static final long PRESS_ANIMATION_DURATION = 1000;
 	private static final long RESET_ANIMATION_DURATION = 500;
+
+	private final Activity activity;
 	private SkinsListFragment frag;
 	private Typeface minecraftiaFont;
 	private boolean wasTutorialPlayed;
 
-	public SkinsListAdapter(Context context, SkinsListFragment frag, int resource, List<BasicSkin> array) {
-		super(context, resource, array);
+	public SkinsListAdapter(Activity activity, SkinsListFragment frag, int resource, List<BasicSkin> array) {
+		super(activity, resource, array);
 		this.frag = frag;
+		this.activity = activity;
 
 		minecraftiaFont = Typeface.createFromAsset(getContext().getAssets(), "Minecraftia.ttf");
 		wasTutorialPlayed = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("wasTutorialPlayed", false);
@@ -140,6 +146,10 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 
 		convertView.setOnTouchListener(new OnSkinHeadTouchListener(skin, skinView));
 		return convertView;
+	}
+
+	public Activity getActivity() {
+		return activity;
 	}
 
 	/**
@@ -248,9 +258,11 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 			if((new Date()).getTime() - touchTimestamp < 300) {
 				cancelAnimationAndGoBackToWork();
 
+				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+						getActivity(), skinView.findViewById(R.id.img_skin_preview), DetailActivity.SHARED_SKIN_IMAGE);
 				Intent intent = new Intent(getContext(), DetailActivity.class);
 				intent.putExtra("skin", skin);
-				getContext().startActivity(intent);
+				ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
 			}
 
 			if((new Date()).getTime() - touchTimestamp < PRESS_ANIMATION_DURATION) {
