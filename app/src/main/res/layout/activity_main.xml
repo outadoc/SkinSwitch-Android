@@ -16,19 +16,18 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
-
-	<include layout="@layout/toolbar" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
 	<fragment
 		android:id="@+id/skins_list_fragment"
 		android:name="fr.outadev.skinswitch.skinlist.SkinsListFragment"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_weight="1" />
+		android:layout_weight="1"
+		tools:layout="@layout/simple_list_item_1" />
 
 </LinearLayout>

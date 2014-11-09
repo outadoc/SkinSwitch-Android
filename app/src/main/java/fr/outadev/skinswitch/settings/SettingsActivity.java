@@ -20,10 +20,7 @@ package fr.outadev.skinswitch.settings;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
-import fr.outadev.skinswitch.R;
 
 /**
  * Activity that handles the SkinSwitch settings.
@@ -35,14 +32,11 @@ public class SettingsActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.activity_fragment_container);
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Display the fragment as the main content.
 		getFragmentManager().beginTransaction()
-				.replace(R.id.fragment_container, new SettingsFragment())
+				.replace(android.R.id.content, new SettingsFragment())
 				.commit();
 	}
 

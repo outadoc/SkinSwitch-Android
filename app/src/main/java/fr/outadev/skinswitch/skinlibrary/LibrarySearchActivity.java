@@ -24,10 +24,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
 /**
@@ -41,9 +39,6 @@ public class LibrarySearchActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.activity_fragment_container);
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if(Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
@@ -56,7 +51,7 @@ public class LibrarySearchActivity extends ActionBarActivity {
 			Fragment searchFrag = new SkinLibraryPageFragment();
 			searchFrag.setArguments(args);
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			ft.add(R.id.fragment_container, searchFrag).commit();
+			ft.add(android.R.id.content, searchFrag).commit();
 		}
 	}
 
