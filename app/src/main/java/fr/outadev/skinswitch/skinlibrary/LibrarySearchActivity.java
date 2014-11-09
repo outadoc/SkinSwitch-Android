@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.view.MenuItem;
 
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 
@@ -55,14 +54,4 @@ public class LibrarySearchActivity extends ActionBarActivity {
 		}
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()) {
-			case android.R.id.home:
-				this.finish();
-				return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
 }

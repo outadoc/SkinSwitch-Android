@@ -21,9 +21,7 @@
 
 	<style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="colorPrimary">@color/colorPrimary</item>
-		<!-- darker variant of colorPrimary (for status bar, contextual app bars) -->
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<!-- theme UI controls like checkboxes and text fields -->
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="android:navigationBarColor">@color/colorPrimaryDark</item>
 		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
