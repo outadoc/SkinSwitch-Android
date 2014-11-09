@@ -23,7 +23,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -33,8 +32,9 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 import fr.outadev.skinswitch.R;
-import fr.outadev.skinswitch.SlidingTabLayout;
 
 /**
  * Activity displaying the skin library.
@@ -54,11 +54,8 @@ public class SkinLibraryActivity extends ActionBarActivity {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(adapter);
 
-		SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+		PagerSlidingTabStrip slidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
 		slidingTabLayout.setViewPager(viewPager);
-		slidingTabLayout.setDividerColors(Color.TRANSPARENT);
-		slidingTabLayout.setSelectedIndicatorColors(Color.WHITE);
-		slidingTabLayout.setBackgroundResource(R.color.colorPrimary);
 	}
 
 	@Override
