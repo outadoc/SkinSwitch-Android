@@ -26,8 +26,6 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,14 +51,12 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
 public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 	private final int animTime;
-	private final Animation fadeInAnim;
 	private Activity parentActivity;
 
 	public SkinLibraryListAdapter(Activity parent, int resource, List<SkinLibrarySkin> objects) {
 		super(parent, resource, objects);
 		this.parentActivity = parent;
 		animTime = getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime);
-		fadeInAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_skin_fade_in);
 	}
 
 	@Override
@@ -116,7 +112,6 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 			protected void onPostExecute(Bitmap bitmap) {
 				if(bitmap != null && tag.equals(img_skin_preview_front.getTag())) {
 					img_skin_preview_front.setImageBitmap(bitmap);
-					img_skin_preview_front.startAnimation(fadeInAnim);
 					img_skin_preview_front.setAlpha(1.0F);
 
 					(new AsyncTask<Void, Void, Bitmap>() {
