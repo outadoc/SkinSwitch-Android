@@ -29,26 +29,24 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
-	<style name="Theme.SkinSwitch.ActionBar" parent="Widget.AppCompat.Toolbar">
-		<item name="android:background">@color/colorPrimary</item>
-		<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-		<item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+	<style name="Theme.SkinSwitch.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+	<item name="android:background">@color/colorPrimary</item>
 	</style>
 
-	<style name="Theme.SkinSwitch.ActionBar.Transparent" parent="Theme.SkinSwitch.ActionBar" />
+	<style name="Theme.SkinSwitch.ActionBar.Detail" parent="Theme.SkinSwitch.ActionBar" />
 
 	<style name="Theme.SkinSwitch.Widget.LoginFormContainer">
-		<item name="android:layout_width">match_parent</item>
+	<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:padding">16dp</item>
 	</style>
 
 	<style name="Theme.SkinSwitch.Widget.LibraryCard">
-		<item name="android:layout_width">match_parent</item>
+	<item name="android:layout_width">match_parent</item>
 	</style>
 
 	<style name="Theme.SkinSwitch.Detail" parent="Theme.SkinSwitch">
-		<item name="android:actionBarStyle">@style/Theme.SkinSwitch.ActionBar.Transparent</item>
+		<item name="android:actionBarStyle">@style/Theme.SkinSwitch.ActionBar.Detail</item>
 		<item name="android:windowActionBarOverlay">false</item>
 		<item name="android:windowContentOverlay">@null</item>
 	</style>
