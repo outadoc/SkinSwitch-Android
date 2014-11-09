@@ -19,43 +19,42 @@
 
 <resources>
 
-	<style name="Theme" />
-
-	<style name="Theme.SkinSwitch.Widget" />
-
-	<style name="Theme.SkinSwitch" parent="Theme.AppCompat.Light.NoActionBar">
-		<item name="colorPrimary">@color/colorPrimary</item>
-		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<item name="colorAccent">@color/colorAccent</item>
+	<style name="SkinSwitchActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+		<item name="android:background">@color/colorPrimary</item>
 	</style>
 
-	<style name="Theme.SkinSwitch.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-	<item name="android:background">@color/colorPrimary</item>
-	</style>
+	<style name="AppTheme" parent="AppBaseTheme" />
 
-	<style name="Theme.SkinSwitch.ActionBar.Detail" parent="Theme.SkinSwitch.ActionBar" />
-
-	<style name="Theme.SkinSwitch.Widget.LoginFormContainer">
-	<item name="android:layout_width">match_parent</item>
+	<style name="LoginFormContainer">
+		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:padding">16dp</item>
 	</style>
 
-	<style name="Theme.SkinSwitch.Widget.LibraryCard">
-	<item name="android:layout_width">match_parent</item>
+	<style name="SkinLibraryCard">
+		<item name="android:layout_width">match_parent</item>
 	</style>
 
-	<style name="Theme.SkinSwitch.Detail" parent="Theme.SkinSwitch">
-		<item name="android:actionBarStyle">@style/Theme.SkinSwitch.ActionBar.Detail</item>
+	<style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+	<item name="colorPrimary">@color/colorPrimary</item>
+		<!-- darker variant of colorPrimary (for status bar, contextual app bars) -->
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<!-- theme UI controls like checkboxes and text fields -->
+		<item name="colorAccent">@color/colorAccent</item>
+	</style>
+
+	<style name="DetailTheme" parent="AppBaseTheme">
+		<item name="android:actionBarStyle">@style/DetailActionBar</item>
 		<item name="android:windowActionBarOverlay">false</item>
 		<item name="android:windowContentOverlay">@null</item>
 	</style>
 
-	<style name="Theme.SkinSwitch.Dialog" parent="android:Theme.Holo.Light.Dialog">
-		<item name="colorPrimary">@color/colorPrimary</item>
+	<style name="DialogActivity" parent="android:Theme.Holo.Light.Dialog">
+	<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<style name="DetailActionBar" parent="SkinSwitchActionBar" />
 
 </resources>

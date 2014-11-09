@@ -25,4 +25,4 @@
 	android:layout_height="wrap_content"
 	android:layout_alignParentTop="true"
 	android:minHeight="?attr/actionBarSize"
-	app:theme="@style/Theme.SkinSwitch.ActionBar" />
+	app:theme="@style/SkinSwitchActionBar" />
