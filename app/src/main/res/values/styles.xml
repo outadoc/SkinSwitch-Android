@@ -60,4 +60,13 @@
 		<item name="android:displayOptions">homeAsUp</item>
 	</style>
 
+	<style name="LibraryTheme" parent="AppTheme">
+		<item name="android:actionBarStyle">@style/LibraryActionBar</item>
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
+	<style name="LibraryActionBar" parent="SkinSwitchActionBar">
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
 </resources>

@@ -21,7 +21,7 @@
 	package="fr.outadev.skinswitch"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
 	<application
@@ -67,8 +67,9 @@
 		</activity>
 		<activity
 			android:name=".skinlibrary.SkinLibraryActivity"
-			android:label="@string/title_activity_skin_library">
-			<meta-data
+			android:label="@string/title_activity_skin_library"
+			android:theme="@style/LibraryTheme">
+		<meta-data
 				android:name="android.app.default_searchable"
 				android:value=".skinlibrary.LibrarySearchActivity" />
 		</activity>
