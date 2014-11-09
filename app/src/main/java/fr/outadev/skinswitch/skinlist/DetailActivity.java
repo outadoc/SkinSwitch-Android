@@ -175,6 +175,9 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 				startActivity(intent);
 				return true;
 			}
+			case android.R.id.home:
+				this.finish();
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
