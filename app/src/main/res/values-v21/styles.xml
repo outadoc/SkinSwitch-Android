@@ -43,10 +43,4 @@
 		<item name="displayOptions">homeAsUp</item>
 	</style>
 
-	<style name="DialogActivity" parent="android:Theme.Material.Light.Dialog">
-		<item name="colorPrimary">@color/colorPrimary</item>
-		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<item name="colorAccent">@color/colorAccent</item>
-	</style>
-
 </resources>
