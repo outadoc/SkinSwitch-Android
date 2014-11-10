@@ -95,7 +95,8 @@
 			android:layout_alignParentEnd="true"
 			android:layout_alignParentRight="true"
 			android:layout_marginBottom="@dimen/floating_action_button_margin_normal_minus"
-			android:layout_marginRight="@dimen/floating_action_button_margin_normal">
+			android:layout_marginRight="@dimen/floating_action_button_margin_normal"
+			android:elevation="4dp">
 
 			<com.shamanland.fab.FloatingActionButton
 				android:id="@+id/b_upload_skin"
@@ -109,7 +110,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_gravity="center"
-				android:visibility="gone" />
+				android:elevation="5dp"
+				android:visibility="visible" />
 
 		</FrameLayout>
 

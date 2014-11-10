@@ -344,7 +344,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 		int rippleColor = palette.getVibrantColor(getResources().getColor(R.color.loading_bar_one));
 
-		colorRipple(R.id.b_upload_skin, rippleColor);
+		//colorRipple(R.id.b_upload_skin, rippleColor);
 	}
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
