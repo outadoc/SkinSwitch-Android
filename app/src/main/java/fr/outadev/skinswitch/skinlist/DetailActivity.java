@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Outline;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.AsyncTask;
@@ -41,13 +40,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.view.WindowInsets;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.shamanland.fab.FloatingActionButton;
 
 import java.io.FileNotFoundException;
 
@@ -69,10 +68,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	private BasicSkin skin;
 	private int animTime;
 
-	private ImageButton b_delete;
 	private ImageButton b_wear;
-
-	private FrameLayout b_upload_skin_container;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +81,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		skin = (BasicSkin) getIntent().getSerializableExtra("skin");
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
-		b_delete = (ImageButton) findViewById(R.id.b_delete);
 		b_wear = (ImageButton) findViewById(R.id.b_upload_skin);
-
-		b_upload_skin_container = (FrameLayout) findViewById(R.id.b_upload_skin_container);
 
 		Log.d(Utils.TAG, skin.toString());
 
@@ -96,7 +89,6 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		setupText();
 		setupButtons();
 
-		setOutlines();
 		applySystemWindowsBottomInset();
 
 		setLoading(false);
@@ -166,6 +158,36 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 							}
 
 						}).create().show();
+
+				return true;
+			}
+			case R.id.action_delete_skin: {
+				AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+				builder.setTitle(getResources().getString(R.string.delete_skin_title, skin.getName())).setMessage(getResources()
+						.getString(R.string.delete_skin_message, skin.getName()));
+
+				builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int id) {
+						(new AsyncTask<Void, Void, Void>() {
+
+							@Override
+							protected Void doInBackground(Void... voids) {
+								SkinsDatabase db = new SkinsDatabase(DetailActivity.this);
+								db.removeSkin(skin);
+								skin.deleteAllSkinResFromFilesystem(DetailActivity.this);
+								DetailActivity.this.finish();
+
+								return null;
+							}
+
+						}).execute();
+					}
+
+				});
+
+				builder.setNegativeButton(R.string.no, null);
+				builder.create().show();
 
 				return true;
 			}
@@ -273,40 +295,6 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	 * Sets up the buttons (colour and actions).
 	 */
 	private void setupButtons() {
-		b_delete.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View view) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
-				builder.setTitle(getResources().getString(R.string.delete_skin_title, skin.getName())).setMessage(getResources()
-						.getString(R.string.delete_skin_message, skin.getName()));
-
-				builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int id) {
-						(new AsyncTask<Void, Void, Void>() {
-
-							@Override
-							protected Void doInBackground(Void... voids) {
-								SkinsDatabase db = new SkinsDatabase(DetailActivity.this);
-								db.removeSkin(skin);
-								skin.deleteAllSkinResFromFilesystem(DetailActivity.this);
-								DetailActivity.this.finish();
-
-								return null;
-							}
-
-						}).execute();
-					}
-
-				});
-
-				builder.setNegativeButton(R.string.no, null);
-				builder.create().show();
-			}
-
-		});
-
 		b_wear.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -315,27 +303,6 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 			}
 
 		});
-	}
-
-	/**
-	 * Sets the outlines of the buttons.
-	 */
-	@TargetApi(Build.VERSION_CODES.L)
-	private void setOutlines() {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
-			ViewOutlineProvider outlineProvider = new ViewOutlineProvider() {
-
-				@Override
-				public void getOutline(View view, Outline outline) {
-					int size = getResources().getDimensionPixelSize(R.dimen.floating_button_size);
-					outline.setOval(0, 0, size, size);
-				}
-
-			};
-
-			b_delete.setOutlineProvider(outlineProvider);
-			b_upload_skin_container.setOutlineProvider(outlineProvider);
-		}
 	}
 
 	@TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
@@ -375,14 +342,13 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 		int rippleColor = palette.getVibrantColor(getResources().getColor(R.color.loading_bar_one));
 
-		colorRipple(R.id.b_delete, rippleColor);
 		colorRipple(R.id.b_upload_skin, rippleColor);
 	}
 
-	@TargetApi(Build.VERSION_CODES.L)
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void colorRipple(int id, int tintColor) {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.L) {
-			View buttonView = findViewById(id);
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			FloatingActionButton buttonView = (FloatingActionButton) findViewById(id);
 
 			RippleDrawable ripple = (RippleDrawable) buttonView.getBackground();
 			GradientDrawable rippleBackground = (GradientDrawable) ripple.getDrawable(0);
@@ -402,10 +368,10 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 	@Override
 	public void setLoading(boolean loading) {
-		View bLoading = findViewById(R.id.b_loading);
+		/*View bLoading = findViewById(R.id.b_loading);
 		View bWear = findViewById(R.id.b_upload_skin);
 
 		bLoading.setVisibility((loading) ? View.VISIBLE : View.GONE);
-		bWear.setVisibility((loading) ? View.GONE : View.VISIBLE);
+		bWear.setVisibility((loading) ? View.GONE : View.VISIBLE);*/
 	}
 }

@@ -24,6 +24,8 @@
 
 
 
+
+
 apply plugin: 'com.android.application'
 
 android {
@@ -55,4 +57,5 @@ dependencies {
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.1'
     compile 'com.github.kevinsawicki:http-request:5.6'
     compile 'com.jpardogo.materialtabstrip:library:1.0.0'
+    compile 'com.shamanland:fab:0.0.5'
 }

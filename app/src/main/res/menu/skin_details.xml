@@ -27,6 +27,11 @@
 		app:showAsAction="never" />
 
 	<item
+		android:id="@+id/action_delete_skin"
+		android:title="@string/action_delete"
+		app:showAsAction="never" />
+
+	<item
 		android:id="@+id/action_refresh_skin"
 		android:title="@string/action_refresh"
 		app:showAsAction="never" />

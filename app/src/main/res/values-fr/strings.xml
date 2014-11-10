@@ -35,6 +35,7 @@
 	<string name="action_edit">Modifier</string>
 	<string name="action_share">Partager</string>
 	<string name="action_search">Recherche</string>
+	<string name="action_delete">Supprimer</string>
 
 	<string name="success_skin_upload">Skin envoyé avec succès !</string>
 	<string name="error_skin_download">Impossible de télécharger ce skin : %1$s</string>
