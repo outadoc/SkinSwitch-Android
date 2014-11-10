@@ -19,6 +19,7 @@
 package fr.outadev.skinswitch.skinlibrary;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -52,11 +53,17 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 	private final int animTime;
 	private Activity parentActivity;
+	private ProgressDialog progDial;
 
 	public SkinLibraryListAdapter(Activity parent, int resource, List<SkinLibrarySkin> objects) {
 		super(parent, resource, objects);
 		this.parentActivity = parent;
 		animTime = getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+		progDial = new ProgressDialog(getContext());
+		progDial.setMessage(getContext().getResources().getString(R.string.downloading_custom_skin));
+		progDial.setIndeterminate(true);
+		progDial.setCancelable(false);
 	}
 
 	@Override
@@ -165,6 +172,11 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 				(new AsyncTask<Void, Void, Exception>() {
 
 					@Override
+					protected void onPreExecute() {
+						progDial.show();
+					}
+
+					@Override
 					protected Exception doInBackground(Void... voids) {
 						SkinLibrarySkin skin = getItem(position);
 						skin.setCreationDate(new Date());
@@ -194,6 +206,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 									e.getMessage()), Toast.LENGTH_LONG).show();
 						}
 
+						progDial.hide();
 						parentActivity.finish();
 					}
 
