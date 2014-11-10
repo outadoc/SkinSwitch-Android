@@ -41,7 +41,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowInsets;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +67,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	private BasicSkin skin;
 	private int animTime;
 
-	private ImageButton b_wear;
+	private FloatingActionButton b_wear;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +80,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		skin = (BasicSkin) getIntent().getSerializableExtra("skin");
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
-		b_wear = (ImageButton) findViewById(R.id.b_upload_skin);
+		b_wear = (FloatingActionButton) findViewById(R.id.b_upload_skin);
 
 		Log.d(Utils.TAG, skin.toString());
 
@@ -90,15 +89,16 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		setupButtons();
 
 		applySystemWindowsBottomInset();
-
-		setLoading(false);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+
 		SkinsDatabase db = new SkinsDatabase(this);
 		skin = db.getSkin(skin.getId());
+
+		setLoading(false);
 		setupText();
 	}
 
@@ -330,7 +330,6 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		}
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	private void colorizeInterface(Bitmap skin) {
 		Palette palette = Palette.generate(skin);
 
@@ -368,10 +367,6 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 	@Override
 	public void setLoading(boolean loading) {
-		/*View bLoading = findViewById(R.id.b_loading);
-		View bWear = findViewById(R.id.b_upload_skin);
 
-		bLoading.setVisibility((loading) ? View.VISIBLE : View.GONE);
-		bWear.setVisibility((loading) ? View.GONE : View.VISIBLE);*/
 	}
 }
