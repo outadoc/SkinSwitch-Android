@@ -42,6 +42,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	private int animTime;
 
 	private FloatingActionButton b_wear;
+	private ProgressBar progressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
 		b_wear = (FloatingActionButton) findViewById(R.id.b_upload_skin);
+		progressBar = (ProgressBar) findViewById(R.id.skin_upload_progress);
 
 		Log.d(Utils.TAG, skin.toString());
 
@@ -367,6 +370,12 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 	@Override
 	public void setLoading(boolean loading) {
+		if(loading) {
+			b_wear.setImageDrawable(null);
+		} else {
+			b_wear.setImageResource(R.drawable.ic_action_done);
+		}
 
+		progressBar.setVisibility((loading) ? View.VISIBLE : View.GONE);
 	}
 }

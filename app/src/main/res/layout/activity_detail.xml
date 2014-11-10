@@ -88,17 +88,30 @@
 
 		</LinearLayout>
 
-		<com.shamanland.fab.FloatingActionButton
-			android:id="@+id/b_upload_skin"
+		<FrameLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignBottom="@id/skin_details_header"
 			android:layout_alignParentEnd="true"
 			android:layout_alignParentRight="true"
 			android:layout_marginBottom="@dimen/floating_action_button_margin_normal_minus"
-			android:layout_marginRight="@dimen/floating_action_button_margin_normal"
-			android:src="@drawable/ic_action_done"
-			app:floatingActionButtonColor="@color/colorAccent" />
+			android:layout_marginRight="@dimen/floating_action_button_margin_normal">
+
+			<com.shamanland.fab.FloatingActionButton
+				android:id="@+id/b_upload_skin"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ic_action_done"
+				app:floatingActionButtonColor="@color/colorAccent" />
+
+			<ProgressBar
+				android:id="@+id/skin_upload_progress"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_gravity="center"
+				android:visibility="gone" />
+
+		</FrameLayout>
 
 	</RelativeLayout>
 
