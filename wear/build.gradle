@@ -18,6 +18,8 @@
 
 
 
+
+
 apply plugin: 'com.android.application'
 
 android {
@@ -34,9 +36,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources true
-            proguardFiles 'proguard-rules.pro'
         }
     }
 }
