@@ -60,7 +60,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 	 * @return an array containing the latest skins.
 	 */
 	public List<SkinLibrarySkin> fetchLatestSkins(int count, int start) throws HttpRequest.HttpRequestException {
-		return fetchSkinsFromAPI("method=getLastestSkins&max=" + count + "&start=" + start);
+		return fetchSkinsFromAPI("method=getLatestSkins&max=" + count + "&start=" + start);
 	}
 
 	/**
