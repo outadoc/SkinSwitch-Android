@@ -35,7 +35,7 @@
 		<FrameLayout
 			android:id="@+id/skin_details_header"
 			android:layout_width="match_parent"
-			android:layout_height="375dp"
+			android:layout_height="@dimen/skin_details_skin_height"
 			android:background="@drawable/bg"
 			android:elevation="3dp"
 			android:paddingTop="@dimen/skin_details_topmargin">

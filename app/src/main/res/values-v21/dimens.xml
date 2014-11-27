@@ -19,4 +19,5 @@
 
 <resources>
 	<dimen name="skin_details_topmargin">20dp</dimen>
+	<dimen name="skin_details_skin_height">395dp</dimen>
 </resources>

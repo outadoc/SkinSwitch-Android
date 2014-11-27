@@ -27,5 +27,6 @@
 	<dimen name="button_elevation">2dp</dimen>
 	<dimen name="card_corner_radius">2dp</dimen>
 	<dimen name="skin_details_topmargin">0dp</dimen>
+	<dimen name="skin_details_skin_height">375dp</dimen>
 
 </resources>
