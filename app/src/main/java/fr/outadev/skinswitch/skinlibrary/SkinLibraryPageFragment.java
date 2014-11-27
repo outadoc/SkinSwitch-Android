@@ -141,6 +141,7 @@ public class SkinLibraryPageFragment extends Fragment {
 							return handler.fetchAllSkins(MAX_SKINS_LOAD_COUNT, skinsList.size());
 					}
 				} catch(HttpRequest.HttpRequestException e) {
+					e.printStackTrace();
 					return null;
 				}
 
