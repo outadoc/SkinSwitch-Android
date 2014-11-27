@@ -239,9 +239,7 @@ public class SkinsListFragment extends Fragment {
 
 			if(hasGPS == ConnectionResult.SUCCESS) {
 				AdRequest adRequest = new AdRequest.Builder()
-						.addTestDevice("29EBDB460C20FD273BADF028945C56E2")
-						.addTestDevice("4A75A651AD45105DB97E1E0ECE162D0B")
-						.addTestDevice("01A97399DB3801AC28F513F1356A3AC6").build();
+						.addTestDevice("1176AD77C8CCAB0BE044FA12ACD473B0").build();
 				adView.loadAd(adRequest);
 			} else {
 				adView.setVisibility(View.GONE);
