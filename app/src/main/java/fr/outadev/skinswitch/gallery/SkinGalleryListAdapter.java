@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinLibraryListAdapter
+ * SkinSwitch - SkinGalleryListAdapter
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.skinlibrary;
+package fr.outadev.skinswitch.gallery;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -41,7 +41,7 @@ import java.util.List;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Utils;
-import fr.outadev.skinswitch.skin.SkinLibrarySkin;
+import fr.outadev.skinswitch.skin.SkinGallerySkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
 
 /**
@@ -49,13 +49,13 @@ import fr.outadev.skinswitch.skin.SkinsDatabase;
  *
  * @author outadoc
  */
-public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
+public class SkinGalleryListAdapter extends ArrayAdapter<SkinGallerySkin> {
 
 	private final int animTime;
 	private Activity parentActivity;
 	private ProgressDialog progDial;
 
-	public SkinLibraryListAdapter(Activity parent, int resource, List<SkinLibrarySkin> objects) {
+	public SkinGalleryListAdapter(Activity parent, int resource, List<SkinGallerySkin> objects) {
 		super(parent, resource, objects);
 		this.parentActivity = parent;
 		animTime = getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime);
@@ -73,7 +73,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 			convertView = inflater.inflate(R.layout.skin_library_card, parent, false);
 		}
 
-		final SkinLibrarySkin skin = getItem(position);
+		final SkinGallerySkin skin = getItem(position);
 
 		TextView txt_skin_name = (TextView) convertView.findViewById(R.id.lbl_skin_name);
 		TextView txt_skin_description = (TextView) convertView.findViewById(R.id.lbl_skin_description);
@@ -90,7 +90,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 		txt_skin_name.setText(skin.getName());
 		txt_skin_description.setText((!skin.getDescription().isEmpty()) ? skin.getDescription() :
 				getContext().getResources().getString(R.string.no_description_available));
-		txt_skin_author.setText(getContext().getResources().getString(R.string.library_skin_author, skin.getOwner()));
+		txt_skin_author.setText(getContext().getResources().getString(R.string.gallery_skin_author, skin.getOwner()));
 
 		(new AsyncTask<Void, Void, Bitmap>() {
 
@@ -178,7 +178,7 @@ public class SkinLibraryListAdapter extends ArrayAdapter<SkinLibrarySkin> {
 
 					@Override
 					protected Exception doInBackground(Void... voids) {
-						SkinLibrarySkin skin = getItem(position);
+						SkinGallerySkin skin = getItem(position);
 						skin.setCreationDate(new Date());
 						SkinsDatabase db = new SkinsDatabase(getContext());
 						db.addSkin(skin);

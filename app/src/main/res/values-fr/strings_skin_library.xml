@@ -19,17 +19,17 @@
 
 <resources>
 
-	<string name="title_activity_skin_library">Bibliothèque</string>
+	<string name="title_activity_skin_gallery">Gallerie</string>
 	<string name="no_description_available">Pas de description disponible.</string>
-	<string name="hint_search_library">Chercher dans la bibliothèque…</string>
-	<string name="library_connection_error">Chargement des skins impossible ! (erreur réseau)</string>
-	<string name="library_skin_author">… par %1$s</string>
+	<string name="gallery_search_hint">Chercher dans la gallerie…</string>
+	<string name="gallery_connection_error">Chargement des skins impossible ! (erreur réseau)</string>
+	<string name="gallery_skin_author">… par %1$s</string>
 
-	<string name="library_section_random">Aléatoire</string>
-	<string name="library_section_latest">Plus récents</string>
-	<string name="library_section_all">Tous</string>
+	<string name="gallery_section_random">Aléatoire</string>
+	<string name="gallery_section_latest">Plus récents</string>
+	<string name="gallery_section_all">Tous</string>
 
-	<string name="search_title">Recherche de skins</string>
+	<string name="gallery_search_title">Recherche de skins</string>
 	<string name="action_upload">Envoyer sur Skin Manager</string>
 	<string name="upload_to_sm_message">Pour rendre l\'un de vos skins disponibles depuis la bibliothèque de skins, allez sur Skin Manager, créez un nouveau compte (ou connectez-vous), puis envoyez votre skin.</string>
 	<string name="upload_to_sm_title">Aller sur Skin Manager?</string>

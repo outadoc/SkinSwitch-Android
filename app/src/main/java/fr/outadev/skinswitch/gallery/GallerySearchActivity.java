@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - LibrarySearchActivity
+ * SkinSwitch - GallerySearchActivity
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.skinlibrary;
+package fr.outadev.skinswitch.gallery;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -34,7 +34,7 @@ import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
  *
  * @author outadoc
  */
-public class LibrarySearchActivity extends ActionBarActivity {
+public class GallerySearchActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +45,10 @@ public class LibrarySearchActivity extends ActionBarActivity {
 			String query = getIntent().getStringExtra(SearchManager.QUERY);
 
 			Bundle args = new Bundle();
-			args.putString(SkinLibraryPageFragment.ARG_SEARCH_QUERY, query);
-			args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, SkinManagerConnectionHandler.EndPoint.SEARCH_SKINS);
+			args.putString(SkinGalleryPageFragment.ARG_SEARCH_QUERY, query);
+			args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, SkinManagerConnectionHandler.EndPoint.SEARCH_SKINS);
 
-			Fragment searchFrag = new SkinLibraryPageFragment();
+			Fragment searchFrag = new SkinGalleryPageFragment();
 			searchFrag.setArguments(args);
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			ft.add(android.R.id.content, searchFrag).commit();

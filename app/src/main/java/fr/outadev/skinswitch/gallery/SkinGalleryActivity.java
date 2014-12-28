@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinLibraryActivity
+ * SkinSwitch - SkinGalleryActivity
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.skinlibrary;
+package fr.outadev.skinswitch.gallery;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
@@ -41,7 +41,7 @@ import fr.outadev.skinswitch.R;
  *
  * @author outadoc
  */
-public class SkinLibraryActivity extends ActionBarActivity {
+public class SkinGalleryActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class SkinLibraryActivity extends ActionBarActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setElevation(0.0F);
 
-		SkinLibraryPageAdapter adapter = new SkinLibraryPageAdapter(getSupportFragmentManager(), this);
+		SkinGalleryPageAdapter adapter = new SkinGalleryPageAdapter(getSupportFragmentManager(), this);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(adapter);
 

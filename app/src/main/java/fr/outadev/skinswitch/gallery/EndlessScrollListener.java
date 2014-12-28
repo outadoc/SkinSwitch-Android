@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.skinlibrary;
+package fr.outadev.skinswitch.gallery;
 
 import android.widget.AbsListView;
 

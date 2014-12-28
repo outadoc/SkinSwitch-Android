@@ -73,8 +73,8 @@
 				android:value=".skinlist.MainActivity" />
 		</activity>
 		<activity
-			android:name=".skinlibrary.SkinLibraryActivity"
-			android:label="@string/title_activity_skin_library"
+			android:name=".gallery.SkinGalleryActivity"
+			android:label="@string/title_activity_skin_gallery"
 			android:parentActivityName=".skinlist.MainActivity"
 			android:theme="@style/LibraryTheme">
 			<meta-data
@@ -85,9 +85,9 @@
 				android:value=".skinlist.MainActivity" />
 		</activity>
 		<activity
-			android:name=".skinlibrary.LibrarySearchActivity"
-			android:label="@string/search_title"
-			android:parentActivityName=".skinlibrary.SkinLibraryActivity">
+			android:name=".gallery.GallerySearchActivity"
+			android:label="@string/gallery_search_title"
+			android:parentActivityName=".gallery.SkinGalleryActivity">
 			<intent-filter>
 				<action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
 				<action android:name="android.intent.action.SEARCH" />
@@ -95,7 +95,7 @@
 
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value=".skinlibrary.SkinLibraryActivity" />
+				android:value=".gallery.SkinGalleryActivity" />
 			<meta-data
 				android:name="android.app.searchable"
 				android:resource="@xml/searchable" />

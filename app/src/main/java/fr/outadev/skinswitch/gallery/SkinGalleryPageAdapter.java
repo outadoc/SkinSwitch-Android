@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinLibraryPageAdapter
+ * SkinSwitch - SkinGalleryPageAdapter
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.skinlibrary;
+package fr.outadev.skinswitch.gallery;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.En
  *
  * @author outadoc
  */
-public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
+public class SkinGalleryPageAdapter extends FragmentPagerAdapter {
 
 	public static final int INDEX_RANDOM_SKINS = 0;
 	public static final int INDEX_LATEST_SKINS = 1;
@@ -40,25 +40,25 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
 	private Context context;
 
-	public SkinLibraryPageAdapter(FragmentManager fm, Context context) {
+	public SkinGalleryPageAdapter(FragmentManager fm, Context context) {
 		super(fm);
 		this.context = context;
 	}
 
 	@Override
 	public Fragment getItem(int index) {
-		SkinLibraryPageFragment frag = new SkinLibraryPageFragment();
+		SkinGalleryPageFragment frag = new SkinGalleryPageFragment();
 		Bundle args = new Bundle();
 
 		switch(index) {
 			case INDEX_RANDOM_SKINS:
-				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.RANDOM_SKINS);
+				args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, EndPoint.RANDOM_SKINS);
 				break;
 			case INDEX_LATEST_SKINS:
-				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
+				args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
 				break;
 			case INDEX_ALL_SKINS:
-				args.putSerializable(SkinLibraryPageFragment.ARG_ENDPOINT, EndPoint.ALL_SKINS);
+				args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, EndPoint.ALL_SKINS);
 				break;
 			default:
 				return null;
@@ -79,13 +79,13 @@ public class SkinLibraryPageAdapter extends FragmentPagerAdapter {
 
 		switch(position) {
 			case INDEX_RANDOM_SKINS:
-				resId = R.string.library_section_random;
+				resId = R.string.gallery_section_random;
 				break;
 			case INDEX_LATEST_SKINS:
-				resId = R.string.library_section_latest;
+				resId = R.string.gallery_section_latest;
 				break;
 			case INDEX_ALL_SKINS:
-				resId = R.string.library_section_all;
+				resId = R.string.gallery_section_all;
 				break;
 			default:
 				return null;

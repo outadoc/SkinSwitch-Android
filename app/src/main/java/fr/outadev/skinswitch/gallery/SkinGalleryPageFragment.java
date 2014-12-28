@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinLibraryPageFragment
+ * SkinSwitch - SkinGalleryPageFragment
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.skinlibrary;
+package fr.outadev.skinswitch.gallery;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,7 +37,7 @@ import java.util.List;
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler;
 import fr.outadev.skinswitch.network.skinmanager.SkinManagerConnectionHandler.EndPoint;
-import fr.outadev.skinswitch.skin.SkinLibrarySkin;
+import fr.outadev.skinswitch.skin.SkinGallerySkin;
 
 /**
  * Fragment containing a skin library tab.
@@ -45,7 +45,7 @@ import fr.outadev.skinswitch.skin.SkinLibrarySkin;
  *
  * @author outadoc
  */
-public class SkinLibraryPageFragment extends Fragment {
+public class SkinGalleryPageFragment extends Fragment {
 
 	public static final String ARG_ENDPOINT = "EndPoint";
 	public static final String ARG_SEARCH_QUERY = "SearchQuery";
@@ -53,8 +53,8 @@ public class SkinLibraryPageFragment extends Fragment {
 
 	private EndPoint endPoint;
 	private String searchQuery;
-	private List<SkinLibrarySkin> skinsList;
-	private SkinLibraryListAdapter adapter;
+	private List<SkinGallerySkin> skinsList;
+	private SkinGalleryListAdapter adapter;
 	private SwipeRefreshLayout swipeRefreshLayout;
 
 	private ProgressBar progressBar;
@@ -89,8 +89,8 @@ public class SkinLibraryPageFragment extends Fragment {
 		});
 
 		ListView listView = (ListView) view.findViewById(R.id.skins_library_list);
-		skinsList = new ArrayList<SkinLibrarySkin>();
-		adapter = new SkinLibraryListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
+		skinsList = new ArrayList<SkinGallerySkin>();
+		adapter = new SkinGalleryListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
 		listView.setAdapter(adapter);
 
 		listView.setOnScrollListener(new EndlessScrollListener(getResources().getInteger(R.integer
@@ -118,7 +118,7 @@ public class SkinLibraryPageFragment extends Fragment {
 	 * @author outadoc
 	 */
 	private void loadSkinsFromNetwork(final boolean append) {
-		(new AsyncTask<Void, Void, List<SkinLibrarySkin>>() {
+		(new AsyncTask<Void, Void, List<SkinGallerySkin>>() {
 
 			@Override
 			protected void onPreExecute() {
@@ -126,7 +126,7 @@ public class SkinLibraryPageFragment extends Fragment {
 			}
 
 			@Override
-			protected List<SkinLibrarySkin> doInBackground(Void... params) {
+			protected List<SkinGallerySkin> doInBackground(Void... params) {
 				SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler(getActivity());
 
 				try {
@@ -149,7 +149,7 @@ public class SkinLibraryPageFragment extends Fragment {
 			}
 
 			@Override
-			protected void onPostExecute(List<SkinLibrarySkin> result) {
+			protected void onPostExecute(List<SkinGallerySkin> result) {
 				progressBar.setVisibility(View.GONE);
 				swipeRefreshLayout.setRefreshing(false);
 
@@ -162,7 +162,7 @@ public class SkinLibraryPageFragment extends Fragment {
 					adapter.notifyDataSetChanged();
 				} else {
 					if(isAdded()) {
-						Toast.makeText(getActivity(), getResources().getString(R.string.library_connection_error),
+						Toast.makeText(getActivity(), getResources().getString(R.string.gallery_connection_error),
 								Toast.LENGTH_LONG).show();
 					}
 				}

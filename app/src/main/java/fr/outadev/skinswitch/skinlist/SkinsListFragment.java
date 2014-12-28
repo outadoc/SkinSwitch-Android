@@ -45,11 +45,11 @@ import java.util.List;
 
 import fr.outadev.skinswitch.R;
 import fr.outadev.skinswitch.Utils;
+import fr.outadev.skinswitch.gallery.SkinGalleryActivity;
 import fr.outadev.skinswitch.network.login.MojangLoginActivity;
 import fr.outadev.skinswitch.settings.SettingsActivity;
 import fr.outadev.skinswitch.skin.BasicSkin;
 import fr.outadev.skinswitch.skin.SkinsDatabase;
-import fr.outadev.skinswitch.skinlibrary.SkinLibraryActivity;
 import fr.outadev.skinswitch.user.UsersManager;
 
 /**
@@ -160,7 +160,7 @@ public class SkinsListFragment extends Fragment {
 							public void onClick(DialogInterface dialog, int which) {
 								switch(which) {
 									case 0: {
-										Intent intent = new Intent(getActivity(), SkinLibraryActivity.class);
+										Intent intent = new Intent(getActivity(), SkinGalleryActivity.class);
 										startActivity(intent);
 										break;
 									}
