@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinUploadException
+ * SkinSwitch - InvalidSkinSizeException
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,19 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.network;
+package fr.outadev.skinswitch;
 
 /**
- * Defines an exception that happened during the upload of a skin.
+ * An exception thrown when the skin is not the right size.
  *
  * @author outadoc
  */
-public class SkinUploadException extends Exception {
+public class InvalidSkinSizeException extends Exception {
 
-	private static final long serialVersionUID = 4950056828289764272L;
+	private final int width;
+	private final int height;
 
-	public SkinUploadException(String error) {
-		super(error);
+	/**
+	 * Creates a new InvalidSkinSizeException.
+	 *
+	 * @param width  the width of the invalid skin
+	 * @param height the height of the invalid skin
+	 */
+	public InvalidSkinSizeException(int width, int height) {
+		this.width = width;
+		this.height = height;
 	}
 
+	@Override
+	public String getMessage() {
+		return "Invalid size for skin, should be 64x32 or 64x64 (is " + width + "x" + height + ")";
+	}
 }

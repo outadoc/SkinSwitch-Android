@@ -30,6 +30,7 @@ import android.os.Build;
  */
 public abstract class ConnectionHandler {
 
+	public static final String TAG = "Mojang/Network";
 	private String userAgent;
 
 	public ConnectionHandler(Context context) {

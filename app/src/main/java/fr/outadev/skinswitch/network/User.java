@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinUploadException
+ * SkinSwitch - User
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,34 @@
 package fr.outadev.skinswitch.network;
 
 /**
- * Defines an exception that happened during the upload of a skin.
+ * Represents a user, with his/her username and decrypted password.
  *
  * @author outadoc
  */
-public class SkinUploadException extends Exception {
+public class User {
 
-	private static final long serialVersionUID = 4950056828289764272L;
+	private String username;
+	private String password;
 
-	public SkinUploadException(String error) {
-		super(error);
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

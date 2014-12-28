@@ -35,13 +35,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fr.outadev.skinswitch.Utils;
-import fr.outadev.skinswitch.network.login.ChallengeRequirementException;
-import fr.outadev.skinswitch.network.login.InvalidMojangChallengeAnswerException;
-import fr.outadev.skinswitch.network.login.InvalidMojangCredentialsException;
-import fr.outadev.skinswitch.network.login.LoginChallenge;
-import fr.outadev.skinswitch.skin.BasicSkin;
-import fr.outadev.skinswitch.user.User;
+import fr.outadev.skinswitch.BasicSkin;
 
 /**
  * Manages the connection to minecraft.net. Allows you to sign in successfully,
@@ -79,14 +73,14 @@ public class MojangConnectionHandler extends ConnectionHandler {
 		String body = HttpRequest.post(BASE_URL + "/login").userAgent(getUserAgent()).followRedirects(true).form(data).body();
 
 		if(body.isEmpty() || body.contains("<h1>Login</h1>")) {
-			Log.e(Utils.TAG, "could not log in as " + user.getUsername());
+			Log.e(ConnectionHandler.TAG, "could not log in as " + user.getUsername());
 			throw new InvalidMojangCredentialsException();
 		} else if(body.contains("<h1>Confirm your identity</h1>")) {
-			Log.e(Utils.TAG, "challenge required for " + user.getUsername());
+			Log.e(ConnectionHandler.TAG, "challenge required for " + user.getUsername());
 			throw new ChallengeRequirementException(new LoginChallenge(body));
 		}
 
-		Log.i(Utils.TAG, "logged in as " + user.getUsername());
+		Log.i(ConnectionHandler.TAG, "logged in as " + user.getUsername());
 	}
 
 	/**
@@ -108,7 +102,7 @@ public class MojangConnectionHandler extends ConnectionHandler {
 				.body();
 
 		if(body.equals("Security challenge passed.")) {
-			Log.i(Utils.TAG, "challenge validated");
+			Log.i(ConnectionHandler.TAG, "challenge validated");
 		} else {
 			String error;
 
@@ -124,7 +118,7 @@ public class MojangConnectionHandler extends ConnectionHandler {
 				error = Html.fromHtml(body).toString().trim();
 			}
 
-			Log.e(Utils.TAG, "challenge error: " + error);
+			Log.e(ConnectionHandler.TAG, "challenge error: " + error);
 			throw new InvalidMojangChallengeAnswerException(error);
 		}
 	}
@@ -168,12 +162,12 @@ public class MojangConnectionHandler extends ConnectionHandler {
 
 			if(matcher.find()) {
 				String error = matcher.group(1);
-				Log.e(Utils.TAG, "skin couldn't be uploaded: " + error);
+				Log.e(ConnectionHandler.TAG, "skin couldn't be uploaded: " + error);
 				throw new SkinUploadException(error);
 			}
 		}
 
-		Log.i(Utils.TAG, "skin uploaded successfully");
+		Log.i(ConnectionHandler.TAG, "skin uploaded successfully");
 
 	}
 }

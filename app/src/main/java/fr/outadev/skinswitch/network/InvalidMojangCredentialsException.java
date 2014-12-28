@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinUploadException
+ * SkinSwitch - InvalidMojangCredentialsException
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,12 @@
 package fr.outadev.skinswitch.network;
 
 /**
- * Defines an exception that happened during the upload of a skin.
+ * Thrown if the user's username/password were wrong.
  *
  * @author outadoc
  */
-public class SkinUploadException extends Exception {
+public class InvalidMojangCredentialsException extends Exception {
 
-	private static final long serialVersionUID = 4950056828289764272L;
-
-	public SkinUploadException(String error) {
-		super(error);
-	}
+	private static final long serialVersionUID = 8611539444405664181L;
 
 }

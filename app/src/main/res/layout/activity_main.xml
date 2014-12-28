@@ -24,7 +24,7 @@
 
 	<fragment
 		android:id="@+id/skins_list_fragment"
-		android:name="fr.outadev.skinswitch.skinlist.SkinsListFragment"
+		android:name="fr.outadev.skinswitch.SkinsListFragment"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1"

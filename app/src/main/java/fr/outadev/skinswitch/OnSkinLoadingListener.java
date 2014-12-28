@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinUploadException
+ * SkinSwitch - OnSkinLoadingListener
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,19 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.outadev.skinswitch.network;
+package fr.outadev.skinswitch;
 
 /**
- * Defines an exception that happened during the upload of a skin.
- *
- * @author outadoc
+ * Defines an activity that has a progess indicator.
+ * Created by outadoc on 19/07/14.
  */
-public class SkinUploadException extends Exception {
+public interface OnSkinLoadingListener {
 
-	private static final long serialVersionUID = 4950056828289764272L;
-
-	public SkinUploadException(String error) {
-		super(error);
-	}
+	/**
+	 * Displays a loading state.
+	 *
+	 * @param loading true if loading, false if done.
+	 */
+	public void setLoading(boolean loading);
 
 }
