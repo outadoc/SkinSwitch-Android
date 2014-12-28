@@ -113,7 +113,6 @@ public class SkinGalleryPageFragment extends Fragment {
 	 * Downloads a list of skins from the API and displays them in the list.
 	 *
 	 * @param append determines whether the downloaded skins should be appended to the list or replace it.
-	 * @author outadoc
 	 */
 	private void loadSkinsFromNetwork(final boolean append) {
 		(new AsyncTask<Void, Void, List<SkinGallerySkin>>() {
