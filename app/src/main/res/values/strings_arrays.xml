@@ -20,7 +20,7 @@
 <resources>
 
 	<string-array name="new_skin_choices">
-		<item>Choose from Skin Library</item>
+		<item>Choose from Skin Gallery</item>
 		<item>Create a Custom Skin</item>
 	</string-array>
 
