@@ -20,6 +20,7 @@
 <ScrollView
 	android:id="@+id/content"
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:cpv="http://schemas.android.com/apk/res-auto"
 	xmlns:fab="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
@@ -88,8 +89,7 @@
 
 		</LinearLayout>
 
-		<com.getbase.floatingactionbutton.FloatingActionButton
-			android:id="@+id/b_upload_skin"
+		<FrameLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignBottom="@id/skin_details_header"
@@ -97,10 +97,28 @@
 			android:layout_alignParentEnd="false"
 			android:layout_alignParentRight="true"
 			android:layout_marginBottom="-32dp"
-			android:elevation="4dp"
-			fab:fab_colorNormal="@color/colorAccent"
-			fab:fab_colorPressed="@color/colorPrimary"
-			fab:fab_icon="@drawable/ic_action_done" />
+			android:elevation="4dp">
+
+			<com.getbase.floatingactionbutton.FloatingActionButton
+				android:id="@+id/b_upload_skin"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				fab:fab_colorNormal="@color/colorAccent"
+				fab:fab_colorPressed="@color/colorPrimary"
+				fab:fab_icon="@drawable/ic_action_done" />
+
+			<com.github.rahatarmanahmed.cpv.CircularProgressView
+				android:id="@+id/skin_upload_progress"
+				android:layout_width="57dp"
+				android:layout_height="57dp"
+				android:layout_gravity="center"
+				android:layout_marginBottom="3dp"
+				cpv:cpv_color="#FFF"
+				cpv:cpv_indeterminate="true"
+				cpv:cpv_thickness="5dp" />
+
+		</FrameLayout>
+
 
 	</RelativeLayout>
 

@@ -42,11 +42,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.io.FileNotFoundException;
 
@@ -63,7 +63,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 	private int animTime;
 
 	private FloatingActionButton b_wear;
-	private ProgressBar progressBar;
+	private CircularProgressView progressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
 		b_wear = (FloatingActionButton) findViewById(R.id.b_upload_skin);
+		progressBar = (CircularProgressView) findViewById(R.id.skin_upload_progress);
 
 		Log.d(Utils.TAG, skin.toString());
 
@@ -363,7 +364,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 	@Override
 	public void setLoading(boolean loading) {
-
-		//progressBar.setVisibility((loading) ? View.VISIBLE : View.GONE);
+		progressBar.setVisibility((loading) ? View.VISIBLE : View.GONE);
+		b_wear.setEnabled(!loading);
 	}
 }
