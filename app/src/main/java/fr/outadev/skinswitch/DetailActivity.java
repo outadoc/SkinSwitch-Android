@@ -46,7 +46,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.shamanland.fab.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.io.FileNotFoundException;
 
@@ -77,7 +77,6 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		animTime = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
 		b_wear = (FloatingActionButton) findViewById(R.id.b_upload_skin);
-		progressBar = (ProgressBar) findViewById(R.id.skin_upload_progress);
 
 		Log.d(Utils.TAG, skin.toString());
 
@@ -364,12 +363,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 	@Override
 	public void setLoading(boolean loading) {
-		if(loading) {
-			b_wear.setImageDrawable(null);
-		} else {
-			b_wear.setImageResource(R.drawable.ic_action_done);
-		}
 
-		progressBar.setVisibility((loading) ? View.VISIBLE : View.GONE);
+		//progressBar.setVisibility((loading) ? View.VISIBLE : View.GONE);
 	}
 }
