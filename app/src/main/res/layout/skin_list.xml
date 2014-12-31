@@ -70,7 +70,8 @@
 				android:layout_height="wrap_content"
 				fab:fab_colorNormal="@color/colorAccent"
 				fab:fab_colorPressed="@color/colorAccentDark"
-				fab:fab_title="From Skin Gallery" />
+				fab:fab_icon="@drawable/ic_add_to_photos"
+				fab:fab_title="Browse Skin Gallery" />
 
 			<com.getbase.floatingactionbutton.FloatingActionButton
 				android:id="@+id/fab_add_skin_custom"
@@ -78,6 +79,7 @@
 				android:layout_height="wrap_content"
 				fab:fab_colorNormal="@color/colorAccent"
 				fab:fab_colorPressed="@color/colorAccentDark"
+				fab:fab_icon="@drawable/ic_person"
 				fab:fab_title="Custom Skin" />
 
 		</com.getbase.floatingactionbutton.FloatingActionsMenu>
