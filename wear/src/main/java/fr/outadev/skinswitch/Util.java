@@ -1,6 +1,6 @@
 /*
  * SkinSwitch - Util
- * Copyright (C) 2014-2014  Baptiste Candellier
+ * Copyright (C) 2014-2015  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,16 @@ package fr.outadev.skinswitch;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Asset;
+import com.google.android.gms.wearable.Wearable;
+
+import java.io.InputStream;
 
 /**
  * Random useful methods.
@@ -55,6 +64,23 @@ public abstract class Util {
 						oldView.setVisibility(View.GONE);
 					}
 				});
+	}
+
+	public static Bitmap loadBitmapFromAsset(Asset asset, GoogleApiClient googleApiClient) {
+		if(asset == null) {
+			throw new IllegalArgumentException("Asset must be non-null");
+		}
+
+		// convert asset into a file descriptor and block until it's ready
+		InputStream assetInputStream = Wearable.DataApi.getFdForAsset(googleApiClient, asset).await().getInputStream();
+
+		if(assetInputStream == null) {
+			Log.w(MainActivity.TAG, "Requested an unknown Asset.");
+			return null;
+		}
+
+		// decode the stream into a bitmap
+		return BitmapFactory.decodeStream(assetInputStream);
 	}
 
 }
