@@ -183,16 +183,15 @@ public class GalleryListAdapter extends ArrayAdapter<GallerySkin> {
 			GallerySkin skin = getItem(this.position);
 			skin.setCreationDate(new Date());
 			SkinsDatabase db = new SkinsDatabase(getContext());
+			db.addSkin(skin);
 
 			try {
 				skin.toDownloadableSkin().downloadSkinFromSource(getContext());
-			} catch(IOException ignored) {
-			} catch(HttpRequest.HttpRequestException e) {
+			} catch(IOException | HttpRequest.HttpRequestException e) {
 				e.printStackTrace();
+				db.removeSkin(skin);
 				return e;
 			}
-
-			db.addSkin(skin);
 
 			try {
 				Thread.sleep(300);
