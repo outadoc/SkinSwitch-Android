@@ -44,7 +44,7 @@ import fr.outadev.skinswitch.GallerySkin;
  */
 public class SkinManagerConnectionHandler extends ConnectionHandler {
 
-	public static final String BASE_URL = "http://skin.outadoc.fr/json/";
+	public static final String BASE_URL = "https://skin.outadoc.fr/json/";
 
 	public SkinManagerConnectionHandler(Context context) {
 		super(context);
