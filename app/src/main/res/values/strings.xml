@@ -58,4 +58,7 @@
 	<string name="add_skin_instructions">Add a new skin by tapping the <b>+</b> icon.</string>
 	<string name="add_skin_title">Nothing here yet!</string>
 
+	<string name="main_fab_gallery_title">Browse Skin Gallery</string>
+	<string name="main_fab_custom_title">Custom Skin</string>
+
 </resources>
