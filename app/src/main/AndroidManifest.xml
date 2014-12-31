@@ -79,7 +79,7 @@
 			android:theme="@style/LibraryTheme">
 			<meta-data
 				android:name="android.app.default_searchable"
-				android:value=".skinlibrary.LibrarySearchActivity" />
+				android:value=".GallerySearchActivity" />
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".MainActivity" />
