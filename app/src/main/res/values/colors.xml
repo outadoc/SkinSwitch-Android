@@ -31,7 +31,8 @@
 
 	<color name="colorPrimary">#ff744e2c</color>
 	<color name="colorPrimaryDark">#61422A</color>
-	<color name="colorAccent">#ff80582f</color>
+	<color name="colorAccent">#ff66ac28</color>
+	<color name="colorAccentDark">#ff478825</color>
 
 	<color name="loading_bar_one">#ff5a9436</color>
 	<color name="loading_bar_two">#ff83bc4d</color>
