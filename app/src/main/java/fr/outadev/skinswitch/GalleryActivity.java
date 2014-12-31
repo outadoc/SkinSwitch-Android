@@ -44,7 +44,7 @@ public class GalleryActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_skin_library);
+		setContentView(R.layout.activity_skin_gallery);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setElevation(0.0F);
 

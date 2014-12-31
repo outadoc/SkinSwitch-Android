@@ -65,7 +65,7 @@ public class GalleryListAdapter extends ArrayAdapter<GallerySkin> {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		if(convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.skin_library_card, parent, false);
+			convertView = inflater.inflate(R.layout.skin_gallery_card, parent, false);
 		}
 
 		final GallerySkin skin = getItem(position);

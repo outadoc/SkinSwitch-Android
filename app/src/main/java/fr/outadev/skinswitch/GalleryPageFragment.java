@@ -71,7 +71,7 @@ public class GalleryPageFragment extends Fragment {
 			searchQuery = args.getString(ARG_SEARCH_QUERY);
 		}
 
-		View view = inflater.inflate(R.layout.fragment_skin_library_list, container, false);
+		View view = inflater.inflate(R.layout.fragment_skin_gallery_list, container, false);
 
 		progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 		swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
