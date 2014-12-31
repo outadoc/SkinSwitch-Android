@@ -27,12 +27,12 @@
 	android:background="@drawable/bg"
 	android:orientation="vertical">
 
-	<include layout="@layout/no_skins_view" />
-
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1">
+
+		<include layout="@layout/no_skins_view" />
 
 		<GridView
 			android:id="@+id/grid_view"
