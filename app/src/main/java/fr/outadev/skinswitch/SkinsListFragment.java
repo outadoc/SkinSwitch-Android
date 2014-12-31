@@ -34,6 +34,8 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -77,6 +79,32 @@ public class SkinsListFragment extends Fragment {
 		skinsList = new ArrayList<BasicSkin>();
 		skinsAdapter = new SkinsListAdapter(getActivity(), this, android.R.layout.simple_list_item_1, skinsList);
 		gridView.setAdapter(skinsAdapter);
+
+		FloatingActionButton customSkinFab = (FloatingActionButton) view.findViewById(R.id.fab_add_skin_custom);
+		FloatingActionButton gallerySkinFab = (FloatingActionButton) view.findViewById(R.id.fab_add_skin_gallery);
+		final FloatingActionsMenu fab = (FloatingActionsMenu) view.findViewById(R.id.fab_add_skin);
+
+		customSkinFab.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), NewCustomSkinActivity.class);
+				startActivity(intent);
+				fab.collapse();
+			}
+
+		});
+
+		gallerySkinFab.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), SkinGalleryActivity.class);
+				startActivity(intent);
+				fab.collapse();
+			}
+
+		});
 
 		return view;
 	}
@@ -142,33 +170,6 @@ public class SkinsListFragment extends Fragment {
 				// if we want to log in
 				Intent intent = new Intent(getActivity(), MojangLoginActivity.class);
 				startActivity(intent);
-				return true;
-			}
-			case R.id.action_add: {
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle(R.string.add_skin_dialog_title).setItems(R.array.new_skin_choices,
-						new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								switch(which) {
-									case 0: {
-										Intent intent = new Intent(getActivity(), SkinGalleryActivity.class);
-										startActivity(intent);
-										break;
-									}
-									case 1: {
-										Intent intent = new Intent(getActivity(), NewCustomSkinActivity.class);
-										startActivity(intent);
-										break;
-									}
-								}
-							}
-						}
-				);
-
-				builder.create().show();
 				return true;
 			}
 			case R.id.action_settings: {

@@ -20,11 +20,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
-		android:id="@+id/action_add"
-		android:icon="@drawable/ic_action_new"
-		android:title="@string/action_add"
-		app:showAsAction="ifRoom" />
-	<item
 		android:id="@+id/action_settings"
 		android:orderInCategory="100"
 		android:title="@string/action_settings"
