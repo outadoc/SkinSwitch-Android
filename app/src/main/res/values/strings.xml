@@ -39,8 +39,8 @@
 	<string name="action_delete">Delete</string>
 
 	<string name="success_skin_upload">Skin uploaded successfully!</string>
-	<string name="error_skin_download">Could not download this skin: %1$s</string>
-	<string name="error_skin_upload">Could not change your skin: %1$s</string>
+	<string name="error_skin_download">Could not download this skin, check your network!</string>
+	<string name="error_skin_upload">Could not change your skin, check your network!</string>
 
 	<string name="success_skin_added">Skin added successfully!</string>
 	<string name="success_skin_updated">Skin updated successfully!</string>
@@ -60,5 +60,6 @@
 
 	<string name="main_fab_gallery_title">Browse Skin Gallery</string>
 	<string name="main_fab_custom_title">Custom Skin</string>
+	<string name="error_retry">Retry</string>
 
 </resources>

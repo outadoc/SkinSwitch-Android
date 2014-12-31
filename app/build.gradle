@@ -18,10 +18,6 @@
 
 
 
-
-
-
-
 apply plugin: 'com.android.application'
 
 android {
@@ -58,4 +54,5 @@ dependencies {
     compile 'com.jpardogo.materialtabstrip:library:1.0.0'
     compile 'com.getbase:floatingactionbutton:1.4.0'
     compile 'com.github.rahatarmanahmed:circularprogressview:1.0.0'
+    compile 'com.nispok:snackbar:2.3.0'
 }

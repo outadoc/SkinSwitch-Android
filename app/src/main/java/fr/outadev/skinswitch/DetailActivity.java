@@ -47,6 +47,8 @@ import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.listeners.ActionClickListener;
 
 import java.io.FileNotFoundException;
 
@@ -127,31 +129,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 
 							@Override
 							public void onClick(DialogInterface dialogInterface, int i) {
-								(new AsyncTask<Void, Void, Void>() {
-
-									@Override
-									protected Void doInBackground(Void... voids) {
-										try {
-											skin.downloadSkinFromSource(DetailActivity.this);
-										} catch(Exception e) {
-											e.printStackTrace();
-											Toast.makeText(DetailActivity.this, getResources().getString(R.string
-															.error_skin_refresh,
-													e.getMessage()), Toast.LENGTH_LONG).show();
-										}
-
-										return null;
-									}
-
-									@Override
-									protected void onPostExecute(Void aVoid) {
-										setupSkinPreviews();
-										Toast.makeText(DetailActivity.this, getResources().getString(R.string
-														.success_skin_refresh),
-												Toast.LENGTH_LONG).show();
-									}
-
-								}).execute();
+								(new SkinRefreshAsyncTask()).execute();
 							}
 
 						}).create().show();
@@ -367,4 +345,47 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 		progressBar.setVisibility((loading) ? View.VISIBLE : View.GONE);
 		b_wear.setEnabled(!loading);
 	}
+
+	private class SkinRefreshAsyncTask extends AsyncTask<Void, Void, Exception> {
+
+		@Override
+		protected Exception doInBackground(Void... voids) {
+			try {
+				skin.downloadSkinFromSource(DetailActivity.this);
+			} catch(Exception e) {
+				e.printStackTrace();
+				return e;
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Exception e) {
+			setupSkinPreviews();
+
+			if(e != null) {
+				Snackbar.with(DetailActivity.this)
+						.text(R.string.error_skin_refresh)
+						.actionLabel(R.string.error_retry)
+						.actionColorResource(R.color.colorAccent)
+						.actionListener(new ActionClickListener() {
+
+							@Override
+							public void onActionClicked() {
+								(new SkinRefreshAsyncTask()).execute();
+							}
+
+						})
+						.show(DetailActivity.this);
+			} else {
+				Toast.makeText(DetailActivity.this, getResources().getString(R.string
+								.success_skin_refresh),
+						Toast.LENGTH_LONG).show();
+
+			}
+		}
+
+	}
+
 }

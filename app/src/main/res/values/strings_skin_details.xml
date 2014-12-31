@@ -19,7 +19,7 @@
 
 <resources>
 
-	<string name="error_skin_refresh">Could not refresh this skin: %1$s</string>
+	<string name="error_skin_refresh">Could not refresh this skin!</string>
 	<string name="success_skin_refresh">Successfully refreshed this skin!</string>
 
 	<string name="refresh_skin_title">Refresh skin?</string>

@@ -27,9 +27,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.github.kevinsawicki.http.HttpRequest;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.listeners.ActionClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,8 +160,19 @@ public class GalleryPageFragment extends Fragment {
 					adapter.notifyDataSetChanged();
 				} else {
 					if(isAdded()) {
-						Toast.makeText(getActivity(), getResources().getString(R.string.gallery_connection_error),
-								Toast.LENGTH_LONG).show();
+						Snackbar.with(getActivity())
+								.text(R.string.gallery_connection_error)
+								.actionLabel(R.string.error_retry)
+								.actionColorResource(R.color.colorAccent)
+								.actionListener(new ActionClickListener() {
+
+									@Override
+									public void onActionClicked() {
+										loadSkinsFromNetwork(append);
+									}
+
+								})
+								.show(getActivity());
 					}
 				}
 			}

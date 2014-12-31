@@ -38,8 +38,8 @@
 	<string name="action_delete">Supprimer</string>
 
 	<string name="success_skin_upload">Skin envoyé avec succès !</string>
-	<string name="error_skin_download">Impossible de télécharger ce skin : %1$s</string>
-	<string name="error_skin_upload">Impossible de changer votre skin : %1$s</string>
+	<string name="error_skin_download">Impossible de télécharger ce skin ! (réseau)</string>
+	<string name="error_skin_upload">Changement de skin impossible ! (réseau)</string>
 
 	<string name="success_skin_added">Skin ajouté avec succès !</string>
 	<string name="success_skin_updated">Skin mis à jour avec succès !</string>

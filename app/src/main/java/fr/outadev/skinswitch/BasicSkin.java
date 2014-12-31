@@ -18,6 +18,7 @@
 
 package fr.outadev.skinswitch;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,9 +28,10 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.github.kevinsawicki.http.HttpRequest;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.listeners.ActionClickListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -450,34 +452,34 @@ public abstract class BasicSkin implements Serializable {
 	 * Asks a confirmation to the user, if this option is enabled, before starting the network operation
 	 * and notifying the listener of the imminent transfer.
 	 *
-	 * @param context        a context
+	 * @param activity       a context
 	 * @param loadingHandler the listener that will be notified of the upload
 	 */
-	public void initSkinUpload(final Context context, final OnSkinLoadingListener loadingHandler) {
-		UsersManager usersManager = new UsersManager(context);
+	public void initSkinUpload(final Activity activity, final OnSkinLoadingListener loadingHandler) {
+		UsersManager usersManager = new UsersManager(activity);
 
 		//if the user isn't logged in, pop up the login window
 		if(!usersManager.isLoggedInSuccessfully()) {
-			Intent intent = new Intent(context, MojangLoginActivity.class);
-			context.startActivity(intent);
+			Intent intent = new Intent(activity, MojangLoginActivity.class);
+			activity.startActivity(intent);
 			return;
 		}
 
-		boolean noConfirmation = PreferenceManager.getDefaultSharedPreferences(context)
+		boolean noConfirmation = PreferenceManager.getDefaultSharedPreferences(activity)
 				.getBoolean("pref_no_confirmation", false);
 
 		//else, ask for a confirmation, but only if we want to
 		if(noConfirmation) {
-			uploadSkinAsync(context, loadingHandler);
+			uploadSkinAsync(activity, loadingHandler);
 		} else {
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setTitle(context.getResources().getString(R.string.replace_skin_title,
-					getName())).setMessage(context.getResources().getString(R.string.replace_skin_message, getName()));
+			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+			builder.setTitle(activity.getResources().getString(R.string.replace_skin_title,
+					getName())).setMessage(activity.getResources().getString(R.string.replace_skin_message, getName()));
 
 			builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int id) {
-					uploadSkinAsync(context, loadingHandler);
+					uploadSkinAsync(activity, loadingHandler);
 				}
 
 			});
@@ -495,7 +497,7 @@ public abstract class BasicSkin implements Serializable {
 	 * @param context        a context
 	 * @param loadingHandler the listener that will be notified of the upload
 	 */
-	private void uploadSkinAsync(final Context context, final OnSkinLoadingListener loadingHandler) {
+	private void uploadSkinAsync(final Activity activity, final OnSkinLoadingListener loadingHandler) {
 		(new AsyncTask<Void, Void, Exception>() {
 
 			@Override
@@ -505,12 +507,12 @@ public abstract class BasicSkin implements Serializable {
 
 			@Override
 			protected Exception doInBackground(Void... voids) {
-				MojangConnectionHandler handler = new MojangConnectionHandler(context);
-				UsersManager um = new UsersManager(context);
+				MojangConnectionHandler handler = new MojangConnectionHandler(activity);
+				UsersManager um = new UsersManager(activity);
 
 				try {
 					handler.loginWithCredentials(um.getUser());
-					handler.uploadSkinToMojang(BasicSkin.this, context);
+					handler.uploadSkinToMojang(BasicSkin.this, activity);
 				} catch(Exception e) {
 					return e;
 				}
@@ -522,25 +524,35 @@ public abstract class BasicSkin implements Serializable {
 			protected void onPostExecute(Exception e) {
 				if(e != null) {
 					//display the error if any
-					if(e.getMessage() != null && !e.getMessage().isEmpty()) {
-						Toast.makeText(context, context.getResources().getString(R.string.error_skin_upload, e.getMessage()),
-								Toast.LENGTH_LONG).show();
-					}
+					Snackbar.with(activity)
+							.text(R.string.error_skin_upload)
+							.actionLabel(R.string.error_retry)
+							.actionColorResource(R.color.colorAccent)
+							.actionListener(new ActionClickListener() {
+
+								@Override
+								public void onActionClicked() {
+									uploadSkinAsync(activity, loadingHandler);
+								}
+
+							})
+							.show(activity);
 
 					//if the user needs to fill in a challenge
 					if(e instanceof ChallengeRequirementException) {
-						Intent intent = new Intent(context, MojangLoginActivity.class);
+						Intent intent = new Intent(activity, MojangLoginActivity.class);
 						intent.putExtra("step", MojangLoginActivity.Step.CHALLENGE);
-						context.startActivity(intent);
+						activity.startActivity(intent);
 					} else if(e instanceof InvalidMojangCredentialsException) {
 						//if the user needs to relog in
-						Intent intent = new Intent(context, MojangLoginActivity.class);
-						context.startActivity(intent);
+						Intent intent = new Intent(activity, MojangLoginActivity.class);
+						activity.startActivity(intent);
 					}
 
 				} else {
-					Toast.makeText(context, context.getResources().getString(R.string.success_skin_upload),
-							Toast.LENGTH_SHORT).show();
+					Snackbar.with(activity)
+							.text(R.string.success_skin_upload)
+							.show(activity);
 				}
 
 				loadingHandler.setLoading(false);

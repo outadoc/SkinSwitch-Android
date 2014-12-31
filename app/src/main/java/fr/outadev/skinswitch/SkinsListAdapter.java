@@ -213,7 +213,7 @@ public class SkinsListAdapter extends ArrayAdapter<BasicSkin> {
 						public void run() {
 							cancelAnimationAndGoBackToWork();
 
-							skin.initSkinUpload(getContext(), new OnSkinLoadingListener() {
+							skin.initSkinUpload(getActivity(), new OnSkinLoadingListener() {
 
 								@Override
 								public void setLoading(boolean loading) {

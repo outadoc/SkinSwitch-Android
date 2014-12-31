@@ -32,6 +32,8 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.github.kevinsawicki.http.HttpRequest;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.listeners.ActionClickListener;
 
 import java.io.IOException;
 import java.util.Date;
@@ -208,7 +210,19 @@ public class CustomSkinActivity extends ActionBarActivity {
 
 						@Override
 						public void run() {
-							Toast.makeText(CustomSkinActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+							Snackbar.with(CustomSkinActivity.this)
+									.text(e.getMessage())
+									.actionLabel(R.string.error_retry)
+									.actionColorResource(R.color.colorAccent)
+									.actionListener(new ActionClickListener() {
+
+										@Override
+										public void onActionClicked() {
+											downloadAndAddSkin(skin);
+										}
+
+									})
+									.show(CustomSkinActivity.this);
 						}
 
 					});

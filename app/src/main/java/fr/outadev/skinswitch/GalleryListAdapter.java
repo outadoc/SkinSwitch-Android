@@ -30,9 +30,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.kevinsawicki.http.HttpRequest;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.listeners.ActionClickListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -163,55 +164,71 @@ public class GalleryListAdapter extends ArrayAdapter<GallerySkin> {
 
 			@Override
 			public void onClick(View view) {
-
-				(new AsyncTask<Void, Void, Exception>() {
-
-					@Override
-					protected void onPreExecute() {
-						progDial.show();
-					}
-
-					@Override
-					protected Exception doInBackground(Void... voids) {
-						GallerySkin skin = getItem(position);
-						skin.setCreationDate(new Date());
-						SkinsDatabase db = new SkinsDatabase(getContext());
-						db.addSkin(skin);
-
-						try {
-							skin.toDownloadableSkin().downloadSkinFromSource(getContext());
-						} catch(IOException ignored) {
-						} catch(HttpRequest.HttpRequestException e) {
-							e.printStackTrace();
-							return e;
-						}
-
-						try {
-							Thread.sleep(300);
-						} catch(InterruptedException ignored) {
-						}
-
-						return null;
-					}
-
-					@Override
-					protected void onPostExecute(Exception e) {
-						if(e != null) {
-							Toast.makeText(getContext(), getContext().getResources().getString(R.string.error_skin_download,
-									e.getMessage()), Toast.LENGTH_LONG).show();
-						}
-
-						progDial.hide();
-						parentActivity.finish();
-					}
-
-				}).execute();
-
+				(new DownloadSkinAsyncTask()).execute(position);
 			}
 
 		});
 
 		return convertView;
+	}
+
+	private class DownloadSkinAsyncTask extends AsyncTask<Integer, Void, Exception> {
+
+		private int position;
+
+		@Override
+		protected Exception doInBackground(Integer... position) {
+			this.position = position[0];
+
+			GallerySkin skin = getItem(this.position);
+			skin.setCreationDate(new Date());
+			SkinsDatabase db = new SkinsDatabase(getContext());
+
+			try {
+				skin.toDownloadableSkin().downloadSkinFromSource(getContext());
+			} catch(IOException ignored) {
+			} catch(HttpRequest.HttpRequestException e) {
+				e.printStackTrace();
+				return e;
+			}
+
+			db.addSkin(skin);
+
+			try {
+				Thread.sleep(300);
+			} catch(InterruptedException ignored) {
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			progDial.show();
+		}
+
+		@Override
+		protected void onPostExecute(Exception e) {
+			if(e != null) {
+				Snackbar.with(parentActivity)
+						.text(R.string.error_skin_download)
+						.actionLabel(R.string.error_retry)
+						.actionColorResource(R.color.colorAccent)
+						.actionListener(new ActionClickListener() {
+
+							@Override
+							public void onActionClicked() {
+								(new DownloadSkinAsyncTask()).execute(position);
+							}
+
+						})
+						.show(parentActivity);
+			}
+
+			progDial.hide();
+			parentActivity.finish();
+		}
+
 	}
 
 }
