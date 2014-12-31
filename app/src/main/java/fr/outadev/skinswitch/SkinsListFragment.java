@@ -88,7 +88,7 @@ public class SkinsListFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), NewCustomSkinActivity.class);
+				Intent intent = new Intent(getActivity(), CustomSkinActivity.class);
 				startActivity(intent);
 				fab.collapse();
 			}
@@ -99,7 +99,7 @@ public class SkinsListFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), SkinGalleryActivity.class);
+				Intent intent = new Intent(getActivity(), GalleryActivity.class);
 				startActivity(intent);
 				fab.collapse();
 			}

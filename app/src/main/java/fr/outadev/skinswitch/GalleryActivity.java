@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinGalleryActivity
+ * SkinSwitch - GalleryActivity
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ import com.astuetz.PagerSlidingTabStrip;
  *
  * @author outadoc
  */
-public class SkinGalleryActivity extends ActionBarActivity {
+public class GalleryActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class SkinGalleryActivity extends ActionBarActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setElevation(0.0F);
 
-		SkinGalleryPageAdapter adapter = new SkinGalleryPageAdapter(getSupportFragmentManager(), this);
+		GalleryPageAdapter adapter = new GalleryPageAdapter(getSupportFragmentManager(), this);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(adapter);
 

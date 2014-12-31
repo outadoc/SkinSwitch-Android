@@ -45,10 +45,10 @@ public class GallerySearchActivity extends ActionBarActivity {
 			String query = getIntent().getStringExtra(SearchManager.QUERY);
 
 			Bundle args = new Bundle();
-			args.putString(SkinGalleryPageFragment.ARG_SEARCH_QUERY, query);
-			args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, SkinManagerConnectionHandler.EndPoint.SEARCH_SKINS);
+			args.putString(GalleryPageFragment.ARG_SEARCH_QUERY, query);
+			args.putSerializable(GalleryPageFragment.ARG_ENDPOINT, SkinManagerConnectionHandler.EndPoint.SEARCH_SKINS);
 
-			Fragment searchFrag = new SkinGalleryPageFragment();
+			Fragment searchFrag = new GalleryPageFragment();
 			searchFrag.setArguments(args);
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			ft.add(android.R.id.content, searchFrag).commit();

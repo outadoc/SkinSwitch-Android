@@ -35,7 +35,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.outadev.skinswitch.SkinGallerySkin;
+import fr.outadev.skinswitch.GallerySkin;
 
 /**
  * Handles the requests to the Skin Manager API.
@@ -57,7 +57,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 	 * @param start the index of the first skin to fetch.
 	 * @return an array containing the latest skins.
 	 */
-	public List<SkinGallerySkin> fetchLatestSkins(int count, int start) throws HttpRequest.HttpRequestException {
+	public List<GallerySkin> fetchLatestSkins(int count, int start) throws HttpRequest.HttpRequestException {
 		return fetchSkinsFromAPI("method=getLatestSkins&max=" + count + "&start=" + start);
 	}
 
@@ -67,7 +67,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 	 * @param count the max number of skins to retrieve.
 	 * @return an array containing the random skins.
 	 */
-	public List<SkinGallerySkin> fetchRandomSkins(int count) throws HttpRequest.HttpRequestException {
+	public List<GallerySkin> fetchRandomSkins(int count) throws HttpRequest.HttpRequestException {
 		return fetchSkinsFromAPI("method=getRandomSkins&max=" + count);
 	}
 
@@ -79,7 +79,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 	 * @param start    the index of the first skin to fetch.
 	 * @return an array of skins matching the criteria.
 	 */
-	public List<SkinGallerySkin> fetchSkinByName(String criteria, int count, int start) throws HttpRequest.HttpRequestException {
+	public List<GallerySkin> fetchSkinByName(String criteria, int count, int start) throws HttpRequest.HttpRequestException {
 		try {
 			return fetchSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match="
 					+ URLEncoder.encode(criteria, "UTF-8"));
@@ -88,7 +88,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 		}
 	}
 
-	public List<SkinGallerySkin> fetchAllSkins(int count, int start) throws HttpRequest.HttpRequestException {
+	public List<GallerySkin> fetchAllSkins(int count, int start) throws HttpRequest.HttpRequestException {
 		return fetchSkinsFromAPI("method=searchSkinByName&max=" + count + "&start=" + start + "&match=.");
 	}
 
@@ -104,8 +104,8 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 	 * @param parameters the GET parameters that will be given to the API.
 	 * @return an array of skins returned by the API.
 	 */
-	private List<SkinGallerySkin> fetchSkinsFromAPI(String parameters) throws HttpRequest.HttpRequestException {
-		List<SkinGallerySkin> skinsList = new ArrayList<SkinGallerySkin>();
+	private List<GallerySkin> fetchSkinsFromAPI(String parameters) throws HttpRequest.HttpRequestException {
+		List<GallerySkin> skinsList = new ArrayList<GallerySkin>();
 		String response = HttpRequest.get(BASE_URL + "?" + parameters).userAgent(getUserAgent()).trustAllHosts().body();
 
 		if(response != null) {
@@ -115,7 +115,7 @@ public class SkinManagerConnectionHandler extends ConnectionHandler {
 
 				for(int i = 0; i < resultArray.length(); i++) {
 					JSONObject currSkinObj = resultArray.getJSONObject(i);
-					SkinGallerySkin skin = new SkinGallerySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
+					GallerySkin skin = new GallerySkin(currSkinObj.getInt("id"), currSkinObj.getString("title"),
 							currSkinObj.getString("description"), currSkinObj.getString("owner_username"));
 
 					if(currSkinObj.has("model")) {

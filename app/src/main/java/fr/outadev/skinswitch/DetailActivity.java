@@ -189,7 +189,7 @@ public class DetailActivity extends ActionBarActivity implements OnSkinLoadingLi
 				return true;
 			}
 			case R.id.action_edit_skin: {
-				Intent intent = new Intent(this, NewCustomSkinActivity.class);
+				Intent intent = new Intent(this, CustomSkinActivity.class);
 				intent.putExtra("skin", skin);
 				startActivity(intent);
 				return true;

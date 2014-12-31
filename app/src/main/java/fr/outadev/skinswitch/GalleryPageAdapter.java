@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinGalleryPageAdapter
+ * SkinSwitch - GalleryPageAdapter
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ import fr.outadev.skinswitch.network.SkinManagerConnectionHandler.EndPoint;
  *
  * @author outadoc
  */
-public class SkinGalleryPageAdapter extends FragmentPagerAdapter {
+public class GalleryPageAdapter extends FragmentPagerAdapter {
 
 	public static final int INDEX_RANDOM_SKINS = 0;
 	public static final int INDEX_LATEST_SKINS = 1;
@@ -39,25 +39,25 @@ public class SkinGalleryPageAdapter extends FragmentPagerAdapter {
 
 	private Context context;
 
-	public SkinGalleryPageAdapter(FragmentManager fm, Context context) {
+	public GalleryPageAdapter(FragmentManager fm, Context context) {
 		super(fm);
 		this.context = context;
 	}
 
 	@Override
 	public Fragment getItem(int index) {
-		SkinGalleryPageFragment frag = new SkinGalleryPageFragment();
+		GalleryPageFragment frag = new GalleryPageFragment();
 		Bundle args = new Bundle();
 
 		switch(index) {
 			case INDEX_RANDOM_SKINS:
-				args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, EndPoint.RANDOM_SKINS);
+				args.putSerializable(GalleryPageFragment.ARG_ENDPOINT, EndPoint.RANDOM_SKINS);
 				break;
 			case INDEX_LATEST_SKINS:
-				args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
+				args.putSerializable(GalleryPageFragment.ARG_ENDPOINT, EndPoint.LATEST_SKINS);
 				break;
 			case INDEX_ALL_SKINS:
-				args.putSerializable(SkinGalleryPageFragment.ARG_ENDPOINT, EndPoint.ALL_SKINS);
+				args.putSerializable(GalleryPageFragment.ARG_ENDPOINT, EndPoint.ALL_SKINS);
 				break;
 			default:
 				return null;

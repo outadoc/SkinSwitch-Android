@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinGalleryPageFragment
+ * SkinSwitch - GalleryPageFragment
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ import fr.outadev.skinswitch.network.SkinManagerConnectionHandler.EndPoint;
  *
  * @author outadoc
  */
-public class SkinGalleryPageFragment extends Fragment {
+public class GalleryPageFragment extends Fragment {
 
 	public static final String ARG_ENDPOINT = "EndPoint";
 	public static final String ARG_SEARCH_QUERY = "SearchQuery";
@@ -51,8 +51,8 @@ public class SkinGalleryPageFragment extends Fragment {
 
 	private EndPoint endPoint;
 	private String searchQuery;
-	private List<SkinGallerySkin> skinsList;
-	private SkinGalleryListAdapter adapter;
+	private List<GallerySkin> skinsList;
+	private GalleryListAdapter adapter;
 	private SwipeRefreshLayout swipeRefreshLayout;
 
 	private ProgressBar progressBar;
@@ -87,8 +87,8 @@ public class SkinGalleryPageFragment extends Fragment {
 		});
 
 		ListView listView = (ListView) view.findViewById(R.id.skins_library_list);
-		skinsList = new ArrayList<SkinGallerySkin>();
-		adapter = new SkinGalleryListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
+		skinsList = new ArrayList<GallerySkin>();
+		adapter = new GalleryListAdapter(getActivity(), android.R.layout.simple_list_item_1, skinsList);
 		listView.setAdapter(adapter);
 
 		listView.setOnScrollListener(new EndlessScrollListener(getResources().getInteger(R.integer
@@ -115,7 +115,7 @@ public class SkinGalleryPageFragment extends Fragment {
 	 * @param append determines whether the downloaded skins should be appended to the list or replace it.
 	 */
 	private void loadSkinsFromNetwork(final boolean append) {
-		(new AsyncTask<Void, Void, List<SkinGallerySkin>>() {
+		(new AsyncTask<Void, Void, List<GallerySkin>>() {
 
 			@Override
 			protected void onPreExecute() {
@@ -123,7 +123,7 @@ public class SkinGalleryPageFragment extends Fragment {
 			}
 
 			@Override
-			protected List<SkinGallerySkin> doInBackground(Void... params) {
+			protected List<GallerySkin> doInBackground(Void... params) {
 				SkinManagerConnectionHandler handler = new SkinManagerConnectionHandler(getActivity());
 
 				try {
@@ -146,7 +146,7 @@ public class SkinGalleryPageFragment extends Fragment {
 			}
 
 			@Override
-			protected void onPostExecute(List<SkinGallerySkin> result) {
+			protected void onPostExecute(List<GallerySkin> result) {
 				progressBar.setVisibility(View.GONE);
 				swipeRefreshLayout.setRefreshing(false);
 

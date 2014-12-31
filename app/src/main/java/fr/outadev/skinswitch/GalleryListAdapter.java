@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinGalleryListAdapter
+ * SkinSwitch - GalleryListAdapter
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,13 +44,13 @@ import java.util.List;
  *
  * @author outadoc
  */
-public class SkinGalleryListAdapter extends ArrayAdapter<SkinGallerySkin> {
+public class GalleryListAdapter extends ArrayAdapter<GallerySkin> {
 
 	private final int animTime;
 	private Activity parentActivity;
 	private ProgressDialog progDial;
 
-	public SkinGalleryListAdapter(Activity parent, int resource, List<SkinGallerySkin> objects) {
+	public GalleryListAdapter(Activity parent, int resource, List<GallerySkin> objects) {
 		super(parent, resource, objects);
 		this.parentActivity = parent;
 		animTime = getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime);
@@ -68,7 +68,7 @@ public class SkinGalleryListAdapter extends ArrayAdapter<SkinGallerySkin> {
 			convertView = inflater.inflate(R.layout.skin_library_card, parent, false);
 		}
 
-		final SkinGallerySkin skin = getItem(position);
+		final GallerySkin skin = getItem(position);
 
 		TextView txt_skin_name = (TextView) convertView.findViewById(R.id.lbl_skin_name);
 		TextView txt_skin_description = (TextView) convertView.findViewById(R.id.lbl_skin_description);
@@ -173,7 +173,7 @@ public class SkinGalleryListAdapter extends ArrayAdapter<SkinGallerySkin> {
 
 					@Override
 					protected Exception doInBackground(Void... voids) {
-						SkinGallerySkin skin = getItem(position);
+						GallerySkin skin = getItem(position);
 						skin.setCreationDate(new Date());
 						SkinsDatabase db = new SkinsDatabase(getContext());
 						db.addSkin(skin);

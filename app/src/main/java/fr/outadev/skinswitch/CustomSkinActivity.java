@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - NewCustomSkinActivity
+ * SkinSwitch - CustomSkinActivity
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ import java.util.Date;
  *
  * @author outadoc
  */
-public class NewCustomSkinActivity extends ActionBarActivity {
+public class CustomSkinActivity extends ActionBarActivity {
 
 	private EditText txt_name;
 	private EditText txt_description;
@@ -204,11 +204,11 @@ public class NewCustomSkinActivity extends ActionBarActivity {
 				try {
 					return skin.validateSource(txt_source.getText().toString().trim());
 				} catch(final Exception e) {
-					NewCustomSkinActivity.this.runOnUiThread(new Runnable() {
+					CustomSkinActivity.this.runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
-							Toast.makeText(NewCustomSkinActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+							Toast.makeText(CustomSkinActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 						}
 
 					});
@@ -224,11 +224,11 @@ public class NewCustomSkinActivity extends ActionBarActivity {
 
 						@Override
 						protected Void doInBackground(Void... params) {
-							SkinsDatabase db = new SkinsDatabase(NewCustomSkinActivity.this);
+							SkinsDatabase db = new SkinsDatabase(CustomSkinActivity.this);
 							db.addSkin(skin);
 
 							try {
-								skin.downloadSkinFromSource(NewCustomSkinActivity.this);
+								skin.downloadSkinFromSource(CustomSkinActivity.this);
 							} catch(HttpRequest.HttpRequestException e) {
 								e.printStackTrace();
 							} catch(IOException e) {
@@ -243,9 +243,9 @@ public class NewCustomSkinActivity extends ActionBarActivity {
 							progDial.hide();
 							progDial.dismiss();
 
-							Toast.makeText(NewCustomSkinActivity.this, getResources().getString(R.string.success_skin_added),
+							Toast.makeText(CustomSkinActivity.this, getResources().getString(R.string.success_skin_added),
 									Toast.LENGTH_LONG).show();
-							NewCustomSkinActivity.this.finish();
+							CustomSkinActivity.this.finish();
 						}
 
 					}).execute();
@@ -276,7 +276,7 @@ public class NewCustomSkinActivity extends ActionBarActivity {
 		db.updateSkin(editSkin);
 		editSkin.deleteAllCacheFilesFromFilesystem(this);
 
-		Toast.makeText(NewCustomSkinActivity.this, getResources().getString(R.string.success_skin_updated),
+		Toast.makeText(CustomSkinActivity.this, getResources().getString(R.string.success_skin_updated),
 				Toast.LENGTH_LONG).show();
 		this.finish();
 	}

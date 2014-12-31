@@ -1,5 +1,5 @@
 /*
- * SkinSwitch - SkinGallerySkin
+ * SkinSwitch - GallerySkin
  * Copyright (C) 2014-2014  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,12 +32,12 @@ import fr.outadev.skinswitch.network.SkinManagerConnectionHandler;
  *
  * @author outadoc
  */
-public class SkinGallerySkin extends CustomUriSkin {
+public class GallerySkin extends CustomUriSkin {
 
 	private String owner;
 	private int skinManagerId;
 
-	public SkinGallerySkin(int id, String name, String description, String owner) {
+	public GallerySkin(int id, String name, String description, String owner) {
 		super(id, name, description, null, SkinManagerConnectionHandler.BASE_URL + "?method=getSkin&id=" + id);
 		this.owner = owner;
 	}
