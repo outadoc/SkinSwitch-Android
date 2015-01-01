@@ -21,13 +21,35 @@ package fr.outadev.skinswitch;
 import android.graphics.Bitmap;
 
 /**
- * Created by outadoc on 1/1/15.
+ * Used to control the interface of the app, and display certain elements after events.
  */
 public interface WatchInterface {
 
+	/**
+	 * Displays the Google voice entry activity.
+	 */
 	public void displaySpeechRecognizer();
+
+	/**
+	 * Displays the name of the skin the user spelled.
+	 *
+	 * @param name the name that comes from the speech recogniser
+	 */
 	public void displayRequestedSkinName(String name);
+
+	/**
+	 * Displays the name of the skin that will be uploaded to Minecraft.net.
+	 *
+	 * @param name the name of the final skin
+	 */
 	public void displayInAppSkinName(String name);
+
+	/**
+	 * Displays a bitmap representing the skin on the screen.
+	 *
+	 * @param skin   the bitmap of the head of the skin
+	 * @param skinId the id of the skin
+	 */
 	public void displaySkinBitmap(Bitmap skin, byte skinId);
 
 }

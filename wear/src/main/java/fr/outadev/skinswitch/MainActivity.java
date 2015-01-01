@@ -58,6 +58,7 @@ public class MainActivity extends Activity implements WatchInterface {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// Create a connection manager
 		companionManager = new CompanionManager(this, this);
 
 		((WatchViewStub) findViewById(R.id.watch_view_stub))
@@ -157,6 +158,11 @@ public class MainActivity extends Activity implements WatchInterface {
 		delayedConfirmationView.start();
 	}
 
+	/**
+	 * Displays an error screen, and quits.
+	 *
+	 * @param error the error string to display
+	 */
 	private void displayErrorAndFinish(final String error) {
 		runOnUiThread(new Runnable() {
 
