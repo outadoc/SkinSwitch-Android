@@ -35,7 +35,6 @@ import java.util.TimerTask;
 
 public class MainActivity extends Activity implements WatchInterface {
 
-	public static final String TAG = "SkinSwitch/Wear";
 	private static final int SPEECH_REQUEST_CODE = 0;
 	private static final int CONFIRM_REQUEST_CODE = 1;
 	private static final long IMAGE_RESPONSE_TIMEOUT = 3000;

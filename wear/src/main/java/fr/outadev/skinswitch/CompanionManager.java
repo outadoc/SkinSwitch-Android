@@ -57,7 +57,7 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 
 					@Override
 					public void onConnectionFailed(ConnectionResult result) {
-						Log.d(MainActivity.TAG, "onConnectionFailed: " + result);
+						Log.d(Util.TAG, "onConnectionFailed: " + result);
 					}
 
 				})
@@ -69,19 +69,19 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		Log.d(MainActivity.TAG, "onConnected: " + connectionHint);
+		Log.d(Util.TAG, "onConnected: " + connectionHint);
 		Wearable.DataApi.addListener(googleApiClient, this);
 		watchInterface.displaySpeechRecognizer();
 	}
 
 	@Override
 	public void onConnectionSuspended(int cause) {
-		Log.d(MainActivity.TAG, "onConnectionSuspended: " + cause);
+		Log.d(Util.TAG, "onConnectionSuspended: " + cause);
 	}
 
 	@Override
 	public void onDataChanged(DataEventBuffer dataEvents) {
-		Log.d(MainActivity.TAG, "received data");
+		Log.d(Util.TAG, "received data");
 
 		for(DataEvent event : dataEvents) {
 			if(event.getType() == DataEvent.TYPE_CHANGED &&
@@ -122,9 +122,9 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 								path, payload).await();
 
 						if(!result.getStatus().isSuccess()) {
-							Log.e(MainActivity.TAG, "error");
+							Log.e(Util.TAG, "error");
 						} else {
-							Log.i(MainActivity.TAG, "success! sent to: " + node.getDisplayName());
+							Log.i(Util.TAG, "success! sent to: " + node.getDisplayName());
 						}
 					}
 				}
@@ -132,7 +132,7 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 			}).start();
 
 		} else {
-			Log.e(MainActivity.TAG, "not connected");
+			Log.e(Util.TAG, "not connected");
 		}
 	}
 

@@ -38,6 +38,8 @@ import java.io.InputStream;
  */
 public abstract class Util {
 
+	public static final String TAG = "SkinSwitch/Wear";
+
 	/**
 	 * Fades a view into another view.
 	 *
@@ -89,7 +91,7 @@ public abstract class Util {
 		InputStream assetInputStream = Wearable.DataApi.getFdForAsset(googleApiClient, asset).await().getInputStream();
 
 		if(assetInputStream == null) {
-			Log.w(MainActivity.TAG, "Requested an unknown Asset.");
+			Log.w(TAG, "Requested an unknown Asset.");
 			return null;
 		}
 
