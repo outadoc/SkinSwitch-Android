@@ -62,35 +62,25 @@
 		android:id="@+id/view_confirmation"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_margin="20dp"
+		android:layout_marginBottom="40dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:layout_marginTop="40dp"
 		android:orientation="vertical"
 		android:visibility="gone">
 
-		<LinearLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-
-			<ImageView
-				android:id="@+id/img_skin_head"
-				android:layout_width="55dp"
-				android:layout_height="55dp" />
-
-			<TextView
-				android:id="@+id/lbl_skin_name_inapp"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_marginLeft="10dp"
-				android:fontFamily="roboto-light" />
-
-		</LinearLayout>
-
+		<ImageView
+			android:id="@+id/img_skin_head"
+			android:layout_width="65dp"
+			android:layout_height="65dp"
+			android:layout_gravity="center_horizontal"
+			android:contentDescription="@string/img_skin_preview"
+			android:elevation="3dp" />
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="20dp"
+			android:layout_marginTop="15dp"
 			android:orientation="horizontal">
 
 			<FrameLayout
@@ -117,16 +107,16 @@
 
 			</FrameLayout>
 
-
 			<TextView
+				android:id="@+id/lbl_sending_skin"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
 				android:fontFamily="roboto-light"
 				android:text="@string/sending"
 				android:textColor="@color/light_grey" />
-		</LinearLayout>
 
+		</LinearLayout>
 
 	</LinearLayout>
 

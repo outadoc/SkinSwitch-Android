@@ -45,8 +45,8 @@ public class MainActivity extends Activity implements WatchInterface {
 	private TextView lblLoading;
 	private DelayedConfirmationView delayedConfirmationView;
 	private TextView lblSkinNameRequested;
-	private TextView lblSkinNameInApp;
 	private ImageView imgSkinHead;
+	private TextView lblSendingSkin;
 
 	private Timer imageTimeoutTimer;
 
@@ -68,10 +68,10 @@ public class MainActivity extends Activity implements WatchInterface {
 						confirmView = stub.findViewById(R.id.view_confirmation);
 						loadingView = stub.findViewById(R.id.view_loading);
 						lblSkinNameRequested = (TextView) stub.findViewById(R.id.lbl_skin_name_requested);
-						lblSkinNameInApp = (TextView) stub.findViewById(R.id.lbl_skin_name_inapp);
 						imgSkinHead = (ImageView) stub.findViewById(R.id.img_skin_head);
 						lblLoading = (TextView) stub.findViewById(R.id.lbl_loading);
 						delayedConfirmationView = (DelayedConfirmationView) stub.findViewById(R.id.view_confirm_delay);
+						lblSendingSkin = (TextView) stub.findViewById(R.id.lbl_sending_skin);
 					}
 
 				});
@@ -124,7 +124,7 @@ public class MainActivity extends Activity implements WatchInterface {
 
 	@Override
 	public void displayInAppSkinName(String name) {
-		lblSkinNameInApp.setText(name);
+		lblSendingSkin.setText(getString(R.string.sending, name));
 	}
 
 	@Override

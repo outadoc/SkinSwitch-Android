@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ SkinSwitch - strings.xml
-  ~ Copyright (C) 2014-2014  Baptiste Candellier
+  ~ Copyright (C) 2014-2015  Baptiste Candellier
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -21,8 +21,9 @@
 
 	<string name="app_name">SkinSwitch</string>
 	<string name="loading">Looking for your skin&#8230;</string>
-	<string name="sending">Sending&#8230;</string>
+	<string name="sending">Sending %1$s&#8230;</string>
 	<string name="error_skin_not_found">Couldn\'t find that skin!</string>
 	<string name="error_search_cancelled">Search entry canceled.</string>
+	<string name="img_skin_preview">Skin preview</string>
 
 </resources>
