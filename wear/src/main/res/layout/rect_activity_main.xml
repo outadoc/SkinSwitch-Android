@@ -65,9 +65,9 @@
 		android:layout_marginBottom="40dp"
 		android:layout_marginLeft="20dp"
 		android:layout_marginRight="20dp"
-		android:layout_marginTop="40dp"
+		android:layout_marginTop="25dp"
 		android:orientation="vertical"
-		android:visibility="gone">
+		android:visibility="visible">
 
 		<ImageView
 			android:id="@+id/img_skin_head"
@@ -83,38 +83,29 @@
 			android:layout_marginTop="15dp"
 			android:orientation="horizontal">
 
-			<FrameLayout
+			<android.support.wearable.view.DelayedConfirmationView
+				android:id="@+id/view_confirm_delay"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content">
-
-				<android.support.wearable.view.DelayedConfirmationView
-					android:id="@+id/view_confirm_delay"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"
-					app:circle_border_color="@color/light_grey"
-					app:circle_border_width="@dimen/circle_border_normal_width"
-					app:circle_color="@color/blue"
-					app:circle_padding="@dimen/circle_padding"
-					app:circle_radius="@dimen/circle_radius"
-					app:circle_radius_pressed="@dimen/circle_radius_pressed" />
-
-				<ImageView
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_gravity="center"
-					android:src="@drawable/ic_action_cancel" />
-
-			</FrameLayout>
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:clipToPadding="false"
+				android:src="@drawable/ic_action_cancel"
+				app:circle_border_color="@color/light_grey"
+				app:circle_border_width="@dimen/circle_border_normal_width"
+				app:circle_color="@color/blue"
+				app:circle_padding="@dimen/circle_padding"
+				app:circle_radius="@dimen/circle_radius"
+				app:circle_radius_pressed="@dimen/circle_radius_pressed" />
 
 			<TextView
 				android:id="@+id/lbl_sending_skin"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
+				android:layout_marginLeft="10dp"
 				android:fontFamily="roboto-light"
 				android:text="@string/sending"
-				android:textColor="@color/light_grey" />
+				android:textColor="@color/grey" />
 
 		</LinearLayout>
 
