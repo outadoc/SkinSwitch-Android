@@ -35,7 +35,10 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 /**
- * Created by outadoc on 12/31/14.
+ * Handles the connection between the wear app and the companion app.
+ * Is able to send and receive data.
+ *
+ * @author outadoc
  */
 public class CompanionManager implements DataApi.DataListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -64,11 +67,6 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 		googleApiClient.connect();
 	}
 
-	/**
-	 * Called when we're connected to the phone.
-	 *
-	 * @param connectionHint
-	 */
 	@Override
 	public void onConnected(Bundle connectionHint) {
 		Log.d(MainActivity.TAG, "onConnected: " + connectionHint);
@@ -76,21 +74,11 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 		watchInterface.displaySpeechRecognizer();
 	}
 
-	/**
-	 * Called when the connection gets interrupted.
-	 *
-	 * @param cause
-	 */
 	@Override
 	public void onConnectionSuspended(int cause) {
 		Log.d(MainActivity.TAG, "onConnectionSuspended: " + cause);
 	}
 
-	/**
-	 * Called when receiving data (ex: the skin).
-	 *
-	 * @param dataEvents
-	 */
 	@Override
 	public void onDataChanged(DataEventBuffer dataEvents) {
 		Log.d(MainActivity.TAG, "received data");
@@ -115,6 +103,12 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 
 	}
 
+	/**
+	 * Sends a message to the companion Android app.
+	 *
+	 * @param path    the endpoint to send the data to
+	 * @param payload the payload, if any
+	 */
 	public void sendMessageToCompanion(final String path, final byte[] payload) {
 		if(googleApiClient.isConnected()) {
 			new Thread(new Runnable() {
@@ -142,11 +136,21 @@ public class CompanionManager implements DataApi.DataListener, GoogleApiClient.C
 		}
 	}
 
+	/**
+	 * Sends a message to the companion app asking for any skins that match this name.
+	 *
+	 * @param skinName the name of the skin to look for
+	 */
 	public void askForSkinHead(String skinName) {
 		watchInterface.displayRequestedSkinName(skinName);
 		sendMessageToCompanion("/getSkin", skinName.getBytes());
 	}
 
+	/**
+	 * Sends a message to the companion app asking to send this skin.
+	 *
+	 * @param id the id of the skin to send
+	 */
 	public void wearSkinWithId(byte id) {
 		sendMessageToCompanion("/sendSkin", new byte[]{id});
 	}
