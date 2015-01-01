@@ -1,6 +1,6 @@
 /*
  * SkinSwitch - build.gradle
- * Copyright (C) 2014-2014  Baptiste Candellier
+ * Copyright (C) 2014-2015  Baptiste Candellier
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 apply plugin: 'com.android.application'
 
@@ -44,6 +42,7 @@ android {
 }
 
 dependencies {
+    wearApp project(':wear')
     compile 'com.android.support:support-v4:21.0.2'
     compile 'com.android.support:cardview-v7:21.0.0'
     compile 'com.android.support:appcompat-v7:21.0.2'
