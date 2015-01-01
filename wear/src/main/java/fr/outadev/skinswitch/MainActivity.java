@@ -153,7 +153,7 @@ public class MainActivity extends Activity implements WatchInterface {
 
 		});
 
-		delayedConfirmationView.setTotalTimeMs(1500);
+		delayedConfirmationView.setTotalTimeMs(4000);
 		delayedConfirmationView.start();
 	}
 
