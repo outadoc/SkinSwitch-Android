@@ -38,6 +38,13 @@ import java.io.InputStream;
  */
 public abstract class Util {
 
+	/**
+	 * Fades a view into another view.
+	 *
+	 * @param oldView  the view that's currently visible and will be replaced
+	 * @param newView  the view that will be visible once it's replaced the old view
+	 * @param animTime the animation time, in milliseconds
+	 */
 	public static void crossfade(final View oldView, final View newView, int animTime) {
 
 		// Set the new view to 0% opacity but visible, so that it is visible
@@ -66,6 +73,13 @@ public abstract class Util {
 				});
 	}
 
+	/**
+	 * Loads a bitmap from an asset that's been downloaded from the phone.
+	 *
+	 * @param asset           the asset coming from the client
+	 * @param googleApiClient the API client, used to get the asset's file descriptor
+	 * @return the asset as a bitmap
+	 */
 	public static Bitmap loadBitmapFromAsset(Asset asset, GoogleApiClient googleApiClient) {
 		if(asset == null) {
 			throw new IllegalArgumentException("Asset must be non-null");
