@@ -20,15 +20,11 @@
 <resources>
 
 	<string name="action_settings">Aide &amp; Options</string>
-	<string name="action_add">Ajouter</string>
 	<string name="action_login">Se connecter</string>
 	<string name="action_logout">Se déconnecter</string>
-	<string name="add_skin_dialog_title">Ajouter un skin</string>
 
 	<string name="image_skin_front">Devant du skin</string>
 	<string name="image_skin_back">Dos du skin</string>
-	<string name="image_upload_skin">Porter ce skin</string>
-	<string name="image_delete">Supprimer ce skin</string>
 
 	<string name="action_next">Suivant</string>
 	<string name="action_refresh">Rafraîchir</string>
