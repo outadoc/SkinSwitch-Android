@@ -53,7 +53,7 @@
 	<string name="add_skin_instructions">Ajoutez un skin en tapant sur <b>+</b>.</string>
 	<string name="add_skin_title">Rien pour l\'instant !</string>
 
-	<string name="main_fab_gallery_title">Depuis la Gallerie</string>
+	<string name="main_fab_gallery_title">Depuis la Galerie</string>
 	<string name="main_fab_custom_title">Skin personnalisé</string>
 	<string name="error_retry">Réessayer</string>
 

@@ -19,9 +19,9 @@
 
 <resources>
 
-	<string name="title_activity_skin_gallery">Gallerie</string>
+	<string name="title_activity_skin_gallery">Galerie</string>
 	<string name="no_description_available">Pas de description disponible.</string>
-	<string name="gallery_search_hint">Chercher dans la gallerie…</string>
+	<string name="gallery_search_hint">Chercher dans la galerie…</string>
 	<string name="gallery_connection_error">Chargement des skins impossible ! (erreur réseau)</string>
 	<string name="gallery_skin_author">… par %1$s</string>
 
@@ -31,7 +31,7 @@
 
 	<string name="gallery_search_title">Recherche de skins</string>
 	<string name="action_upload">Envoyer sur Skin Manager</string>
-	<string name="upload_to_sm_message">Pour rendre l\'un de vos skins disponibles depuis la bibliothèque de skins, allez sur Skin Manager, créez un nouveau compte (ou connectez-vous), puis envoyez votre skin.</string>
+	<string name="upload_to_sm_message">Pour rendre l\'un de vos skins disponibles depuis la galerie des skins, allez sur Skin Manager, créez un nouveau compte (ou connectez-vous), puis envoyez votre skin.</string>
 	<string name="upload_to_sm_title">Aller sur Skin Manager?</string>
 	<string name="upload_to_sm_positive">Aller sur le site</string>
 	<string name="upload_to_sm_negative">Pas maintenant</string>
